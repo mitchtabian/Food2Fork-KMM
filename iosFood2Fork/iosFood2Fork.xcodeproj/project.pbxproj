@@ -48,7 +48,6 @@
 				2F38F42FDC0C4F50C0B7F91B /* Pods-iosFood2Fork.debug.xcconfig */,
 				F3F27C5FD6200D6CD8710C75 /* Pods-iosFood2Fork.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -304,13 +303,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8ZVFT372F9;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iosFood2Fork/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.iosFood2Fork;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codingwithmitch.iosFood2Fork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -323,13 +323,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8ZVFT372F9;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iosFood2Fork/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.iosFood2Fork;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codingwithmitch.iosFood2Fork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

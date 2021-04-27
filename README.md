@@ -1,3 +1,6 @@
+# Work in progress
+This is the codebase for an upcoming course featuring Kotlin Multiplatform Mobile.
+
 # Important Configuration Information
 Important Android Studio and gradle configuration information for this project.
 
