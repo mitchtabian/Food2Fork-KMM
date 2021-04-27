@@ -34,7 +34,7 @@ android {
         create("testReleaseApi")
     }
 }
-˚
+
 ... more stuff
 ```
 
