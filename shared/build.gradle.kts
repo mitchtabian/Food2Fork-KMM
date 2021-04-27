@@ -10,7 +10,7 @@ version = "1.0"
 
 android {
     compileSdkVersion(Application.compileSdk)
-    sourceSets["main"].manifest.srcFile("src/androidFood2Fork/AndroidManifest.xml")
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdkVersion(Application.minSdk)
         targetSdkVersion(Application.targetSdk)
