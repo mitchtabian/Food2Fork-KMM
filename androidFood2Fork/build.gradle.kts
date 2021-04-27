@@ -52,5 +52,5 @@ dependencies {
     implementation(Compose.navigation)
 
     implementation(Google.material)
-    implementation(SquareUp.leakCanary)
+    debugImplementation(SquareUp.leakCanary)
 }
