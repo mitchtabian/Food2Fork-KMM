@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin(KotlinPlugins.multiplatform)
     kotlin(KotlinPlugins.cocoapods)
+    kotlin(KotlinPlugins.serialization) version Kotlin.version
     id(Plugins.androidLibrary)
 }
 
@@ -45,9 +46,27 @@ kotlin {
     }
     
     sourceSets {
-        val commonMain by getting
-        val androidMain by getting
-        val iosMain by getting
+        val commonMain by getting {
+            dependencies{
+                implementation(Ktor.core)
+                implementation(Ktor.clientSerialization)
+                implementation(Kotlinx.datetime)
+                implementation(Kotlinx.serializationJson)
+//                implementation(SQLDelight.runtime)
+            }
+        }
+        val androidMain by getting {
+            dependencies{
+                implementation(Ktor.android)
+//                implementation(SQLDelight.androidDriver)
+            }
+        }
+        val iosMain by getting{
+            dependencies {
+                implementation(Ktor.ios)
+//                implementation(SQLDelight.nativeDriver)
+            }
+        }
         val iosTest by getting
     }
 }
