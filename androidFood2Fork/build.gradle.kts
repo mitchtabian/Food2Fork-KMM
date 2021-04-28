@@ -51,6 +51,8 @@ dependencies {
     implementation(Compose.activity)
     implementation(Compose.navigation)
 
+    implementation(Ktor.android)
+
     implementation(Google.material)
     debugImplementation(SquareUp.leakCanary)
 }
