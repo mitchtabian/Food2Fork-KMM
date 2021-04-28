@@ -2,8 +2,7 @@ package com.codingwithmitch.food2forkkmm.android.presentation.recipe_list
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import android.util.Log
 import com.codingwithmitch.food2forkkmm.datasource.network.RecipeService
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import kotlinx.coroutines.CoroutineScope
@@ -44,31 +43,20 @@ data class RecipeListViewState(
 class RecipeListViewModel(
     private val recipeService: RecipeService,
     private val scope: CoroutineScope,
-//    private val _viewState: RecipeListViewState
-    private val viewState: RecipeListViewState
+    private val onAppendRecipes: (List<Recipe>) -> Unit,
 ){
 
-//    val viewState: MutableState<RecipeListViewState> = mutableStateOf(RecipeListViewState())
-    val recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
-
     init {
-        searchRecipes()
+        searchRecipes(1, "")
     }
 
-    private fun searchRecipes(){
+    fun searchRecipes(page: Int, query: String){
         scope.launch {
-            val recipeList = recipeService.search(page = viewState.page, query = viewState.query)
-            recipes.value = recipeList
+            val recipeList = recipeService.search(page = page, query = query)
+            Log.d("gfgfd", "searchRecipes: ${recipeList.size}")
+            onAppendRecipes.invoke(ArrayList(recipeList))
         }
     }
-
-//    private fun searchRecipes(){
-//        viewState.value = _viewState
-//        scope.launch {
-//            val recipeList = recipeService.search(page = viewState.value.page, query = viewState.value.query)
-//            recipes.value = recipeList
-//        }
-//    }
 }
 
 

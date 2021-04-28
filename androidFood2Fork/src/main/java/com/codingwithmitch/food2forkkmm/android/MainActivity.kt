@@ -3,6 +3,9 @@ package com.codingwithmitch.food2forkkmm.android
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -14,6 +17,7 @@ import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeL
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListViewState
 import com.codingwithmitch.food2forkkmm.di.AppComponent
+import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 
 private val RecipeListViewStateSaver = Saver<RecipeListViewState, RecipeListViewState>(
     save = { it },
@@ -33,28 +37,27 @@ class MainActivity : AppCompatActivity() {
             NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
                 composable(route = Screen.RecipeList.route) { navBackStackEntry ->
                     val coroutineScope = rememberCoroutineScope() // If I rotate while a job is active, will this kill it?
-//                    val viewModel = RecipeListViewModel(
-//                        recipeService = RecipeServiceImpl(
-//                            recipeDtoMapper = RecipeDtoMapper(),
-//                            httpClient = KtorClientFactory().build(),
-//                            baseUrl = BASE_URL
-//                        ),
-//                        scope = coroutineScope
-//                    )
-                    val viewState = rememberSaveable(
-                        saver = RecipeListViewStateSaver,
-                    ){
-                        RecipeListViewState()
+                    val recipes: MutableState<List<Recipe>> = remember{ mutableStateOf(listOf())}
+                    val page: MutableState<Int> = remember{ mutableStateOf(1)}
+                    val query: MutableState<String> = remember{ mutableStateOf("")}
+                    val viewModel = remember {
+                        RecipeListViewModel(
+                            recipeService = AppComponent().recipeService,
+                            scope = coroutineScope,
+                            onAppendRecipes = {
+                                val curr = ArrayList(recipes.value)
+                                curr.addAll(it)
+                                recipes.value = curr
+                            }
+                        )
                     }
-                    val viewModel = RecipeListViewModel(
-                        recipeService = AppComponent().recipeService,
-                        scope = coroutineScope,
-//                        _viewState = viewState
-                        viewState = viewState
-                    )
                     RecipeListScreen(
                         onNavigateToRecipeDetailScreen = navController::navigate,
-                        viewModel = viewModel,
+                        recipes = recipes.value,
+                        onNextPage = {
+                            page.value = page.value + 1
+                            viewModel.searchRecipes(page = page.value, query = query.value)
+                        }
                     )
                 }
                 composable(
