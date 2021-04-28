@@ -1,6 +1,7 @@
 plugins {
     id(Plugins.androidApplication)
     kotlin(KotlinPlugins.android)
+    kotlin(KotlinPlugins.serialization) version Kotlin.version
 }
 
 android {
@@ -50,6 +51,9 @@ dependencies {
     implementation(Compose.constraintLayout)
     implementation(Compose.activity)
     implementation(Compose.navigation)
+
+    implementation(Kotlinx.serializationJson)
+    implementation(Koin.core)
 
     implementation(Ktor.android)
 

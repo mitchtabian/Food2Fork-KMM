@@ -52,6 +52,7 @@ kotlin {
                 implementation(Ktor.clientSerialization)
                 implementation(Kotlinx.datetime)
                 implementation(Kotlinx.serializationJson)
+                implementation(Koin.core)
 //                implementation(SQLDelight.runtime)
             }
         }

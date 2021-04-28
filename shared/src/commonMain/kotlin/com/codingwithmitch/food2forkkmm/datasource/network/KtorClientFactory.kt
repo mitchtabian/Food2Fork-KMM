@@ -2,6 +2,6 @@ package com.codingwithmitch.food2forkkmm.datasource.network
 
 import io.ktor.client.*
 
-expect class KtorClientFactory {
+expect class KtorClientFactory() {
     fun build(): HttpClient
 }

@@ -8,7 +8,9 @@
         android:allowBackup="false"
         android:supportsRtl="true"
         android:configChanges="orientation"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name="com.codingwithmitch.food2forkkmm.BaseApplication"
+        >
         <activity
             android:name=".MainActivity"
             android:exported="true">
