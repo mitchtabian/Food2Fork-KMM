@@ -48,6 +48,20 @@ Make sure you have this setting in android studio:
 
 <img class='header-img' src='https://raw.githubusercontent.com/mitchtabian/Food2Fork-KMM/master/assets/Kotlin_android_studio.png' />
 
+# Kotlin Multiplatform Talks
+1. Daniele Barconcelli
+	- https://www.youtube.com/watch?v=J3x7_HhrvO8
+1. Ekaterina Petrova
+	- https://www.youtube.com/watch?v=PW-jkOLucjM&ab_channel=JetBrainsTV
+	- https://www.youtube.com/watch?v=mdN6P6RI__k
+1. Dmitry Savvinov
+	- https://www.youtube.com/watch?v=5QPPZV04-50&ab_channel=JetBrainsTV
+1. Kevin Galligan
+	- Kotlin conf 2019
+		- https://www.youtube.com/watch?v=oxQ6e1VeH4M&ab_channel=JetBrainsTV
+1. Ben Asher and Alec Strong
+	- kotlin conf 2019
+		- https://www.youtube.com/watch?v=je8aqW48JiA&ab_channel=JetBrainsTV
 
 
 
