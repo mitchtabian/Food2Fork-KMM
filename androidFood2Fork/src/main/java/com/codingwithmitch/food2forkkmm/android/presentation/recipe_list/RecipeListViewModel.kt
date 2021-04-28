@@ -41,21 +41,21 @@ data class RecipeListViewState(
 }
 
 class RecipeListViewModel(
-    private val recipeService: RecipeService,
-    private val scope: CoroutineScope,
+    page: Int = 1, // initial value
+    query: String = "", // initial value
+    private val recipeService: RecipeService, // could be a use case
     private val onAppendRecipes: (List<Recipe>) -> Unit,
 ){
 
     init {
-        searchRecipes(1, "")
+        for(p in 1..page){ // restore after rotation or process death
+            searchRecipes(p, query)
+        }
     }
 
-    fun searchRecipes(page: Int, query: String){
-        scope.launch {
-            val recipeList = recipeService.search(page = page, query = query)
-            Log.d("gfgfd", "searchRecipes: ${recipeList.size}")
-            onAppendRecipes.invoke(ArrayList(recipeList))
-        }
+    suspend fun searchRecipes(page: Int, query: String){
+        val recipeList = recipeService.search(page = page, query = query)
+        onAppendRecipes.invoke(ArrayList(recipeList))
     }
 }
 
