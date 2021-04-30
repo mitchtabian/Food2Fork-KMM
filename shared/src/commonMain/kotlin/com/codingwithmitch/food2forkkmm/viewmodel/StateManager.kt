@@ -19,6 +19,7 @@ class StateManager {
         initState: () -> T,
         callOnInit: () -> Unit,
         reinitWhen: (T) -> Boolean = {false},
+        callOnInitAlsoAfterBackground : Boolean = false,    // if true, it runs "callOnInit" also after coming back from background
     ) : T {
         val logger = Logger("StateManager.getScreen")
         logger.log("getScreen: "+T::class.simpleName)
@@ -36,6 +37,9 @@ class StateManager {
         if (!isScreenScopeActive(screenType)) { // in case it's coming back from background
             logger.log(loggerText+" (reinitialized scope)")
             initScreenScope(screenType)
+            if (callOnInitAlsoAfterBackground) {
+                callOnInit()
+            }
         } else {
             logger.log(loggerText)
         }
