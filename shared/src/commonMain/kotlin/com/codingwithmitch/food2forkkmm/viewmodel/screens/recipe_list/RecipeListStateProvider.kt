@@ -8,6 +8,6 @@ fun StateProviders.getRecipeListState(): RecipeListState{
     // after initialization, the "callOnInit" code gets called
     return stateManager.getScreen(
         initState = { RecipeListState(isLoading = true) },
-        callOnInit = { events.loadRecipes() }
+        callOnInit = { events.loadRecipes() },
     )
 }

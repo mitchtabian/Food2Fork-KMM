@@ -24,3 +24,11 @@ fun getFoodCategory(value: String): FoodCategory? {
     val map = values().associateBy(FoodCategory::value)
     return map[value]
 }
+
+
+
+
+
+
+
+

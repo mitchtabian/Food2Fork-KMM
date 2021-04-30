@@ -36,7 +36,6 @@ class StateManager {
         if (!isScreenScopeActive(screenType)) { // in case it's coming back from background
             logger.log(loggerText+" (reinitialized scope)")
             initScreenScope(screenType)
-            callOnInit()
         } else {
             logger.log(loggerText)
         }

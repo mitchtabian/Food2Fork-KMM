@@ -5,7 +5,7 @@ actual class Logger actual constructor(
 ) {
 
     actual fun log(msg: String) {
-        if(!Platform.isDebugBinary){
+        if(!BuildConfig().isDebug()){
             // Crashlytics or whatever
         }
         else{

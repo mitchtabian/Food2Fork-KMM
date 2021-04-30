@@ -9,7 +9,11 @@ data class RecipeListState(
     val query: String = "",
     val recipes: List<Recipe> = listOf(),
     val selectedCategory: FoodCategory? = null
-) : ScreenState
+) : ScreenState {
+    companion object{
+        const val RECIPE_PAGINATION_PAGE_SIZE = 30
+    }
+}
 
 
 
