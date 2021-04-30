@@ -58,5 +58,16 @@ dependencies {
     implementation(Ktor.android)
 
     implementation(Google.material)
+
+    implementation(AndroidX.lifecycleProcess)
+
+
     debugImplementation(SquareUp.leakCanary)
 }
+
+
+
+
+
+
+

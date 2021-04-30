@@ -16,17 +16,20 @@ import androidx.compose.ui.unit.dp
 import com.codingwithmitch.food2forkcompose.presentation.theme.AppTheme
 import com.codingwithmitch.food2forkkmm.android.presentation.navigation.Screen
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
+import com.codingwithmitch.food2forkkmm.viewmodel.Events
+import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_list.RecipeListState
+import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_list.nextPage
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @ExperimentalFoundationApi
 @Composable
 fun RecipeListScreen(
-    recipes: List<Recipe>,
-    onNextPage: () -> Unit,
-    onNavigateToRecipeDetailScreen: (String) -> Unit,
+    state: RecipeListState,
+    events : Events,
+    onClickRecipeListItem: (Int) -> Unit,
 ) {
-    AppTheme(displayProgressBar = false) {
+    AppTheme(displayProgressBar = state.isLoading) {
         LazyColumn {
             stickyHeader { // for debugging
                 Text(
@@ -34,16 +37,18 @@ fun RecipeListScreen(
                         .padding(16.dp)
                         .fillMaxWidth()
                     ,
-                    text = "${recipes.size}",
+                    text = "${state.recipes.size}",
                     style = MaterialTheme.typography.h3
                 )
             }
-            itemsIndexed(items = recipes){ index, recipe ->
+            itemsIndexed(items = state.recipes){ index, recipe ->
                 Text(
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth()
-                        .clickable { onNavigateToRecipeDetailScreen("${Screen.RecipeDetail.route}/${recipe.id}") }
+                        .clickable {
+                            onClickRecipeListItem(recipe.id)
+                        }
                     ,
                     text = recipe.title
                 )
@@ -57,7 +62,9 @@ fun RecipeListScreen(
                     Button(
                         modifier = Modifier
                             .padding(16.dp),
-                        onClick = onNextPage
+                        onClick = {
+                            events.nextPage()
+                        }
                     ) {
                         Text(
                             text = "GO NEXT"
