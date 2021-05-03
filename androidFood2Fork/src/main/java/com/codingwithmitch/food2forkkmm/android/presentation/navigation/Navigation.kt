@@ -13,9 +13,14 @@ import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.Recip
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.logger
+import com.codingwithmitch.food2forkkmm.util.printLogD
+import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_detail.getRecipeDetailState
 import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_list.getRecipeListState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import org.koin.core.component.getScopeId
 
+@ExperimentalCoroutinesApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
@@ -26,7 +31,6 @@ fun Navigation(model: DKMPViewModel){
     logger.log("recomposition Index: "+appState.recompositionIndex.toString())
     val stateProviders = appState.getStateProviders(model)
     val events = model.events
-
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
@@ -45,7 +49,10 @@ fun Navigation(model: DKMPViewModel){
             })
         ) { navBackStackEntry ->
             RecipeDetailScreen(
-                recipeId = navBackStackEntry.arguments?.getInt("recipeId"),
+                state = stateProviders.getRecipeDetailState(
+                    recipeId = navBackStackEntry.arguments?.getInt("recipeId")?: -1, // -1 = error
+                ),
+                events = events
             )
         }
     }

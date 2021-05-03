@@ -1,5 +1,6 @@
 package com.codingwithmitch.food2forkkmm.viewmodel
 
+import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_detail.RecipeDetailState
 import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_list.RecipeListState
 import kotlin.reflect.KClass
 
@@ -18,15 +19,13 @@ enum class ScreenType{ MASTER, DETAIL, DIALOG }
 
 interface ScreenState // we apply this empty interface to all screen state data classes
 
+
 // here we list all screenState classes, defining their screenType
 fun getScreenType(stateClass : KClass<out ScreenState>) : ScreenType {
     return when (stateClass) {
         RecipeListState::class -> ScreenType.MASTER
-//        CountryDetailState::class -> ScreenType.DETAIL
-        // ProfileState::class -> ScreenType.MASTER
-        // SettingsState::class -> ScreenType.DETAIL
-        // DialogState::class -> ScreenType.DIALOG
-        else -> ScreenType.MASTER // we default to MASTER
+        RecipeDetailState::class -> ScreenType.DETAIL
+        else -> ScreenType.MASTER
     }
 }
 

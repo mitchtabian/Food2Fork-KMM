@@ -2,7 +2,6 @@ package com.codingwithmitch.food2forkkmm.interactors.recipe_list
 
 import com.codingwithmitch.food2forkkmm.datasource.Repository
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
-import com.codingwithmitch.food2forkkmm.util.Logger
 
 suspend fun Repository.searchRecipes(
     page: Int,

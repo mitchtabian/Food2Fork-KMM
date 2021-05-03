@@ -9,6 +9,8 @@ fun StateProviders.getRecipeListState(): RecipeListState {
     return stateManager.getScreen(
         initState = { RecipeListState(isLoading = true) },
         callOnInit = { events.loadRecipes() },
-
+        reinitWhen = {
+            false
+        }
     )
 }
