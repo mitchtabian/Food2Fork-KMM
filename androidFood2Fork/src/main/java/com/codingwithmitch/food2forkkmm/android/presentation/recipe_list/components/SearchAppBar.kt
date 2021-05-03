@@ -11,10 +11,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -23,10 +21,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.FoodCategoryChip
-import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_list.FoodCategory
-import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_list.getFoodCategory
+import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
+import com.codingwithmitch.food2forkkmm.presentation.recipe_list.getFoodCategory
 
 @ExperimentalComposeUiApi
 @Composable

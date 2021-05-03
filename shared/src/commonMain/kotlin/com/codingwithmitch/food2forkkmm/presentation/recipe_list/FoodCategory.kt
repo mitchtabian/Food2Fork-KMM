@@ -1,6 +1,6 @@
-package com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_list
+package com.codingwithmitch.food2forkkmm.presentation.recipe_list
 
-import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_list.FoodCategory.*
+import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory.*
 
 enum class FoodCategory(val value: String){
     ERROR("error"),

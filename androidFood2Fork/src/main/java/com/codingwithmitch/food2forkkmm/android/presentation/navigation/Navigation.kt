@@ -1,42 +1,38 @@
 package com.codingwithmitch.food2forkkmm.android.presentation.navigation
 
-import android.util.Log
+import android.app.Activity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
-import com.codingwithmitch.food2forkkmm.viewmodel.DKMPViewModel
-import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.RecipeDetailScreen
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
-import com.codingwithmitch.food2forkkmm.domain.model.Recipe
-import com.codingwithmitch.food2forkkmm.logger
-import com.codingwithmitch.food2forkkmm.util.printLogD
-import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_detail.getRecipeDetailState
-import com.codingwithmitch.food2forkkmm.viewmodel.screens.recipe_list.getRecipeListState
+import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
+import dagger.hilt.android.internal.lifecycle.HiltViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
-import org.koin.core.component.getScopeId
 
 @ExperimentalCoroutinesApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
-fun Navigation(model: DKMPViewModel){
-
-    val appState by model.stateFlow.collectAsState()
-    logger.log("recomposition Index: "+appState.recompositionIndex.toString())
-    val stateProviders = appState.getStateProviders(model)
-    val events = model.events
+fun Navigation(activity: Activity){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
+            val factory = HiltViewModelFactory.createInternal(
+                activity,
+                navBackStackEntry,
+                null,
+                navBackStackEntry.defaultViewModelProviderFactory
+            )
+            val viewModel: RecipeListViewModel = viewModel("SplashViewModel", factory)
             RecipeListScreen(
-                state = stateProviders.getRecipeListState(),
-                events = events,
+                state = viewModel.state.value,
+                onTriggerEvent = viewModel::onTriggerEvent,
                 onClickRecipeListItem = { recipeId ->
                     navController.navigate("${Screen.RecipeDetail.route}/$recipeId")
                 }
@@ -48,12 +44,12 @@ fun Navigation(model: DKMPViewModel){
                 type = NavType.IntType
             })
         ) { navBackStackEntry ->
-            RecipeDetailScreen(
-                state = stateProviders.getRecipeDetailState(
-                    recipeId = navBackStackEntry.arguments?.getInt("recipeId")?: -1, // -1 = error
-                ),
-                events = events
-            )
+//            RecipeDetailScreen(
+//                state = stateProviders.getRecipeDetailState(
+//                    recipeId = navBackStackEntry.arguments?.getInt("recipeId")?: -1, // -1 = error
+//                ),
+//                events = events
+//            )
         }
     }
 }

@@ -1,6 +1,8 @@
 plugins {
     id(Plugins.androidApplication)
     kotlin(KotlinPlugins.android)
+    kotlin(KotlinPlugins.kapt)
+    id(Plugins.hilt)
     kotlin(KotlinPlugins.serialization) version Kotlin.version
 }
 
@@ -52,8 +54,10 @@ dependencies {
     implementation(Compose.activity)
     implementation(Compose.navigation)
 
+    implementation(Hilt.hiltAndroid)
+    kapt(Hilt.hiltCompiler)
+
     implementation(Kotlinx.serializationJson)
-    implementation(Koin.core)
 
     implementation(Ktor.android)
 

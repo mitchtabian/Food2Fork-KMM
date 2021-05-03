@@ -1,28 +1,34 @@
 package com.codingwithmitch.food2forkkmm.domain.util
 
-data class DataState<out T>(
-    val data: T? = null,
-    val message: String? = null,
-    val loading: Boolean = false,
-){
-    companion object{
+import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 
-        fun <T> success(
-            data: T
-        ): DataState<T>{
+data class DataState<T>(
+    val message: GenericMessageInfo? = null,
+    val data: T? = null,
+    val isLoading: Boolean = false,
+) {
+
+    companion object {
+
+        fun <T> error(
+            message: GenericMessageInfo,
+        ): DataState<T> {
             return DataState(
+                message = message,
+                data = null,
+            )
+        }
+
+        fun <T> data(
+            message: GenericMessageInfo? = null,
+            data: T? = null,
+        ): DataState<T> {
+            return DataState(
+                message = message,
                 data = data,
             )
         }
 
-        fun <T> error(
-            message: String,
-        ): DataState<T>{
-            return DataState(
-                message = message
-            )
-        }
-
-        fun <T> loading(): DataState<T> = DataState(loading = true)
+        fun <T>loading() = DataState<T>(isLoading = true)
     }
 }
