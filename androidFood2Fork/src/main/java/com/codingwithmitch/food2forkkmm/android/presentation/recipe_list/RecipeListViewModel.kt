@@ -100,9 +100,6 @@ constructor(
         loadRecipes()
     }
 
-    /**
-     * Done on init
-     */
     private suspend fun loadRecipes(){
         searchRecipes.execute(page = state.value.page, query = state.value.query).onEach { dataState ->
             state.value = state.value.copy(isLoading = dataState.isLoading)

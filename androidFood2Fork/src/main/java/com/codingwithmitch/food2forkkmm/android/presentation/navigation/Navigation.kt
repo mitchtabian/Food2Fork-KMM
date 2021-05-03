@@ -3,6 +3,7 @@ package com.codingwithmitch.food2forkkmm.android.presentation.navigation
 import android.app.Activity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
@@ -10,6 +11,8 @@ import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.RecipeDetailScreen
+import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.RecipeDetailViewModel
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,12 +42,17 @@ fun Navigation(activity: Activity){
                 type = NavType.IntType
             })
         ) { navBackStackEntry ->
-//            RecipeDetailScreen(
-//                state = stateProviders.getRecipeDetailState(
-//                    recipeId = navBackStackEntry.arguments?.getInt("recipeId")?: -1, // -1 = error
-//                ),
-//                events = events
-//            )
+            if (navBackStackEntry.arguments?.getInt("recipeId") == null){
+                // TODO("Show error dialog or something")
+                Text("Invalid Recipe")
+            }
+            else{
+                val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
+                val viewModel: RecipeDetailViewModel = viewModel("RecipeDetailViewModel", factory)
+                RecipeDetailScreen(
+                    state = viewModel.state.value
+                )
+            }
         }
     }
 }

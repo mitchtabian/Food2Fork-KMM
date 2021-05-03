@@ -18,7 +18,7 @@ class SearchRecipes(
     ): Flow<DataState<RecipeListState>> = flow{
         emit(DataState.loading())
         if(BuildConfig().isDebug()){
-            delay(1000)
+            delay(700)
         }
         // TODO("add caching and error handling")
         val listData: ArrayList<Recipe> = ArrayList()
