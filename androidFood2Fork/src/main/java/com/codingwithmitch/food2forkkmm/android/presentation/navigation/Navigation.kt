@@ -6,12 +6,12 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
-import dagger.hilt.android.internal.lifecycle.HiltViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -23,13 +23,8 @@ fun Navigation(activity: Activity){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
-            val factory = HiltViewModelFactory.createInternal(
-                activity,
-                navBackStackEntry,
-                null,
-                navBackStackEntry.defaultViewModelProviderFactory
-            )
-            val viewModel: RecipeListViewModel = viewModel("SplashViewModel", factory)
+            val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
+            val viewModel: RecipeListViewModel = viewModel("RecipeListViewModel", factory)
             RecipeListScreen(
                 state = viewModel.state.value,
                 onTriggerEvent = viewModel::onTriggerEvent,

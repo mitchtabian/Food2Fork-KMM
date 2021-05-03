@@ -55,6 +55,7 @@ dependencies {
     implementation(Compose.navigation)
 
     implementation(Hilt.hiltAndroid)
+    implementation(Hilt.navigation)
     kapt(Hilt.hiltCompiler)
 
     implementation(Kotlinx.serializationJson)
