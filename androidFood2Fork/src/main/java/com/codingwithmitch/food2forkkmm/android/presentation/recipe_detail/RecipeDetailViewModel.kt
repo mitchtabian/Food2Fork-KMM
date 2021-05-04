@@ -8,9 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 import com.codingwithmitch.food2forkkmm.interactors.recipe_detail.GetRecipe
 import com.codingwithmitch.food2forkkmm.presentation.recipe_detail.RecipeDetailState
-import com.codingwithmitch.food2forkkmm.util.Logger
-import dagger.assisted.Assisted
 import dagger.hilt.android.lifecycle.HiltViewModel
+
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -27,10 +26,15 @@ constructor(
     val state: MutableState<RecipeDetailState> = mutableStateOf(RecipeDetailState())
 
     init {
-        savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
-            viewModelScope.launch {
-                getRecipe(recipeId = recipeId)
+        try {
+            savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
+                viewModelScope.launch {
+                    getRecipe(recipeId = recipeId)
+                }
             }
+        }catch (e: Exception){
+            // will throw exception if arg is not there for whatever reason.
+            // we don't need to do anything because it will already show a composable saying "Unable to get the details of this recipe..."
         }
     }
 
