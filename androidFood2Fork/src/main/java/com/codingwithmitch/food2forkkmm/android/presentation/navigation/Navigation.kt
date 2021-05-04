@@ -1,10 +1,7 @@
 package com.codingwithmitch.food2forkkmm.android.presentation.navigation
 
-import android.app.Activity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
@@ -24,7 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
-fun Navigation(activity: Activity){
+fun Navigation(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
@@ -40,7 +37,7 @@ fun Navigation(activity: Activity){
         }
         composable(
             route = Screen.RecipeDetail.route + "/{recipeId}",
-            arguments = listOf(navArgument("recipeId--") {
+            arguments = listOf(navArgument("recipeId") {
                 type = NavType.IntType
             })
         ) { navBackStackEntry ->

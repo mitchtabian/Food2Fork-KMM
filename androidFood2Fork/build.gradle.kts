@@ -65,8 +65,6 @@ dependencies {
 
     implementation(Google.material)
 
-    implementation(AndroidX.lifecycleProcess)
-
 
     debugImplementation(SquareUp.leakCanary)
 }

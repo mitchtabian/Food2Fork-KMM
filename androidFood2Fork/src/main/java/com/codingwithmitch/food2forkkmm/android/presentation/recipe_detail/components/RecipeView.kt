@@ -8,12 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components.RECIPE_IMAGE_HEIGHT
+import com.codingwithmitch.food2forkkmm.android.presentation.components.RecipeImage
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.domain.util.DatetimeUtil
-import com.google.accompanist.coil.CoilImage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalStdlibApi
@@ -27,13 +25,9 @@ fun RecipeView(
             .fillMaxWidth()
     ) {
         item {
-            CoilImage(
-                data = recipe.featuredImage,
-                contentDescription = recipe.title,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(RECIPE_IMAGE_HEIGHT.dp),
-                contentScale = ContentScale.Crop,
+            RecipeImage(
+                url = recipe.featuredImage,
+                contentDescription = recipe.title
             )
             Column(
                 modifier = Modifier

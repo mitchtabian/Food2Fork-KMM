@@ -8,10 +8,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.codingwithmitch.food2forkkmm.android.presentation.components.RecipeImage
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
-import com.google.accompanist.coil.CoilImage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 const val RECIPE_IMAGE_HEIGHT = 260
@@ -33,15 +32,10 @@ fun RecipeCard(
             .clickable(onClick = onClick),
         elevation = 8.dp,
     ) {
-
         Column() {
-            CoilImage(
-                data = recipe.featuredImage,
-                contentDescription = recipe.title,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(RECIPE_IMAGE_HEIGHT.dp),
-                contentScale = ContentScale.Crop,
+            RecipeImage(
+                url = recipe.featuredImage,
+                contentDescription = recipe.title
             )
             Row(
                 modifier = Modifier

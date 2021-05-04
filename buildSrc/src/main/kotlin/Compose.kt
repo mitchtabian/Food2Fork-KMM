@@ -1,5 +1,5 @@
 object Compose {
-    const val composeVersion = "1.0.0-beta03"
+    const val composeVersion = "1.0.0-beta05"
     const val runtime = "androidx.compose.runtime:runtime:${composeVersion}"
     const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:${composeVersion}"
     const val ui = "androidx.compose.ui:ui:${composeVersion}"

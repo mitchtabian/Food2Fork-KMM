@@ -5,6 +5,7 @@ plugins {
     kotlin(KotlinPlugins.cocoapods)
     kotlin(KotlinPlugins.serialization) version Kotlin.version
     id(Plugins.androidLibrary)
+    id(Plugins.sqlDelight)
 }
 
 version = "1.0"
@@ -16,6 +17,13 @@ android {
         minSdkVersion(Application.minSdk)
         targetSdkVersion(Application.targetSdk)
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+//    kotlinOptions {
+//        jvmTarget = "1.8"
+//    }
     configurations {
         create("androidTestApi")
         create("androidTestDebugApi")
@@ -52,21 +60,33 @@ kotlin {
                 implementation(Ktor.clientSerialization)
                 implementation(Kotlinx.datetime)
                 implementation(Kotlinx.serializationJson)
-//                implementation(SQLDelight.runtime)
+                implementation(SQLDelight.runtime)
             }
         }
         val androidMain by getting {
             dependencies{
                 implementation(Ktor.android)
-//                implementation(SQLDelight.androidDriver)
+                implementation(SQLDelight.androidDriver)
             }
         }
         val iosMain by getting{
             dependencies {
                 implementation(Ktor.ios)
-//                implementation(SQLDelight.nativeDriver)
+                implementation(SQLDelight.nativeDriver)
             }
         }
-        val iosTest by getting
     }
 }
+
+sqldelight {
+    database("RecipeDatabase") {
+        packageName = "com.codingwithmitch.food2forkkmm.datasource.cache"
+        sourceFolders = listOf("sqldelight")
+    }
+}
+
+
+
+
+
+

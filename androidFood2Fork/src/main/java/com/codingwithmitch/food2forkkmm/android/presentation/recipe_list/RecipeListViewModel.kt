@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
+import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.interactors.recipe_list.SearchRecipes
+import com.codingwithmitch.food2forkkmm.logger
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListEvents
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState
@@ -76,7 +78,7 @@ constructor(
     /**
      *  Called when a new FoodCategory chip is selected
      */
-    private suspend fun onSelectCategory(category: FoodCategory){
+    private fun onSelectCategory(category: FoodCategory){
         state.value = state.value.copy(selectedCategory = category)
         state.value = state.value.copy(query =  category.value)
         loadRecipes()
@@ -85,7 +87,7 @@ constructor(
     /**
      * Get the next page of recipes
      */
-    private suspend fun nextPage(){
+    private fun nextPage(){
         state.value = state.value.copy(page = state.value.page + 1)
         loadRecipes()
     }
@@ -95,23 +97,29 @@ constructor(
      * 1. page = 1
      * 2. list position needs to be reset
      */
-    private suspend fun newSearch(){
+    private fun newSearch(){
         state.value = state.value.copy(page = 1, recipes = listOf())
         loadRecipes()
     }
 
-    private suspend fun loadRecipes(){
+    private fun loadRecipes(){
         searchRecipes.execute(page = state.value.page, query = state.value.query).onEach { dataState ->
             state.value = state.value.copy(isLoading = dataState.isLoading)
 
-            dataState.data?.let { recipeListState ->
-                state.value = state.value.copy(recipes = recipeListState.recipes)
+            dataState.data?.let { recipes ->
+                appendRecipes(recipes)
             }
 
             dataState.message?.let { message ->
                 appendToMessageQueue(message)
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun appendRecipes(recipes: List<Recipe>){
+        val curr = ArrayList(state.value.recipes)
+        curr.addAll(recipes)
+        state.value = state.value.copy(recipes = curr)
     }
 
     private fun appendToMessageQueue(messageInfo: GenericMessageInfo){

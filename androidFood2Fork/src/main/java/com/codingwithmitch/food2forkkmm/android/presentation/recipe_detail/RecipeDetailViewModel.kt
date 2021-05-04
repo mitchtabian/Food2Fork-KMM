@@ -9,7 +9,6 @@ import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 import com.codingwithmitch.food2forkkmm.interactors.recipe_detail.GetRecipe
 import com.codingwithmitch.food2forkkmm.presentation.recipe_detail.RecipeDetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
-
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -38,12 +37,12 @@ constructor(
         }
     }
 
-    private suspend fun getRecipe(recipeId: Int){
+    private fun getRecipe(recipeId: Int){
         getRecipe.execute(recipeId = recipeId).onEach { dataState ->
             state.value = state.value.copy(isLoading = dataState.isLoading)
 
-            dataState.data?.let { recipeDetailState ->
-                state.value = state.value.copy(recipe = recipeDetailState.recipe)
+            dataState.data?.let { recipe ->
+                state.value = state.value.copy(recipe = recipe)
             }
 
             dataState.message?.let { message ->
