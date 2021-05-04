@@ -29,7 +29,6 @@ fun FoodCategoryChip(
                         value = isSelected,
                         onValueChange = {
                             onSelectedCategoryChanged(category)
-                            onExecuteSearch()
                         }
                 )
         ) {

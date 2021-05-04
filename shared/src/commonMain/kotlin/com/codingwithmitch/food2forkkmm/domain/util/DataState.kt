@@ -3,7 +3,7 @@ package com.codingwithmitch.food2forkkmm.domain.util
 import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 
 data class DataState<T>(
-    val message: GenericMessageInfo? = null,
+    val message: GenericMessageInfo.Builder? = null,
     val data: T? = null,
     val isLoading: Boolean = false,
 ) {
@@ -11,7 +11,7 @@ data class DataState<T>(
     companion object {
 
         fun <T> error(
-            message: GenericMessageInfo,
+            message: GenericMessageInfo.Builder,
         ): DataState<T> {
             return DataState(
                 message = message,
@@ -20,7 +20,7 @@ data class DataState<T>(
         }
 
         fun <T> data(
-            message: GenericMessageInfo? = null,
+            message: GenericMessageInfo.Builder? = null,
             data: T? = null,
         ): DataState<T> {
             return DataState(

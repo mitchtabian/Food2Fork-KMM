@@ -41,12 +41,11 @@ class GetRecipe (
         }catch (e: Exception){
             emit(DataState.error<Recipe>(
                 message = GenericMessageInfo.Builder()
-                    .id(getRandomString(15))
+                    .id("GetRecipe.Error")
                     .title("Error")
                     .uiComponentType(UIComponentType.Dialog)
                     .messageType(MessageType.Error)
                     .description(e.message?: "Unknown Error")
-                    .build()
             ))
         }
     }

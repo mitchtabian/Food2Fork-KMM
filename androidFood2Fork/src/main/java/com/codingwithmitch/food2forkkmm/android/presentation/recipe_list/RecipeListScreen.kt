@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import com.codingwithmitch.food2forkcompose.presentation.theme.AppTheme
+import com.codingwithmitch.food2forkkmm.android.presentation.components.ProcessDialogQueue
 import com.codingwithmitch.food2forkkmm.android.presentation.components.SearchAppBar
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,6 +24,7 @@ fun RecipeListScreen(
     val scaffoldState = rememberScaffoldState()
     AppTheme(
         displayProgressBar = state.isLoading,
+        dialogQueue = state.queue,
     ) {
         val foodCategories = remember{getAllFoodCategories()}
         Scaffold(

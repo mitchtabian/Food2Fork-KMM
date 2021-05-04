@@ -5,7 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codingwithmitch.food2forkkmm.android.presentation.util.doesMessageAlreadyExistInQueue
 import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
+import com.codingwithmitch.food2forkkmm.domain.model.PositiveAction
+import com.codingwithmitch.food2forkkmm.domain.util.Queue
 import com.codingwithmitch.food2forkkmm.interactors.recipe_detail.GetRecipe
 import com.codingwithmitch.food2forkkmm.presentation.recipe_detail.RecipeDetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -51,9 +54,35 @@ constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun appendToMessageQueue(messageInfo: GenericMessageInfo){
-        val queue = state.value.queue
-        queue.add(messageInfo)
+    private fun appendToMessageQueue(messageInfo: GenericMessageInfo.Builder){
+        if(!state.value.queue.doesMessageAlreadyExistInQueue(messageInfo = messageInfo.build())){
+            if(messageInfo.onDismiss == null){ // Users must be able to dismiss the message if it's a dialog
+                messageInfo
+                    .onDismiss {
+                        // remove from queue
+                        val queue = state.value.queue
+                        queue.remove() // if this message is visible it means it's at the head
+                        updateQueue(queue)
+                    }
+                    .positive(
+                        PositiveAction(
+                            positiveBtnTxt = "OK",
+                            onPositiveAction = {
+                                val queue = state.value.queue
+                                queue.remove()
+                                updateQueue(queue)
+                            }
+                        )
+                    )
+            }
+            val queue = state.value.queue
+            queue.add(messageInfo.build())
+            state.value = state.value.copy(queue = queue)
+        }
+    }
+
+    private fun updateQueue(queue: Queue<GenericMessageInfo>){
+        state.value = state.value.copy(queue = Queue(mutableListOf())) // reset queue
         state.value = state.value.copy(queue = queue)
     }
 }

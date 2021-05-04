@@ -4,6 +4,7 @@ import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeDatabase
 import com.codingwithmitch.food2forkkmm.datasource.network.RecipeService
 import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeDtoMapper
 import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
+import com.codingwithmitch.food2forkkmm.domain.model.PositiveAction
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.domain.util.*
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState.Companion.RECIPE_PAGINATION_PAGE_SIZE
@@ -97,12 +98,11 @@ class SearchRecipes(
         } catch (e: Exception) {
             emit(DataState.error<List<Recipe>>(
                 message = GenericMessageInfo.Builder()
-                    .id(getRandomString(15))
+                    .id("SearchRecipes.Error")
                     .title("Error")
                     .uiComponentType(UIComponentType.Dialog)
                     .messageType(MessageType.Error)
                     .description(e.message?: "Unknown Error")
-                    .build()
             ))
         }
     }.asCommonFlow()
