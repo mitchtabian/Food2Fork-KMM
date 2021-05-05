@@ -1,7 +1,5 @@
 package com.codingwithmitch.food2forkkmm.presentation.recipe_list
 
-import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory.*
-
 enum class FoodCategory(val value: String){
     ERROR("error"),
     CHICKEN("Chicken"),
@@ -15,15 +13,6 @@ enum class FoodCategory(val value: String){
     DONUT("Donut"),
 }
 
-fun getAllFoodCategories(): List<FoodCategory>{
-    return listOf(
-        ERROR, CHICKEN, BEEF, SOUP, DESSERT, VEGETARIAN, MILK, VEGAN, PIZZA, DONUT)
-}
-
-fun getFoodCategory(value: String): FoodCategory? {
-    val map = values().associateBy(FoodCategory::value)
-    return map[value]
-}
 
 
 

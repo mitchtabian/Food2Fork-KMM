@@ -26,7 +26,7 @@ fun RecipeListScreen(
         displayProgressBar = state.isLoading,
         dialogQueue = state.queue,
     ) {
-        val foodCategories = remember{getAllFoodCategories()}
+        val foodCategories = remember{FoodCategoryUtil().getAllFoodCategories()}
         Scaffold(
             topBar = {
                 SearchAppBar(

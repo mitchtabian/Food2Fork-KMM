@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.FoodCategoryChip
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
-import com.codingwithmitch.food2forkkmm.presentation.recipe_list.getFoodCategory
+import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategoryUtil
 
 @ExperimentalComposeUiApi
 @Composable
@@ -83,7 +83,7 @@ fun SearchAppBar(
             category = it.value,
             isSelected = selectedCategory == it,
             onSelectedCategoryChanged = {
-              getFoodCategory(it)?.let{ newCategory ->
+              FoodCategoryUtil().getFoodCategory(it)?.let{ newCategory ->
                 onSelectedCategoryChanged(newCategory)
               }
             },
