@@ -32,6 +32,11 @@ class GetRecipe (
                 delay(500)
             }
 
+            // Force error for testing
+            if(recipeId == 1){
+                throw Exception("Invalid Recipe Id")
+            }
+
             val recipe = getRecipeFromCache(recipeId = recipeId)
 
             emit(DataState.data(message = null, data = recipe))
