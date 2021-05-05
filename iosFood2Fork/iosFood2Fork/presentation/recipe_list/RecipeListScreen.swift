@@ -16,12 +16,10 @@ struct RecipeListScreen: View {
     
     init(
         searchRecipes: SearchRecipes,
-        token: String,
         foodCategoryUtil: FoodCategoryUtil
     ) {
         viewModel = RecipeListViewModel(
             searchRecipes: searchRecipes,
-            token: token,
             foodCategoryUtil: foodCategoryUtil
         )
     }
@@ -38,7 +36,7 @@ struct RecipeListScreen: View {
                                     RecipeCard(recipe: recipe)
                                         .onAppear(perform: {
                                             if viewModel.shouldQueryNextPage(recipe: recipe){
-                                                viewModel.onTriggerEvent(stateEvent: RecipeListEvent.NextPageEvent())
+                                                viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NextPage())
                                             }
                                         })
                                 }
@@ -95,12 +93,13 @@ struct RecipeListScreen_Previews: PreviewProvider {
     static let recipeEntityMapper = RecipeEntityMapper()
     static let dateUtil = DatetimeUtil()
     static let recipeService = RecipeServiceImpl(
-        recipeDtoMapper: dtoMapper, httpClient: driverFactory.createDriver(), baseUrl: BASE_URL
+        recipeDtoMapper: dtoMapper,
+        httpClient: KtorClientFactory().build(),
+        baseUrl: RecipeServiceImpl.Companion().BASE_URL
     )
     static let recipeDatabase = RecipeDatabaseFactory(driverFactory: driverFactory).createDatabase()
     static let searchRecipes = SearchRecipes(
         recipeService: recipeService,
-        dtoMapper: dtoMapper,
         recipeDatabase: recipeDatabase,
         recipeEntityMapper: recipeEntityMapper,
         dateUtil: dateUtil
@@ -108,7 +107,6 @@ struct RecipeListScreen_Previews: PreviewProvider {
     static var previews: some View {
         RecipeListScreen(
             searchRecipes: searchRecipes,
-            token: ApiTokenProvider().provideToken(),
             foodCategoryUtil: FoodCategoryUtil()
         )
     }

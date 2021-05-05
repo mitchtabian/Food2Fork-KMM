@@ -13,7 +13,6 @@ class RecipeListViewModel: ObservableObject {
     
     // Dependencies
     let searchRecipes: SearchRecipes
-    let token: String
     let foodCategoryUtil: FoodCategoryUtil
     
     // Variables
@@ -40,33 +39,25 @@ class RecipeListViewModel: ObservableObject {
     // Is a query currently in progress? This will prevent duplicate queries.
     private var isQueryInProgress = false
     
-    // hold reference to DialogQueue from UI
-    private var dialogQueue: DialogQueue? = nil
+    let RECIPE_PAGINATION_PAGE_SIZE = 30
     
     init(
         searchRecipes: SearchRecipes,
-        token: String,
         foodCategoryUtil: FoodCategoryUtil
     ){
         self.searchRecipes = searchRecipes
-        self.token = token
         self.foodCategoryUtil = foodCategoryUtil
         categories = foodCategoryUtil.getAllFoodCategories()
-        onTriggerEvent(stateEvent: RecipeListEvent.NewSearchEvent())
+        onTriggerEvent(stateEvent: RecipeListEvents.NewSearch())
     }
     
-    func onTriggerEvent(stateEvent: RecipeListEvent){
+    func onTriggerEvent(stateEvent: RecipeListEvents){
         switch stateEvent{
-        case RecipeListEvent.NewSearchEvent(): newSearch()
-        case RecipeListEvent.NextPageEvent(): nextPage()
-        //case RecipeListEvent.RestoreStateEvent(): TODO("Probably not needed on iOS")
+        case RecipeListEvents.NewSearch(): newSearch()
+        case RecipeListEvents.NextPage(): nextPage()
         default:
             doNothing()
         }
-    }
-    
-    func setDialogQueue(dialogQueue: DialogQueue){
-        self.dialogQueue = dialogQueue
     }
     
     func doNothing(){}
@@ -103,19 +94,17 @@ class RecipeListViewModel: ObservableObject {
     }
     
     private func handleError(_ error: String){
-        if dialogQueue != nil{
-            dialogQueue!.appendMessage(title: "An Error Occurred", description: error)
-        }
+       // TODO("Handle error - show dialog?")
     }
     
     private func newSearch() {
         resetSearchState()
         do{
-            try searchRecipes.execute(token: token, page: Int32(page), query: query).watch(block: {dataState in
+            try searchRecipes.execute(page: Int32(page), query: query).watch(block: {dataState in
                 if dataState != nil {
                     let _data = dataState?.data
-                    let _error = dataState?.error
-                    let _loading = dataState?.loading ?? false
+                    let _error = dataState?.message
+                    let _loading = dataState?.isLoading ?? false
                     
                     self.loading = _loading
                     if(_data != nil){
@@ -140,7 +129,7 @@ class RecipeListViewModel: ObservableObject {
         // if !queryInProgress
         // else -> do nothing
         if(recipe.id == self.bottomRecipe?.id){
-            if(Constants.RECIPE_PAGINATION_PAGE_SIZE * page <= recipes.count){
+            if(RECIPE_PAGINATION_PAGE_SIZE * page <= recipes.count){
                 if(!isQueryInProgress){
                     return true
                 }
@@ -154,11 +143,11 @@ class RecipeListViewModel: ObservableObject {
         print("NEXT PAGE \(page)")
         if(page > 1){
             do{
-                try searchRecipes.execute(token: token, page: Int32(page), query: query).watch(block: {dataState in
+                try searchRecipes.execute(page: Int32(page), query: query).watch(block: {dataState in
                     if dataState != nil {
                         let _data = dataState?.data
-                        let _error = dataState?.error
-                        let _loading = dataState?.loading ?? false
+                        let _error = dataState?.message
+                        let _loading = dataState?.isLoading ?? false
                         
                         self.loading = _loading
                         if(_data != nil){

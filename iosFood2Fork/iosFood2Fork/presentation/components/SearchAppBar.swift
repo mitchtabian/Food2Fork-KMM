@@ -26,7 +26,7 @@ struct SearchAppBar: View {
                     "Search...",
                     text: $viewModel.query,
                     onCommit:{
-                        viewModel.onTriggerEvent(stateEvent: RecipeListEvent.NewSearchEvent())
+                        viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NewSearch())
                     }
                 )
                 .onChange(of: viewModel.query, perform: { value in
@@ -44,7 +44,7 @@ struct SearchAppBar: View {
                         )
                         .onTapGesture {
                             viewModel.onSelectedCategoryChanged(category: category.value)
-                            viewModel.onTriggerEvent(stateEvent: RecipeListEvent.NewSearchEvent())
+                            viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NewSearch())
                         }
                     }
                 }
@@ -59,25 +59,25 @@ struct SearchAppBar: View {
 
 @available(iOS 14.0, *)
 struct SearchAppBar_Previews: PreviewProvider {
-    static let recipeService = RecipeServiceImpl()
     static let dtoMapper = RecipeDtoMapper()
     static let driverFactory = DriverFactory()
     static let recipeEntityMapper = RecipeEntityMapper()
-    static let dateUtil = DateUtil()
+    static let dateUtil = DatetimeUtil()
+    static let recipeService = RecipeServiceImpl(
+        recipeDtoMapper: dtoMapper,
+        httpClient: KtorClientFactory().build(),
+        baseUrl: RecipeServiceImpl.Companion().BASE_URL
+    )
     static let recipeDatabase = RecipeDatabaseFactory(driverFactory: driverFactory).createDatabase()
     static let searchRecipes = SearchRecipes(
         recipeService: recipeService,
-        dtoMapper: dtoMapper,
         recipeDatabase: recipeDatabase,
         recipeEntityMapper: recipeEntityMapper,
         dateUtil: dateUtil
     )
     static let foodCategoryUtil = FoodCategoryUtil()
-    static let token = ApiTokenProvider().provideToken()
-    static let dialogQueue = DialogQueue()
     static let viewModel = RecipeListViewModel(
         searchRecipes: searchRecipes,
-        token: token,
         foodCategoryUtil: foodCategoryUtil
     )
     static var previews: some View {

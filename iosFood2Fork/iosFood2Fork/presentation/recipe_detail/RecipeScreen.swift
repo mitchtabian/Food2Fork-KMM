@@ -9,7 +9,6 @@
 import SwiftUI
 import shared
 
-
 struct RecipeScreen: View {
     
     let recipe: Recipe
@@ -81,8 +80,8 @@ struct RecipeScreen_Previews: PreviewProvider {
             "1/2 teaspoon freshly ground black pepper",
             "2-3 tablespoons fresh chopped thyme leaves"
         ],
-        dateAdded: DateUtil().now(),
-        dateUpdated: DateUtil().now()
+        dateAdded: DatetimeUtil().now(),
+        dateUpdated: DatetimeUtil().now()
     )
     static var previews: some View {
         RecipeScreen(recipe: recipe)
