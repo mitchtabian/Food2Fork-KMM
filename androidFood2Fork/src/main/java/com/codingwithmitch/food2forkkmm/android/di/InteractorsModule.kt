@@ -11,6 +11,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.ktor.util.*
 import javax.inject.Singleton
 
 @Module
@@ -33,6 +34,7 @@ object InteractorsModule {
         )
     }
 
+    @InternalAPI
     @Singleton
     @Provides
     fun provideGetRecipe(

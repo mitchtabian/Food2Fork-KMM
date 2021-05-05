@@ -9,7 +9,6 @@ import com.codingwithmitch.shared.domain.util.MessageType
 import com.codingwithmitch.shared.domain.util.UIComponentType
 import com.example.kmmplayground.shared.datasource.cache.model.RecipeEntityMapper
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 /**
@@ -28,7 +27,8 @@ class GetRecipe (
             emit(DataState.loading())
 
             // just to show loading, cache is fast
-            if(BuildConfig().isDebug()){
+            // Note: iOS loads the DetailView ahead of time so delaying here for iOS is pointless
+            if(BuildConfig().isDebug() && BuildConfig().isAndroid()){
                 delay(500)
             }
 

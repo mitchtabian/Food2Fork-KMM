@@ -37,14 +37,21 @@ struct RecipeScreen: View {
     }
     
     var body: some View {
-        if viewModel.recipe != nil {
+        if viewModel.state.recipe != nil {
             RecipeView(
-                recipe: viewModel.recipe!,
+                recipe: viewModel.state.recipe!,
                 dateUtil: appModule.dateUtil
             )
         }
         else{
             Text("Error")
+        }
+        if viewModel.state.isLoading { // this is actually pointless b/c SwiftUI preloads this view
+            VStack{
+                Spacer()
+                ProgressView("Loading Recipe Details...")
+                Spacer()
+            }
         }
     }
 }

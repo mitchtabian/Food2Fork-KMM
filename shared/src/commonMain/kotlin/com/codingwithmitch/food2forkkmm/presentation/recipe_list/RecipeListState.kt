@@ -12,6 +12,16 @@ data class RecipeListState(
     val selectedCategory: FoodCategory? = null,
     val queue: Queue<GenericMessageInfo> = Queue(mutableListOf()), // messages to be displayed in ui
 )  {
+    // Need secondary constructor to initialize with no args in SwiftUI
+    constructor(): this(
+        isLoading = false,
+        page = 1,
+        query = "",
+        recipes = listOf(),
+        selectedCategory = null,
+        queue = Queue(mutableListOf()),
+    )
+
     companion object{
         const val RECIPE_PAGINATION_PAGE_SIZE = 30
     }
