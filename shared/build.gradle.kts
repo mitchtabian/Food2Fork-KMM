@@ -21,9 +21,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-//    kotlinOptions {
-//        jvmTarget = "1.8"
-//    }
     configurations {
         create("androidTestApi")
         create("androidTestDebugApi")
@@ -59,7 +56,6 @@ kotlin {
                 implementation(Ktor.core)
                 implementation(Ktor.clientSerialization)
                 implementation(Kotlinx.datetime)
-                implementation(Kotlinx.serializationJson)
                 implementation(SQLDelight.runtime)
             }
         }

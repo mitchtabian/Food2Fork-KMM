@@ -54,17 +54,15 @@ dependencies {
     implementation(Compose.activity)
     implementation(Compose.navigation)
 
+    implementation(Google.material)
+
     implementation(Hilt.hiltAndroid)
     implementation(Hilt.navigation)
     kapt(Hilt.hiltCompiler)
 
-    implementation(Kotlinx.serializationJson)
     implementation(Kotlinx.datetime)
 
     implementation(Ktor.android)
-
-    implementation(Google.material)
-
 
     debugImplementation(SquareUp.leakCanary)
 }
