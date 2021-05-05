@@ -20,8 +20,9 @@
 		22BB513126431109001255A9 /* RecipeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB513026431109001255A9 /* RecipeScreen.swift */; };
 		22BB513526431111001255A9 /* RecipeListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB513326431111001255A9 /* RecipeListScreen.swift */; };
 		22BB513626431111001255A9 /* RecipeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB513426431111001255A9 /* RecipeListViewModel.swift */; };
+		22D3B890264325200002A1CB /* RecipeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D3B88F264325200002A1CB /* RecipeDetailViewModel.swift */; };
+		22D3B894264325FD0002A1CB /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D3B893264325FD0002A1CB /* RecipeView.swift */; };
 		5BDB47D334868C22A88CE278 /* Pods_iosFood2Fork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219AB49DE46487BC9CE2CA74 /* Pods_iosFood2Fork.framework */; };
-		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,9 +40,10 @@
 		22BB513026431109001255A9 /* RecipeScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeScreen.swift; sourceTree = "<group>"; };
 		22BB513326431111001255A9 /* RecipeListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListScreen.swift; sourceTree = "<group>"; };
 		22BB513426431111001255A9 /* RecipeListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListViewModel.swift; sourceTree = "<group>"; };
+		22D3B88F264325200002A1CB /* RecipeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewModel.swift; sourceTree = "<group>"; };
+		22D3B893264325FD0002A1CB /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		2F38F42FDC0C4F50C0B7F91B /* Pods-iosFood2Fork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosFood2Fork.debug.xcconfig"; path = "Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork.debug.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosFood2Fork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosFood2Fork.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F3F27C5FD6200D6CD8710C75 /* Pods-iosFood2Fork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosFood2Fork.release.xcconfig"; path = "Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,7 +118,9 @@
 		22BB5111264308D9001255A9 /* recipe_detail */ = {
 			isa = PBXGroup;
 			children = (
+				22D3B892264325F20002A1CB /* components */,
 				22BB513026431109001255A9 /* RecipeScreen.swift */,
+				22D3B88F264325200002A1CB /* RecipeDetailViewModel.swift */,
 			);
 			path = recipe_detail;
 			sourceTree = "<group>";
@@ -128,6 +132,14 @@
 				22BB513426431111001255A9 /* RecipeListViewModel.swift */,
 			);
 			path = recipe_list;
+			sourceTree = "<group>";
+		};
+		22D3B892264325F20002A1CB /* components */ = {
+			isa = PBXGroup;
+			children = (
+				22D3B893264325FD0002A1CB /* RecipeView.swift */,
+			);
+			path = components;
 			sourceTree = "<group>";
 		};
 		52E6BA7785F9EEF5775D20DE /* Pods */ = {
@@ -163,7 +175,6 @@
 				22BB510D264308AC001255A9 /* presentation */,
 				22BB510926430878001255A9 /* modifiers */,
 				22BB510526430798001255A9 /* fonts */,
-				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				22BB512126431037001255A9 /* assets.xcassets */,
@@ -268,11 +279,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
-				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				22BB511426430C6C001255A9 /* ImageLoader.swift in Sources */,
 				22BB512B26431072001255A9 /* SearchAppBar.swift in Sources */,
 				22BB511726430D09001255A9 /* AsyncImageView.swift in Sources */,
 				22BB512826431072001255A9 /* DefaultText.swift in Sources */,
+				22D3B890264325200002A1CB /* RecipeDetailViewModel.swift in Sources */,
+				22D3B894264325FD0002A1CB /* RecipeView.swift in Sources */,
 				22BB513526431111001255A9 /* RecipeListScreen.swift in Sources */,
 				22BB512A26431072001255A9 /* RecipeCard.swift in Sources */,
 				22BB513626431111001255A9 /* RecipeListViewModel.swift in Sources */,
@@ -405,14 +417,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2F38F42FDC0C4F50C0B7F91B /* Pods-iosFood2Fork.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8ZVFT372F9;
 				ENABLE_PREVIEWS = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = iosFood2Fork/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-framework",
+					"\"shared\"",
+					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.codingwithmitch.iosFood2Fork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -425,14 +445,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3F27C5FD6200D6CD8710C75 /* Pods-iosFood2Fork.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8ZVFT372F9;
 				ENABLE_PREVIEWS = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = iosFood2Fork/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-framework",
+					"\"shared\"",
+					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.codingwithmitch.iosFood2Fork;
 				PRODUCT_NAME = "$(TARGET_NAME)";

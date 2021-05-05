@@ -3,9 +3,7 @@ package com.codingwithmitch.food2forkkmm.interactors.recipe_detail
 import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeDatabase
 import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
-import com.codingwithmitch.food2forkkmm.domain.util.DataState
-import com.codingwithmitch.food2forkkmm.domain.util.DatetimeUtil
-import com.codingwithmitch.food2forkkmm.domain.util.getRandomString
+import com.codingwithmitch.food2forkkmm.domain.util.*
 import com.codingwithmitch.food2forkkmm.util.BuildConfig
 import com.codingwithmitch.shared.domain.util.MessageType
 import com.codingwithmitch.shared.domain.util.UIComponentType
@@ -25,7 +23,7 @@ class GetRecipe (
 
     fun execute(
         recipeId: Int,
-    ): Flow<DataState<Recipe>> = flow {
+    ): CommonFlow<DataState<Recipe>> = flow {
         try {
             emit(DataState.loading())
 
@@ -48,7 +46,7 @@ class GetRecipe (
                     .description(e.message?: "Unknown Error")
             ))
         }
-    }
+    }.asCommonFlow()
 
     private fun getRecipeFromCache(recipeId: Int): Recipe {
         return recipeDatabase.recipeDbQueries.getRecipeById(recipeId.toLong()).executeAsOne().let { entity ->

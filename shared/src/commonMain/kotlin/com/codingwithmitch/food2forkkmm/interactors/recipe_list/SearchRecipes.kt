@@ -24,7 +24,6 @@ class SearchRecipes(
 
     private val logger = Logger("SearchRecipes")
 
-    @Throws(Exception::class)
     fun execute(
         page: Int,
         query: String,

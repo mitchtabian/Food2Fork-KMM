@@ -12,15 +12,29 @@ import shared
 @available(iOS 14.0, *)
 struct RecipeListScreen: View {
     
+    private let appModule: AppModule
+    private let networkModule: NetworkModule
+    private let cacheModule: CacheModule
+    private let searchRecipesModule: SearchRecipesModule
+    
     @ObservedObject var viewModel: RecipeListViewModel
     
     init(
-        searchRecipes: SearchRecipes,
-        foodCategoryUtil: FoodCategoryUtil
+        appModule: AppModule,
+        networkModule: NetworkModule,
+        cacheModule: CacheModule
     ) {
-        viewModel = RecipeListViewModel(
-            searchRecipes: searchRecipes,
-            foodCategoryUtil: foodCategoryUtil
+        self.appModule = appModule
+        self.networkModule = networkModule
+        self.cacheModule = cacheModule
+        self.searchRecipesModule = SearchRecipesModule(
+            appModule: self.appModule,
+            networkModule: self.networkModule,
+            cacheModule: self.cacheModule
+        )
+        self.viewModel = RecipeListViewModel(
+            searchRecipes: searchRecipesModule.searchRecipes,
+            foodCategoryUtil: FoodCategoryUtil()
         )
     }
     
@@ -41,7 +55,11 @@ struct RecipeListScreen: View {
                                         })
                                 }
                                 NavigationLink(
-                                    destination: RecipeScreen(recipe: recipe)
+                                    destination: RecipeScreen(
+                                        recipeId: Int(recipe.id),
+                                        appModule: self.appModule,
+                                        cacheModule: self.cacheModule
+                                    )
                                 ){
                                     // workaround for hiding arrows
                                     EmptyView()
@@ -88,26 +106,11 @@ struct RecipeListScreen: View {
 
 @available(iOS 14.0, *)
 struct RecipeListScreen_Previews: PreviewProvider {
-    static let dtoMapper = RecipeDtoMapper()
-    static let driverFactory = DriverFactory()
-    static let recipeEntityMapper = RecipeEntityMapper()
-    static let dateUtil = DatetimeUtil()
-    static let recipeService = RecipeServiceImpl(
-        recipeDtoMapper: dtoMapper,
-        httpClient: KtorClientFactory().build(),
-        baseUrl: RecipeServiceImpl.Companion().BASE_URL
-    )
-    static let recipeDatabase = RecipeDatabaseFactory(driverFactory: driverFactory).createDatabase()
-    static let searchRecipes = SearchRecipes(
-        recipeService: recipeService,
-        recipeDatabase: recipeDatabase,
-        recipeEntityMapper: recipeEntityMapper,
-        dateUtil: dateUtil
-    )
     static var previews: some View {
         RecipeListScreen(
-            searchRecipes: searchRecipes,
-            foodCategoryUtil: FoodCategoryUtil()
+            appModule: AppModule(),
+            networkModule: NetworkModule(),
+            cacheModule: CacheModule()
         )
     }
 }
