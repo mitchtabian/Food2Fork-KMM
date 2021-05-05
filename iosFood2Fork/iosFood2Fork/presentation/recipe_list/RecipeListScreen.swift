@@ -42,9 +42,22 @@ struct RecipeListScreen: View {
         NavigationView{
             ZStack{
                 VStack{
-                    SearchAppBar(viewModel: viewModel)
+                    SearchAppBar(
+                        query: viewModel.state.query,
+                        onUpdateQuery: { query in
+                            
+                        },
+                        selectedCategory: viewModel.state.selectedCategory,
+                        onUpdateSelectedCategory: { foodCategory in
+                            
+                        },
+                        foodCategories: viewModel.state.foodCategories,
+                        onTriggerEvent: { event in
+                            viewModel.onTriggerEvent(stateEvent: event)
+                        }
+                    )
                     List{
-                        ForEach(viewModel.recipes, id: \.self.id){ recipe in
+                        ForEach(viewModel.state.recipes, id: \.self.id){ recipe in
                             ZStack{
                                 VStack{
                                     RecipeCard(recipe: recipe)
@@ -72,7 +85,7 @@ struct RecipeListScreen: View {
                     .listStyle(PlainListStyle())
                     .background(Color.init(hex: 0xf2f2f2))
                 }
-                if viewModel.loading {
+                if viewModel.state.isLoading {
                     ProgressView("Searching recipes...")
                 }
             }

@@ -51,6 +51,7 @@ class RecipeDetailViewModel: ObservableObject {
     
     private func handleError(_ error: String){
        // TODO("Handle error - show dialog?")
+        // 'appendToQueue'
     }
     
     private func appendToQueue(message: GenericMessageInfo){

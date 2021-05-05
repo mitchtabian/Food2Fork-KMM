@@ -12,10 +12,27 @@ import shared
 @available(iOS 14.0, *)
 struct SearchAppBar: View {
     
-    @ObservedObject var viewModel: RecipeListViewModel
+    @State var query: String = ""
+    let onUpdateQuery: (String) -> Void
+    let selectedCategory: FoodCategory?
+    let onUpdateSelectedCategory: (FoodCategory) -> Void
+    let foodCategories: [FoodCategory]
+    let onTriggerEvent: (RecipeListEvents) -> Void
     
-    init(viewModel: RecipeListViewModel){
-        self.viewModel = viewModel
+    init(
+        query: String,
+        onUpdateQuery: @escaping (String) -> Void,
+        selectedCategory: FoodCategory?,
+        onUpdateSelectedCategory: @escaping (FoodCategory) -> Void,
+        foodCategories: [FoodCategory],
+        onTriggerEvent: @escaping (RecipeListEvents) -> Void
+    ) {
+        self.onUpdateQuery = onUpdateQuery
+        self.selectedCategory = selectedCategory
+        self.onUpdateSelectedCategory = onUpdateSelectedCategory
+        self.foodCategories = foodCategories
+        self.onTriggerEvent = onTriggerEvent
+        self.query = query // set initial value for query
     }
     
     var body: some View {
@@ -24,27 +41,26 @@ struct SearchAppBar: View {
                 Image(systemName: "magnifyingglass")
                 TextField(
                     "Search...",
-                    text: $viewModel.query,
+                    text: $query,
                     onCommit:{
-                        viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NewSearch())
+                        onTriggerEvent(RecipeListEvents.NewSearch())
                     }
                 )
-                .onChange(of: viewModel.query, perform: { value in
-                    viewModel.setQuery(query: value)
+                .onChange(of: query, perform: { value in
+                    onUpdateQuery(value)
                 })
                 
             }
             .padding(.bottom, 8)
             ScrollView(.horizontal){
                 HStack(spacing: 10){
-                    ForEach(viewModel.categories, id: \.self){ category in
+                    ForEach(foodCategories, id: \.self){ category in
                         FoodCategoryChip(
                             category: category.value,
-                            isSelected: viewModel.selectedCategory == category
+                            isSelected: selectedCategory == category
                         )
                         .onTapGesture {
-                            viewModel.onSelectedCategoryChanged(category: category.value)
-                            viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NewSearch())
+                            onUpdateSelectedCategory(category)
                         }
                     }
                 }
@@ -57,30 +73,30 @@ struct SearchAppBar: View {
     }
 }
 
-@available(iOS 14.0, *)
-struct SearchAppBar_Previews: PreviewProvider {
-    static let dtoMapper = RecipeDtoMapper()
-    static let driverFactory = DriverFactory()
-    static let recipeEntityMapper = RecipeEntityMapper()
-    static let dateUtil = DatetimeUtil()
-    static let recipeService = RecipeServiceImpl(
-        recipeDtoMapper: dtoMapper,
-        httpClient: KtorClientFactory().build(),
-        baseUrl: RecipeServiceImpl.Companion().BASE_URL
-    )
-    static let recipeDatabase = RecipeDatabaseFactory(driverFactory: driverFactory).createDatabase()
-    static let searchRecipes = SearchRecipes(
-        recipeService: recipeService,
-        recipeDatabase: recipeDatabase,
-        recipeEntityMapper: recipeEntityMapper,
-        dateUtil: dateUtil
-    )
-    static let foodCategoryUtil = FoodCategoryUtil()
-    static let viewModel = RecipeListViewModel(
-        searchRecipes: searchRecipes,
-        foodCategoryUtil: foodCategoryUtil
-    )
-    static var previews: some View {
-        SearchAppBar(viewModel: viewModel)
-    }
-}
+//@available(iOS 14.0, *)
+//struct SearchAppBar_Previews: PreviewProvider {
+//    static let dtoMapper = RecipeDtoMapper()
+//    static let driverFactory = DriverFactory()
+//    static let recipeEntityMapper = RecipeEntityMapper()
+//    static let dateUtil = DatetimeUtil()
+//    static let recipeService = RecipeServiceImpl(
+//        recipeDtoMapper: dtoMapper,
+//        httpClient: KtorClientFactory().build(),
+//        baseUrl: RecipeServiceImpl.Companion().BASE_URL
+//    )
+//    static let recipeDatabase = RecipeDatabaseFactory(driverFactory: driverFactory).createDatabase()
+//    static let searchRecipes = SearchRecipes(
+//        recipeService: recipeService,
+//        recipeDatabase: recipeDatabase,
+//        recipeEntityMapper: recipeEntityMapper,
+//        dateUtil: dateUtil
+//    )
+//    static let foodCategoryUtil = FoodCategoryUtil()
+//    static let viewModel = RecipeListViewModel(
+//        searchRecipes: searchRecipes,
+//        foodCategoryUtil: foodCategoryUtil
+//    )
+//    static var previews: some View {
+//        SearchAppBar(viewModel: viewModel)
+//    }
+//}
