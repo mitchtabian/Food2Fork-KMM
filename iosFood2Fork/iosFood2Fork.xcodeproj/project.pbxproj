@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		22BB5107264307FB001255A9 /* Avenir.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 22BB5106264307FB001255A9 /* Avenir.ttc */; };
+		22BB510B26430883001255A9 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB510A26430883001255A9 /* Color.swift */; };
+		22BB511426430C6C001255A9 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB511326430C6C001255A9 /* ImageLoader.swift */; };
+		22BB511726430D09001255A9 /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB511626430D09001255A9 /* AsyncImageView.swift */; };
+		22BB512226431037001255A9 /* assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22BB512126431037001255A9 /* assets.xcassets */; };
 		5BDB47D334868C22A88CE278 /* Pods_iosFood2Fork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219AB49DE46487BC9CE2CA74 /* Pods_iosFood2Fork.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -17,6 +21,10 @@
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		219AB49DE46487BC9CE2CA74 /* Pods_iosFood2Fork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosFood2Fork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22BB5106264307FB001255A9 /* Avenir.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Avenir.ttc; sourceTree = "<group>"; };
+		22BB510A26430883001255A9 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		22BB511326430C6C001255A9 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		22BB511626430D09001255A9 /* AsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
+		22BB512126431037001255A9 /* assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assets.xcassets; sourceTree = "<group>"; };
 		2F38F42FDC0C4F50C0B7F91B /* Pods-iosFood2Fork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosFood2Fork.debug.xcconfig"; path = "Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork.debug.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosFood2Fork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosFood2Fork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,6 +60,55 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		22BB510926430878001255A9 /* modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				22BB510A26430883001255A9 /* Color.swift */,
+			);
+			path = modifiers;
+			sourceTree = "<group>";
+		};
+		22BB510D264308AC001255A9 /* presentation */ = {
+			isa = PBXGroup;
+			children = (
+				22BB5112264308DF001255A9 /* recipe_list */,
+				22BB5111264308D9001255A9 /* recipe_detail */,
+				22BB5110264308D4001255A9 /* components */,
+				22BB510E264308C0001255A9 /* util */,
+			);
+			path = presentation;
+			sourceTree = "<group>";
+		};
+		22BB510E264308C0001255A9 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				22BB511626430D09001255A9 /* AsyncImageView.swift */,
+				22BB511326430C6C001255A9 /* ImageLoader.swift */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		22BB5110264308D4001255A9 /* components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
+		22BB5111264308D9001255A9 /* recipe_detail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = recipe_detail;
+			sourceTree = "<group>";
+		};
+		22BB5112264308DF001255A9 /* recipe_list */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = recipe_list;
+			sourceTree = "<group>";
+		};
 		52E6BA7785F9EEF5775D20DE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -82,10 +139,13 @@
 		7555FF7D242A565900829871 /* iosFood2Fork */ = {
 			isa = PBXGroup;
 			children = (
+				22BB510D264308AC001255A9 /* presentation */,
+				22BB510926430878001255A9 /* modifiers */,
 				22BB510526430798001255A9 /* fonts */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
+				22BB512126431037001255A9 /* assets.xcassets */,
 			);
 			path = iosFood2Fork;
 			sourceTree = "<group>";
@@ -149,6 +209,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22BB512226431037001255A9 /* assets.xcassets in Resources */,
 				22BB5107264307FB001255A9 /* Avenir.ttc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,6 +248,9 @@
 			files = (
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				22BB511426430C6C001255A9 /* ImageLoader.swift in Sources */,
+				22BB511726430D09001255A9 /* AsyncImageView.swift in Sources */,
+				22BB510B26430883001255A9 /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
