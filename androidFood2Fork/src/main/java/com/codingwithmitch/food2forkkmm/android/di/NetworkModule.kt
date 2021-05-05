@@ -1,10 +1,8 @@
 package com.codingwithmitch.food2forkkmm.android.di
 
-import com.codingwithmitch.food2forkkmm.datasource.network.BASE_URL
 import com.codingwithmitch.food2forkkmm.datasource.network.KtorClientFactory
 import com.codingwithmitch.food2forkkmm.datasource.network.RecipeService
 import com.codingwithmitch.food2forkkmm.datasource.network.RecipeServiceImpl
-import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeDto
 import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeDtoMapper
 import dagger.Module
 import dagger.Provides
@@ -37,7 +35,7 @@ object NetworkModule{
         return RecipeServiceImpl(
             recipeDtoMapper = dtoMapper,
             httpClient = KtorClientFactory().build(),
-            baseUrl = BASE_URL,
+            baseUrl = RecipeServiceImpl.BASE_URL,
         )
     }
 }
