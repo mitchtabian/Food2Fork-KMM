@@ -12,7 +12,7 @@ import shared
 @available(iOS 14.0, *)
 struct SearchAppBar: View {
     
-    @State var query: String = ""
+    @State var query: String
     let onUpdateQuery: (String) -> Void
     let selectedCategory: FoodCategory?
     let onUpdateSelectedCategory: (FoodCategory) -> Void
@@ -32,7 +32,7 @@ struct SearchAppBar: View {
         self.onUpdateSelectedCategory = onUpdateSelectedCategory
         self.foodCategories = foodCategories
         self.onTriggerEvent = onTriggerEvent
-        self.query = query // set initial value for query
+        self._query = State(initialValue: query) // set initial value for query
     }
     
     var body: some View {
@@ -60,6 +60,7 @@ struct SearchAppBar: View {
                             isSelected: selectedCategory == category
                         )
                         .onTapGesture {
+                            query = category.value
                             onUpdateSelectedCategory(category)
                         }
                     }

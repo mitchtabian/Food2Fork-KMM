@@ -67,27 +67,11 @@ class RecipeDetailViewModel: ObservableObject {
         queue: Queue<GenericMessageInfo>? = nil
     ){
         let currentState = (self.state.copy() as! RecipeDetailState)
-        if isLoading != nil {
-            self.state = self.state.doCopy(
-                isLoading: isLoading!, // update isLoading
-                recipe: currentState.recipe,
-                queue: currentState.queue
-            )
-        }
-        if recipe != nil {
-            self.state = self.state.doCopy(
-                isLoading: currentState.isLoading,
-                recipe: recipe!, // Update recipe
-                queue: currentState.queue
-            )
-        }
-        if queue != nil {
-            self.state = self.state.doCopy(
-                isLoading: currentState.isLoading,
-                recipe: currentState.recipe,
-                queue: queue!  // Update queue
-            )
-        }
+        self.state = self.state.doCopy(
+            isLoading: isLoading ?? currentState.isLoading,
+            recipe: recipe ?? currentState.recipe,
+            queue: queue ?? currentState.queue
+        )
     }
 }
 

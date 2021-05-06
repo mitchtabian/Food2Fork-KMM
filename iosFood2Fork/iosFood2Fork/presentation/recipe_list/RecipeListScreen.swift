@@ -36,6 +36,8 @@ struct RecipeListScreen: View {
             searchRecipes: searchRecipesModule.searchRecipes,
             foodCategoryUtil: FoodCategoryUtil()
         )
+        // dismiss keyboard when drag starts
+        UIScrollView.appearance().keyboardDismissMode = .onDrag
     }
     
     var body: some View {
@@ -45,11 +47,11 @@ struct RecipeListScreen: View {
                     SearchAppBar(
                         query: viewModel.state.query,
                         onUpdateQuery: { query in
-                            
+                            viewModel.onUpdateQuery(query: query)
                         },
                         selectedCategory: viewModel.state.selectedCategory,
                         onUpdateSelectedCategory: { foodCategory in
-                            
+                            viewModel.onUpdateSelectedCategory(foodCategory: foodCategory)
                         },
                         foodCategories: viewModel.state.foodCategories,
                         onTriggerEvent: { event in

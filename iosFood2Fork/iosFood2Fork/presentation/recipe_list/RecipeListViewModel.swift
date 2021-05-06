@@ -99,6 +99,7 @@ class RecipeListViewModel: ObservableObject {
             queue: currentState.queue
         )
         onUpdateQuery(query: foodCategory?.value ?? "")
+        onTriggerEvent(stateEvent: RecipeListEvents.NewSearch())
     }
 
     func onUpdateQuery(query: String){
@@ -231,84 +232,17 @@ class RecipeListViewModel: ObservableObject {
         queue: Queue<GenericMessageInfo>? = nil
     ){
         let currentState = (self.state.copy() as! RecipeListState)
-        if isLoading != nil {
-            self.state = self.state.doCopy(
-                isLoading: isLoading!, // update isLoading
-                page: currentState.page,
-                query: currentState.query,
-                recipes: currentState.recipes,
-                selectedCategory: currentState.selectedCategory,
-                foodCategories: currentState.foodCategories,
-                bottomRecipe:  currentState.bottomRecipe,
-                isQueryInProgress: currentState.isQueryInProgress,
-                queue: currentState.queue
-            )
-        }
-        if page != nil {
-            self.state = self.state.doCopy(
-                isLoading: currentState.isLoading,
-                page: Int32(page!),
-                query: currentState.query,
-                recipes: currentState.recipes,
-                selectedCategory: currentState.selectedCategory,
-                foodCategories: currentState.foodCategories,
-                bottomRecipe:  currentState.bottomRecipe,
-                isQueryInProgress: currentState.isQueryInProgress,
-                queue: currentState.queue
-            )
-        }
-        if query != nil {
-            self.state = self.state.doCopy(
-                isLoading: currentState.isLoading,
-                page: currentState.page,
-                query: query!,
-                recipes: currentState.recipes,
-                selectedCategory: currentState.selectedCategory,
-                foodCategories: currentState.foodCategories,
-                bottomRecipe:  currentState.bottomRecipe,
-                isQueryInProgress: currentState.isQueryInProgress,
-                queue: currentState.queue
-            )
-        }
-        if bottomRecipe != nil {
-            self.state = self.state.doCopy(
-                isLoading: currentState.isLoading,
-                page: currentState.page,
-                query: currentState.query,
-                recipes: currentState.recipes,
-                selectedCategory: currentState.selectedCategory,
-                foodCategories: currentState.foodCategories,
-                bottomRecipe:  bottomRecipe,
-                isQueryInProgress: currentState.isQueryInProgress,
-                queue: currentState.queue
-            )
-        }
-        if isQueryInProgress != nil {
-            self.state = self.state.doCopy(
-                isLoading: currentState.isLoading,
-                page: currentState.page,
-                query: currentState.query,
-                recipes: currentState.recipes,
-                selectedCategory: currentState.selectedCategory,
-                foodCategories: currentState.foodCategories,
-                bottomRecipe:  currentState.bottomRecipe,
-                isQueryInProgress: isQueryInProgress!,
-                queue: currentState.queue
-            )
-        }
-        if query != nil {
-            self.state = self.state.doCopy(
-                isLoading: currentState.isLoading,
-                page: currentState.page,
-                query: currentState.query,
-                recipes: currentState.recipes,
-                selectedCategory: currentState.selectedCategory,
-                foodCategories: currentState.foodCategories,
-                bottomRecipe:  currentState.bottomRecipe,
-                isQueryInProgress: currentState.isQueryInProgress,
-                queue: queue!
-            )
-        }
+        self.state = self.state.doCopy(
+            isLoading: isLoading ?? currentState.isLoading,
+            page: Int32(page ?? Int(currentState.page)),
+            query: query ?? currentState.query,
+            recipes: currentState.recipes ,
+            selectedCategory: currentState.selectedCategory,
+            foodCategories: currentState.foodCategories,
+            bottomRecipe:  bottomRecipe ?? currentState.bottomRecipe,
+            isQueryInProgress: isQueryInProgress ?? currentState.isQueryInProgress,
+            queue: queue ?? currentState.queue
+        )
     }
 }
 
