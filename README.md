@@ -15,7 +15,7 @@ This is the codebase for an upcoming course featuring Kotlin Multiplatform Mobil
 	- (Single activity, zero fragments)
 1. Accompanist Coil
 1. Hilt
-    - I decided AAC ViewModel gives so much state management stuff for free. Maybe in the future a shared viewmodel will be more practical. I'll talk about this in detail in the course.
+    - I decided to use AAC ViewModel because it gives so much state management stuff for free. Maybe in the future a shared viewmodel will be more practical. I'll talk about this in detail in the course.
 
 #### iOS Specific Components
 1. SwiftUI
