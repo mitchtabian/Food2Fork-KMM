@@ -65,8 +65,6 @@ android {
 ```
 
 ### Kotlin Version
-I've been using kotlin version 1.4.31 since that is required for Jetpack Compose at this time.
-
 Make sure you have this setting in android studio:
 
 <img class='header-img' src='https://raw.githubusercontent.com/mitchtabian/Food2Fork-KMM/master/assets/Kotlin_android_studio.png' />
