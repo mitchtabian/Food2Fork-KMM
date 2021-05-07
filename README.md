@@ -19,7 +19,7 @@ This is the codebase for an upcoming course featuring Kotlin Multiplatform Mobil
 
 #### iOS Specific Components
 1. SwiftUI
-1. Cocoapods
+
 
 <img class='header-img' src="https://github.com/mitchtabian/Food2Fork-KMM/blob/master/assets/clean_architecture_kmm.png?raw=true" />
 <br>
