@@ -15,7 +15,7 @@ fun RecipeListScreen(
     onSelectRecipe: (Int) -> Unit,
 ){
     LazyColumn {
-        items(10){ recipeId ->
+        items(100){ recipeId ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
