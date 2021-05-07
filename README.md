@@ -1,5 +1,4 @@
-# Food2Fork Recipe App
-<img src="https://github.com/mitchtabian/Food2Fork-KMM/blob/master/assets/food2fork_logo.png?raw=true" alt="Food2Fork App Icon" width="100" height="100">
+# <img src="https://github.com/mitchtabian/Food2Fork-KMM/blob/master/assets/food2fork_logo.png?raw=true" alt="Food2Fork App Icon" width="100" height="100"> Food2Fork Recipe App
 This is the codebase for an upcoming course featuring Kotlin Multiplatform Mobile.
 
 # Important Configuration Information
