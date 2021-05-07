@@ -4,14 +4,10 @@ buildscript {
         jcenter()
         google()
         mavenCentral()
-        maven ( url = "https://www.jetbrains.com/intellij-repository/releases" )
-        maven ( url = "https://jetbrains.bintray.com/intellij-third-party-dependencies" )
     }
     dependencies {
-        classpath(Build.kotlinGradlePlugin)
-        classpath(Build.buildTools)
-        classpath(Build.sqlDelightGradlePlugin)
-        classpath(Build.hiltGradlePlugin)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30")
+        classpath("com.android.tools.build:gradle:4.1.2")
     }
 }
 
