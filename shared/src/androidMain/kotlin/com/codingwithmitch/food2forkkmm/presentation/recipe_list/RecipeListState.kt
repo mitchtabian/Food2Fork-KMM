@@ -22,7 +22,4 @@ actual data class RecipeListState(
         queue = Queue(mutableListOf()),
     )
 
-    companion object{
-        const val RECIPE_PAGINATION_PAGE_SIZE = 30
-    }
 }

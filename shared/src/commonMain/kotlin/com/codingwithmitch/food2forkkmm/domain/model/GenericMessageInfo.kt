@@ -1,6 +1,5 @@
 package com.codingwithmitch.food2forkkmm.domain.model
 
-import com.codingwithmitch.shared.domain.util.MessageType
 import com.codingwithmitch.shared.domain.util.UIComponentType
 
 class GenericMessageInfo
@@ -9,7 +8,6 @@ private constructor(builder: GenericMessageInfo.Builder){
     // required
     val id: String
     val title: String
-    val messageType: MessageType
     val uiComponentType: UIComponentType
 
     // optional
@@ -25,15 +23,11 @@ private constructor(builder: GenericMessageInfo.Builder){
         if(builder.title == null){
             throw Exception("GenericDialog title cannot be null.")
         }
-        if(builder.messageType == null){
-            throw Exception("GenericDialog messageType cannot be null.")
-        }
         if(builder.uiComponentType == null){
             throw Exception("GenericDialog uiComponentType cannot be null.")
         }
         this.id = builder.id!!
         this.title = builder.title!!
-        this.messageType = builder.messageType!!
         this.uiComponentType = builder.uiComponentType!!
         this.onDismiss = builder.onDismiss
         this.description = builder.description
@@ -50,9 +44,6 @@ private constructor(builder: GenericMessageInfo.Builder){
             private set
 
         var onDismiss: (() -> Unit)? = null
-            private set
-
-        var messageType: MessageType? = null
             private set
 
         var uiComponentType: UIComponentType? = null
@@ -79,13 +70,6 @@ private constructor(builder: GenericMessageInfo.Builder){
 
         fun onDismiss(onDismiss: () -> Unit): Builder{
             this.onDismiss = onDismiss
-            return this
-        }
-
-        fun messageType(
-            messageType: MessageType
-        ) : Builder {
-            this.messageType = messageType
             return this
         }
 

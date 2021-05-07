@@ -11,11 +11,15 @@ import shared
 
 class RecipeDetailViewModel: ObservableObject {
     
+    private let logger = Logger(className: "RecipeDetailViewModel")
+    
     // Dependencies
     let getRecipe: GetRecipe
     
     // State
     @Published var state: RecipeDetailState =  RecipeDetailState()
+    
+    @Published var showDialog: Bool = false
     
     init(
         recipeId: Int,
@@ -30,35 +34,46 @@ class RecipeDetailViewModel: ObservableObject {
             try self.getRecipe.execute(recipeId: Int32(recipeId)).watch(block: { dataState in
                 if dataState != nil {
                     let data = dataState?.data
-                    let error = dataState?.message
+                    let message = dataState?.message
                     let loading = dataState?.isLoading ?? false
                     self.updateState(isLoading: loading)
                     
                     if(data != nil){
                         self.updateState(recipe: data! as Recipe)
                     }
-                    if(error != nil){
-                        self.handleError("\(error!)")
+                    if(message != nil){
+                        self.handleMessageByUIComponentType(message!.build())
                     }
                 }else{
-                    self.handleError("ERROR: getRecipe: DataState is nil")
+                    self.logger.log(msg: "GetRecipe: DataState is nil")
                 }
             })
         }catch{
-            self.handleError("\(error)")
+            self.logger.log(msg: "\(error)")
         }
     }
     
-    private func handleError(_ error: String){
-       // TODO("Handle error - show dialog?")
-        // 'appendToQueue'
+    private func handleMessageByUIComponentType(_ message: GenericMessageInfo){
+        switch message.uiComponentType{
+        case UIComponentType.Dialog():
+            appendToQueue(message: message)
+        case UIComponentType.None():
+            logger.log(msg: "\(message.description)")
+        default:
+            doNothing()
+        }
     }
+    
+    private func doNothing(){}
     
     private func appendToQueue(message: GenericMessageInfo){
         let currentState = (self.state.copy() as! RecipeDetailState)
         let queue = currentState.queue
-        queue.add(element: message)
-        updateState(queue: queue)
+        let queueUtil = GenericMessageInfoQueueUtil() // prevent duplicates
+        if !queueUtil.doesMessageAlreadyExistInQueue(queue: queue, messageInfo: message) {
+            queue.add(element: message)
+            updateState(queue: queue)
+        }
     }
     
     private func updateState(
@@ -72,6 +87,26 @@ class RecipeDetailViewModel: ObservableObject {
             recipe: recipe ?? currentState.recipe,
             queue: queue ?? currentState.queue
         )
+        shouldShowDialog()
+    }
+    
+    func shouldShowDialog(){
+        let currentState = (self.state.copy() as! RecipeDetailState)
+        showDialog = currentState.queue.items.count > 0
+    }
+    
+    /**
+     *  Remove the head message from queue
+     */
+    func removeHeadFromQueue(){
+        let currentState = (self.state.copy() as! RecipeDetailState)
+        let queue = currentState.queue
+        do {
+            try queue.remove()
+            updateState(queue: queue)
+        }catch{
+            self.logger.log(msg: "\(error)")
+        }
     }
 }
 

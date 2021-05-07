@@ -1,5 +1,6 @@
 package com.codingwithmitch.food2forkkmm.domain.util
 
+
 /**
  * Kotlin version of a java.util Queue
  * https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html

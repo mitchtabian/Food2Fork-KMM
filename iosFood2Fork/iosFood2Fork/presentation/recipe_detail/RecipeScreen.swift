@@ -37,22 +37,31 @@ struct RecipeScreen: View {
     }
     
     var body: some View {
-        if viewModel.state.recipe != nil {
-            RecipeView(
-                recipe: viewModel.state.recipe!,
-                dateUtil: appModule.dateUtil
-            )
-        }
-        else{
-            Text("Error")
-        }
-        if viewModel.state.isLoading { // this is actually pointless b/c SwiftUI preloads this view
-            VStack{
-                Spacer()
-                ProgressView("Loading Recipe Details...")
-                Spacer()
+            if viewModel.state.recipe != nil {
+                RecipeView(
+                    recipe: viewModel.state.recipe!,
+                    dateUtil: appModule.dateUtil
+                )
             }
-        }
+            else{
+                NavigationView { // NavigationView is needed for alert to work?
+                    Text("Error")
+                        .alert(isPresented: $viewModel.showDialog, content: {
+                            let first = viewModel.state.queue.peek()!
+                            return GenericMessageInfoAlert().build(
+                                message: first,
+                                onRemoveHeadMessage: viewModel.removeHeadFromQueue
+                            )
+                        })
+                }
+            }
+            if viewModel.state.isLoading { // this is actually pointless b/c SwiftUI preloads this view
+                VStack{
+                    Spacer()
+                    ProgressView("Loading Recipe Details...")
+                    Spacer()
+                }
+            }
     }
 }
 

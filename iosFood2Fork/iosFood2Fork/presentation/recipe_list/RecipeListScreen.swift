@@ -92,29 +92,13 @@ struct RecipeListScreen: View {
                 }
             }
             .navigationBarHidden(true)
-//            .alert(isPresented: $dialogQueue.hasMessages, content: {
-//                let first = dialogQueue.queue.peek()!
-//                return Alert(
-//                    title: Text(first.title),
-//                    message: Text(first.description_ ?? "Something went wrong"),
-//                    primaryButton: .default(
-//                        Text(first.positiveAction?.positiveBtnTxt ?? "Ok"),
-//                        action: {
-//                            if(first.positiveAction != nil){
-//                                first.positiveAction?.onPositiveAction()
-//                            }
-//                        }
-//                    ),
-//                    secondaryButton: .default(
-//                        Text(first.negativeAction?.negativeBtnTxt ?? "Cancel"),
-//                        action: {
-//                            if(first.negativeAction != nil){
-//                                first.negativeAction?.onNegativeAction()
-//                            }
-//                        }
-//                    )
-//                )
-//            })
+            .alert(isPresented: $viewModel.showDialog, content: {
+                let first = viewModel.state.queue.peek()!
+                return GenericMessageInfoAlert().build(
+                    message: first,
+                    onRemoveHeadMessage: viewModel.removeHeadFromQueue
+                )
+            })
         }
     }
 }

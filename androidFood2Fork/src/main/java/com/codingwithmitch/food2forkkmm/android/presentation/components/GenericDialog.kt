@@ -20,12 +20,13 @@ fun GenericDialog(
     description: String? = null,
     positiveAction: PositiveAction?,
     negativeAction: NegativeAction?,
+    onRemoveHeadFromQueue: () -> Unit,
 ) {
     AlertDialog(
         modifier = modifier,
         onDismissRequest = {
-            println("fmdkfgnd: on dismiss called")
             onDismiss?.invoke()
+            onRemoveHeadFromQueue()
         },
         title = { Text(title) },
         text = {
@@ -44,7 +45,10 @@ fun GenericDialog(
                     Button(
                         modifier = Modifier.padding(end = 8.dp),
                         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onError),
-                        onClick = negativeAction.onNegativeAction
+                        onClick = {
+                            negativeAction.onNegativeAction()
+                            onRemoveHeadFromQueue()
+                        }
                     ) {
                         Text(text = negativeAction.negativeBtnTxt)
                     }
@@ -52,7 +56,10 @@ fun GenericDialog(
                 if(positiveAction != null){
                     Button(
                         modifier = Modifier.padding(end = 8.dp),
-                        onClick = positiveAction.onPositiveAction,
+                        onClick = {
+                            positiveAction.onPositiveAction()
+                            onRemoveHeadFromQueue()
+                        },
                     ) {
                         Text(text = positiveAction.positiveBtnTxt)
                     }

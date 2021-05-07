@@ -4,16 +4,14 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codingwithmitch.food2forkkmm.android.presentation.util.doesMessageAlreadyExistInQueue
 import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
-import com.codingwithmitch.food2forkkmm.domain.model.PositiveAction
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
+import com.codingwithmitch.food2forkkmm.domain.util.GenericMessageInfoQueueUtil
 import com.codingwithmitch.food2forkkmm.domain.util.Queue
 import com.codingwithmitch.food2forkkmm.interactors.recipe_list.SearchRecipes
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListEvents
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState
-import com.codingwithmitch.shared.domain.util.MessageType
 import com.codingwithmitch.shared.domain.util.UIComponentType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -59,7 +57,6 @@ constructor(
                     val messageInfoBuilder = GenericMessageInfo.Builder()
                         .id(UUID.randomUUID().toString())
                         .title("Invalid Event")
-                        .messageType(MessageType.Error)
                         .uiComponentType(UIComponentType.Dialog)
                         .description("Something went wrong.")
                     appendToMessageQueue(messageInfo = messageInfoBuilder)
@@ -115,26 +112,8 @@ constructor(
     }
 
     private fun appendToMessageQueue(messageInfo: GenericMessageInfo.Builder){
-        if(!state.value.queue.doesMessageAlreadyExistInQueue(messageInfo = messageInfo.build())){
-            if(messageInfo.onDismiss == null){ // Users must be able to dismiss the message if it's a dialog
-                messageInfo
-                    .onDismiss {
-                        // remove from queue
-                        val queue = state.value.queue
-                        queue.remove() // if this message is visible it means it's at the head
-                        updateQueue(queue)
-                    }
-                    .positive(
-                        PositiveAction(
-                            positiveBtnTxt = "OK",
-                            onPositiveAction = {
-                                val queue = state.value.queue
-                                queue.remove()
-                                updateQueue(queue)
-                            }
-                        )
-                    )
-            }
+        if(!GenericMessageInfoQueueUtil()
+                .doesMessageAlreadyExistInQueue(queue = state.value.queue,messageInfo = messageInfo.build())){
             val queue = state.value.queue
             queue.add(messageInfo.build())
             state.value = state.value.copy(queue = queue)

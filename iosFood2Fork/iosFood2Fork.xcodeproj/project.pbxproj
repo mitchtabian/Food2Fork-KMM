@@ -22,6 +22,7 @@
 		22BB513626431111001255A9 /* RecipeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB513426431111001255A9 /* RecipeListViewModel.swift */; };
 		22D3B890264325200002A1CB /* RecipeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D3B88F264325200002A1CB /* RecipeDetailViewModel.swift */; };
 		22D3B894264325FD0002A1CB /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D3B893264325FD0002A1CB /* RecipeView.swift */; };
+		22D3B89F2645B0320002A1CB /* GenericMessageInfoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D3B89E2645B0320002A1CB /* GenericMessageInfoAlert.swift */; };
 		5BDB47D334868C22A88CE278 /* Pods_iosFood2Fork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219AB49DE46487BC9CE2CA74 /* Pods_iosFood2Fork.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		22BB513426431111001255A9 /* RecipeListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListViewModel.swift; sourceTree = "<group>"; };
 		22D3B88F264325200002A1CB /* RecipeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewModel.swift; sourceTree = "<group>"; };
 		22D3B893264325FD0002A1CB /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
+		22D3B89E2645B0320002A1CB /* GenericMessageInfoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericMessageInfoAlert.swift; sourceTree = "<group>"; };
 		2F38F42FDC0C4F50C0B7F91B /* Pods-iosFood2Fork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosFood2Fork.debug.xcconfig"; path = "Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork.debug.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosFood2Fork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosFood2Fork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				22BB512526431071001255A9 /* FoodCategoryChip.swift */,
 				22BB512626431072001255A9 /* RecipeCard.swift */,
 				22BB512726431072001255A9 /* SearchAppBar.swift */,
+				22D3B89E2645B0320002A1CB /* GenericMessageInfoAlert.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D3B89F2645B0320002A1CB /* GenericMessageInfoAlert.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				22BB511426430C6C001255A9 /* ImageLoader.swift in Sources */,
 				22BB512B26431072001255A9 /* SearchAppBar.swift in Sources */,

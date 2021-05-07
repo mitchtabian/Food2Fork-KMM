@@ -5,7 +5,6 @@ import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.domain.util.*
 import com.codingwithmitch.food2forkkmm.util.BuildConfig
-import com.codingwithmitch.shared.domain.util.MessageType
 import com.codingwithmitch.shared.domain.util.UIComponentType
 import com.example.kmmplayground.shared.datasource.cache.model.RecipeEntityMapper
 import kotlinx.coroutines.delay
@@ -47,7 +46,6 @@ class GetRecipe (
                     .id("GetRecipe.Error")
                     .title("Error")
                     .uiComponentType(UIComponentType.Dialog)
-                    .messageType(MessageType.Error)
                     .description(e.message?: "Unknown Error")
             ))
         }

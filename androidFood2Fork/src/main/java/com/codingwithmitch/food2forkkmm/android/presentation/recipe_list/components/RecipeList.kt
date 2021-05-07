@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.codingwithmitch.food2forkkmm.android.presentation.components.NothingHere
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components.RecipeCard
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
-import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState.Companion.RECIPE_PAGINATION_PAGE_SIZE
+import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RECIPE_PAGINATION_PAGE_SIZE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalMaterialApi

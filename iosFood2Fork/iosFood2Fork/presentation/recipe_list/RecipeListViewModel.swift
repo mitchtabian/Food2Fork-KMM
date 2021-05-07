@@ -11,39 +11,16 @@ import shared
 
 class RecipeListViewModel: ObservableObject {
     
+    private let logger = Logger(className: "RecipeListViewModel")
+    
     // Dependencies
     let searchRecipes: SearchRecipes
     let foodCategoryUtil: FoodCategoryUtil
     
-//    // Variables
-//    var categories = [FoodCategory]()
-//
-//    // The current query
-//    @Published var query = ""
-//
-//    // The Recipes
-//    @Published var recipes: [Recipe] = []
-//
-//    // Selected category chip in SearchBar
-//    @Published var selectedCategory: FoodCategory? = nil
-//
-//    // Show/hide progress bar
-//    @Published var loading = false
-//
-//    // Page number for pagination
-//    @Published var page = 1
-//
-//    // track the recipe at the bottom of the list so we know when to trigger pagination
-//    private var bottomRecipe: Recipe? = nil
-//
-//    // Is a query currently in progress? This will prevent duplicate queries.
-//    private var isQueryInProgress = false
-//
-//    let RECIPE_PAGINATION_PAGE_SIZE = 30
-//
-    
     // State
     @Published var state: RecipeListState = RecipeListState()
+    
+    @Published var showDialog: Bool = false
     
     init(
         searchRecipes: SearchRecipes,
@@ -64,6 +41,62 @@ class RecipeListViewModel: ObservableObject {
     }
     
     func doNothing(){}
+
+    private func newSearch() {
+        resetSearchState()
+        let currentState = (self.state.copy() as! RecipeListState)
+        do{
+            try searchRecipes.execute(page: Int32(currentState.page), query: currentState.query).watch(block: {dataState in
+                if dataState != nil {
+                    let data = dataState?.data
+                    let message = dataState?.message
+                    let loading = dataState?.isLoading ?? false
+
+                    self.updateState(isLoading: loading)
+                    
+                    if(data != nil){
+                        self.appendRecipes(recipes: data as! [Recipe])
+                    }
+                    if(message != nil){
+                        self.handleMessageByUIComponentType(message!.build())
+                    }
+                }else{
+                    self.logger.log(msg: "DataState is nil")
+                }
+            })
+        }catch{
+            self.logger.log(msg: "\(error)")
+        }
+    }
+
+    private func nextPage(){
+        incrementPage()
+        let currentState = (self.state.copy() as! RecipeListState)
+        logger.log(msg: "NEXT PAGE \(currentState.page)")
+        if(currentState.page > 1){
+            do{
+                try searchRecipes.execute(page: Int32(currentState.page), query: currentState.query).watch(block: {dataState in
+                    if dataState != nil {
+                        let data = dataState?.data
+                        let message = dataState?.message
+                        let loading = dataState?.isLoading ?? false
+
+                        self.updateState(isLoading: loading)
+                        if(data != nil){
+                            self.appendRecipes(recipes: data as! [Recipe])
+                        }
+                        if(message != nil){
+                            self.handleMessageByUIComponentType(message!.build())
+                        }
+                    }else{
+                        self.logger.log(msg: "NextPage: DataState is nil")
+                    }
+                })
+            }catch{
+                self.logger.log(msg: "\(error)")
+            }
+        }
+    }
     
     private func resetSearchState(){
         let currentState = (self.state.copy() as! RecipeListState)
@@ -82,7 +115,6 @@ class RecipeListViewModel: ObservableObject {
             isQueryInProgress: currentState.isQueryInProgress,
             queue: currentState.queue
         )
-        
     }
 
     func onUpdateSelectedCategory(foodCategory: FoodCategory?){
@@ -133,39 +165,18 @@ class RecipeListViewModel: ObservableObject {
         currentState = (self.state.copy() as! RecipeListState)
         self.onUpdateBottomRecipe(recipe: currentState.recipes[currentState.recipes.count - 1])
     }
-
-    private func handleError(_ error: String){
-       // TODO("Handle error - show dialog?")
-        // 'appendToQueue'
-    }
-
-    private func newSearch() {
-        resetSearchState()
-        let currentState = (self.state.copy() as! RecipeListState)
-        do{
-            try searchRecipes.execute(page: Int32(currentState.page), query: currentState.query).watch(block: {dataState in
-                if dataState != nil {
-                    let data = dataState?.data
-                    let message = dataState?.message
-                    let loading = dataState?.isLoading ?? false
-
-                    self.updateState(isLoading: loading)
-                    
-                    if(data != nil){
-                        self.appendRecipes(recipes: data as! [Recipe])
-                    }
-                    if(message != nil){
-                        self.handleError("\(message!)")
-                    }
-                }else{
-                    self.handleError("ERROR: newSearch: DataState is nil")
-                }
-            })
-        }catch{
-            self.handleError("\(error)")
+    
+    private func handleMessageByUIComponentType(_ message: GenericMessageInfo){
+        switch message.uiComponentType{
+        case UIComponentType.Dialog():
+            appendToQueue(message: message)
+        case UIComponentType.None():
+            logger.log(msg: "\(message.description)")
+        default:
+            doNothing()
         }
     }
-//
+    
     func shouldQueryNextPage(recipe: Recipe) -> Bool {
         // check if looking at the bottom recipe
         // if lookingAtBottom -> proceed
@@ -182,41 +193,29 @@ class RecipeListViewModel: ObservableObject {
         }
         return false
     }
-
-    private func nextPage(){
-        incrementPage()
+    
+    private func appendToQueue(message: GenericMessageInfo){
         let currentState = (self.state.copy() as! RecipeListState)
-        print("NEXT PAGE \(currentState.page)")
-        if(currentState.page > 1){
-            do{
-                try searchRecipes.execute(page: Int32(currentState.page), query: currentState.query).watch(block: {dataState in
-                    if dataState != nil {
-                        let data = dataState?.data
-                        let message = dataState?.message
-                        let loading = dataState?.isLoading ?? false
-
-                        self.updateState(isLoading: loading)
-                        if(data != nil){
-                            self.appendRecipes(recipes: data as! [Recipe])
-                        }
-                        if(message != nil){
-                            self.handleError("ERROR: newSearch: \(message!)")
-                        }
-                    }else{
-                        self.handleError("ERROR: newSearch: DataState is nil")
-                    }
-                })
-            }catch{
-                self.handleError("\(error)")
-            }
+        let queue = currentState.queue
+        let queueUtil = GenericMessageInfoQueueUtil() // prevent duplicates
+        if !queueUtil.doesMessageAlreadyExistInQueue(queue: queue, messageInfo: message) {
+            queue.add(element: message)
+            updateState(queue: queue)
         }
     }
     
-    private func appendToQueue(message: GenericMessageInfo){
-        let currentState = (self.state.copy() as! RecipeDetailState)
+    /**
+     *  Remove the head message from queue
+     */
+    func removeHeadFromQueue(){
+        let currentState = (self.state.copy() as! RecipeListState)
         let queue = currentState.queue
-        queue.add(element: message)
-        updateState(queue: queue)
+        do {
+            try queue.remove()
+            updateState(queue: queue)
+        }catch{
+            self.logger.log(msg: "\(error)")
+        }
     }
     
     /**
@@ -243,8 +242,16 @@ class RecipeListViewModel: ObservableObject {
             isQueryInProgress: isQueryInProgress ?? currentState.isQueryInProgress,
             queue: queue ?? currentState.queue
         )
+        shouldShowDialog()
+    }
+    
+    func shouldShowDialog(){
+        let currentState = (self.state.copy() as! RecipeListState)
+        showDialog = currentState.queue.items.count > 0
     }
 }
+
+
 
 
 
