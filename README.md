@@ -1,5 +1,5 @@
 # Food2Fork Recipe App
-[!Thingy](https://img.shields.io/maven-central/v/org.jetbrains.kotlinx/kotlinx-datetime.svg?label=Maven%20Central)
+![Food2Fork App Icon](https://github.com/mitchtabian/Food2Fork-KMM/blob/master/assets/food2fork_logo.png?raw=true)
 This is the codebase for an upcoming course featuring Kotlin Multiplatform Mobile.
 
 # Important Configuration Information
