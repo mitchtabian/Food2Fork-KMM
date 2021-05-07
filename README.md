@@ -29,7 +29,9 @@ This is the codebase for an upcoming course featuring Kotlin Multiplatform Mobil
 Important Android Studio and gradle configuration information for this project.
 
 ### Android Studio Version
-I've been using Canary 8. I was using a newer version but had some issue. You can see the version archive here: [Android Studio Archive](https://developer.android.com/studio/archive)
+I've been using "Android Studio Arctic Fox (2020.3.1) Canary 8". I was using a newer version but had some issues. If you want to decrease the probability that you will have random issues that I did not, use the same version as me.
+
+You can download here: [Android Studio Archive](https://developer.android.com/studio/archive).
 
 ### Kotlin Multiplatform Mobile Plugin
 Make sure you install this plugin. It will make your life way easier.
