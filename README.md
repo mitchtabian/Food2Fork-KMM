@@ -4,6 +4,21 @@ This is the codebase for an upcoming course featuring Kotlin Multiplatform Mobil
 </p>
 
 # Architecture
+#### Shared Components
+1. Ktor (Network Client)
+1. SQL Delight (Caching Client)
+1. Kotlinx.datetime
+
+#### Android Specific Components
+1. Jetpack Compose
+1. Jetpack Compose Navigation
+	- (Single activity, zero fragments)
+1. Accompanist Coil
+
+#### iOS Specific Components
+1. SwiftUI
+1. Cocoapods
+
 <img class='header-img' src="https://github.com/mitchtabian/Food2Fork-KMM/blob/master/assets/clean_architecture_kmm.png?raw=true" />
 <br>
 
