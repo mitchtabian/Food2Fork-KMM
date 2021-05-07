@@ -3,6 +3,9 @@
 This is the codebase for an upcoming course featuring Kotlin Multiplatform Mobile.
 </p>
 
+# Architecture
+<img class='header-img' src="https://github.com/mitchtabian/Food2Fork-KMM/blob/master/assets/clean_architecture_kmm.png?raw=true" />
+<br>
 
 # Important Configuration Information
 Important Android Studio and gradle configuration information for this project.
