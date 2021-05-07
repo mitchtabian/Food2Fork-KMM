@@ -2,7 +2,6 @@ plugins {
     id(Plugins.androidApplication)
     kotlin(KotlinPlugins.android)
     kotlin(KotlinPlugins.kapt)
-    id(Plugins.hilt)
     kotlin(KotlinPlugins.serialization) version Kotlin.version
 }
 
@@ -39,8 +38,6 @@ android {
 dependencies {
     implementation(project(":shared"))
 
-    implementation(Accompanist.coil)
-
     implementation(AndroidX.appCompat)
 
     implementation(Compose.runtime)
@@ -56,13 +53,7 @@ dependencies {
 
     implementation(Google.material)
 
-    implementation(Hilt.hiltAndroid)
-    implementation(Hilt.navigation)
-    kapt(Hilt.hiltCompiler)
-
     implementation(Kotlinx.datetime)
-
-    implementation(Ktor.android)
 
     debugImplementation(SquareUp.leakCanary)
 }
