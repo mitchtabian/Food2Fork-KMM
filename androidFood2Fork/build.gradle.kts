@@ -57,7 +57,7 @@ dependencies {
     implementation(Google.material)
 
     implementation(Hilt.hiltAndroid)
-    implementation(Hilt.navigation)
+    implementation(Hilt.hiltNavigation)
     kapt(Hilt.hiltCompiler)
 
     implementation(Kotlinx.datetime)
