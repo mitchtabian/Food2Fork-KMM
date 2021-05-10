@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.codingwithmitch.food2forkkmm.android.presentation.navigation.Navigation
 import com.codingwithmitch.food2forkkmm.datasource.network.KtorClientFactory
+import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeDtoMapper
+import com.codingwithmitch.food2forkkmm.domain.util.DatetimeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.client.request.*
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +16,7 @@ import kotlinx.coroutines.launch
 const val TOKEN = "Token 9c8b06d329136da358c2d00e76946b0111ce2c48"
 const val BASE_URL = "https://food2fork.ca/api/recipe"
 
+@ExperimentalStdlibApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,11 +25,15 @@ class MainActivity : AppCompatActivity() {
         val ktorClient = KtorClientFactory().build()
         CoroutineScope(IO).launch {
             val recipeId = 1551
-            val recipe = ktorClient.get<String> {
-                url("$BASE_URL/get?id=$recipeId")
-                header("Authorization", TOKEN)
-            }
-            println("KtorTest: ${recipe}")
+            val recipe = RecipeDtoMapper().mapToDomainModel(
+                ktorClient.get{
+                    url("$BASE_URL/get?id=$recipeId")
+                    header("Authorization", TOKEN)
+                }
+            )
+            println("KtorTest: ${recipe.title}")
+            println("KtorTest: ${recipe.ingredients}")
+            println("KtorTest: ${DatetimeUtil().humanizeDatetime(recipe.dateUpdated)}")
         }
 
 
