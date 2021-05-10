@@ -2,9 +2,6 @@
 .gradle
 /local.properties
 /.idea/*
-gradle/wrapper/
-gradlew
-gradlew.bat
 .DS_Store
 /build
 */build
