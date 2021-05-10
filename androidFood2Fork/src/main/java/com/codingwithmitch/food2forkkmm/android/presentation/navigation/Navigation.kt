@@ -11,6 +11,7 @@ import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.Recip
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
 
+@ExperimentalStdlibApi
 @Composable
 fun Navigation(){
     val navController = rememberNavController()
@@ -34,7 +35,7 @@ fun Navigation(){
             val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
             val viewModel: RecipeDetailViewModel = viewModel("RecipeDetailViewModel", factory)
             RecipeDetailScreen(
-                recipeId = viewModel.recipeId.value
+                recipe = viewModel.recipe.value
             )
         }
     }
