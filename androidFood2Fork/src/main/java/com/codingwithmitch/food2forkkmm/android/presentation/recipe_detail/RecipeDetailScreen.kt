@@ -9,7 +9,7 @@ fun RecipeDetailScreen(
     recipeId: Int?,
 ){
     if(recipeId == null){
-        Text("ERROR")
+        Text("Unable to get the details of this recipe...")
     }
     else{
         Column{
