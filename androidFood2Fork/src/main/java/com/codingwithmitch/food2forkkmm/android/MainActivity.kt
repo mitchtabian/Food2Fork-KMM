@@ -6,6 +6,13 @@ import androidx.activity.compose.setContent
 import com.codingwithmitch.food2forkkmm.android.presentation.navigation.Navigation
 import com.codingwithmitch.food2forkkmm.datasource.network.KtorClientFactory
 import dagger.hilt.android.AndroidEntryPoint
+import io.ktor.client.request.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+
+const val TOKEN = "Token 9c8b06d329136da358c2d00e76946b0111ce2c48"
+const val BASE_URL = "https://food2fork.ca/api/recipe"
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -13,10 +20,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val ktorClient = KtorClientFactory().build()
-        val recipe = ktorClient.get{
-            url("$baseUrl/get?id=$id")
-            header("Authorization", TOKEN)
+        CoroutineScope(IO).launch {
+            val recipeId = 1551
+            val recipe = ktorClient.get<String> {
+                url("$BASE_URL/get?id=$recipeId")
+                header("Authorization", TOKEN)
+            }
+            println("KtorTest: ${recipe}")
         }
+
 
         setContent{
             Navigation()
