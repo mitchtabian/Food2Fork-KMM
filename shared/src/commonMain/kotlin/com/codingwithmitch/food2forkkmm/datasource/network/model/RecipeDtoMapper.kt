@@ -14,8 +14,8 @@ class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
             publisher = model.publisher,
             sourceUrl = model.sourceUrl,
             ingredients = model.ingredients,
-            dateAdded = TODO("Date conversion"),
-            dateUpdated = TODO("Date conversion"),
+            dateAdded = ,
+            dateUpdated = ,
         )
     }
 
@@ -28,8 +28,8 @@ class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
             publisher = domainModel.publisher,
             sourceUrl = domainModel.sourceUrl,
             ingredients = domainModel.ingredients,
-            longDateAdded = TODO("Date conversion"),
-            longDateUpdated = TODO("Date conversion"),
+            longDateAdded = ,
+            longDateUpdated = ,
         )
     }
 
