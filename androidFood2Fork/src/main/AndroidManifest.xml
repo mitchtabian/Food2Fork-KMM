@@ -3,6 +3,7 @@
     package="com.codingwithmitch.food2forkkmm.android">
 
     <application
+        android:name=".BaseApplication"
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
