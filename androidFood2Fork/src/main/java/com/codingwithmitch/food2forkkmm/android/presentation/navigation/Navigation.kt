@@ -5,6 +5,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.RecipeDetailScreen
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
+import java.util.*
 
 @Composable
 fun Navigation(){
@@ -23,7 +24,9 @@ fun Navigation(){
                 type = NavType.IntType
             })
         ) { navBackStackEntry ->
-            RecipeDetailScreen(recipeId = navBackStackEntry.arguments?.getInt("recipeId"))
+            RecipeDetailScreen(
+                recipeId = navBackStackEntry.arguments?.getInt("recipeId"),
+            )
         }
     }
 }
