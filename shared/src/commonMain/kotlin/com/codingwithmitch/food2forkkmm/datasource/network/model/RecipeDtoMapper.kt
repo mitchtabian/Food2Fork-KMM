@@ -1,9 +1,12 @@
 package com.codingwithmitch.food2forkkmm.datasource.network.model
 
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
+import com.codingwithmitch.food2forkkmm.domain.util.DatetimeUtil
 import com.codingwithmitch.food2forkkmm.domain.util.DomainMapper
 
 class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
+
+    private val datetimeUtil = DatetimeUtil()
 
     override fun mapToDomainModel(model: RecipeDto): Recipe {
         return Recipe(
@@ -14,8 +17,8 @@ class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
             publisher = model.publisher,
             sourceUrl = model.sourceUrl,
             ingredients = model.ingredients,
-            dateAdded = ,
-            dateUpdated = ,
+            dateAdded = datetimeUtil.toLocalDate(model.longDateAdded.toDouble()),
+            dateUpdated = datetimeUtil.toLocalDate(model.longDateUpdated.toDouble()),
         )
     }
 
@@ -28,8 +31,8 @@ class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
             publisher = domainModel.publisher,
             sourceUrl = domainModel.sourceUrl,
             ingredients = domainModel.ingredients,
-            longDateAdded = ,
-            longDateUpdated = ,
+            longDateAdded = datetimeUtil.toEpochMilliseconds(domainModel.dateAdded).toLong(),
+            longDateUpdated = datetimeUtil.toEpochMilliseconds(domainModel.dateUpdated).toLong(),
         )
     }
 
