@@ -53,6 +53,11 @@ dependencies {
 
     implementation(Google.material)
 
+    implementation(Hilt.hiltAndroid)
+    implementation(Hilt.hiltNavigationCompose)
+    implementation(Hilt.hiltNavigation)
+    kapt(Hilt.hiltCompiler)
+
     implementation(Kotlinx.datetime)
 
     debugImplementation(SquareUp.leakCanary)
