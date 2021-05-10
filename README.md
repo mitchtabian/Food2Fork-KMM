@@ -75,7 +75,7 @@ Make sure you have this setting in android studio:
 # Kotlin Multiplatform Talks
 1. Mitch Tabian
     1. [Is Kotlin Multiplatform Ready for Production?](https://www.youtube.com/watch?v=L8Xq15NTuCc)
-    1. KMM - Fragmented Podcast (Coming soon)
+    1. [KMM - Fragmented Podcast](https://fragmentedpodcast.com/episodes/210/)
 1. Daniele Barconcelli
 	- https://www.youtube.com/watch?v=J3x7_HhrvO8
 1. Ekaterina Petrova
