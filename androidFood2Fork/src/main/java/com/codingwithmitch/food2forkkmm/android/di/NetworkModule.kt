@@ -30,11 +30,12 @@ object NetworkModule{
     @Singleton
     @Provides
     fun provideRecipeService(
-        dtoMapper: RecipeDtoMapper
+        dtoMapper: RecipeDtoMapper,
+        httpClient: HttpClient,
     ): RecipeService {
         return RecipeServiceImpl(
             recipeDtoMapper = dtoMapper,
-            httpClient = KtorClientFactory().build(),
+            httpClient = httpClient,
             baseUrl = RecipeServiceImpl.BASE_URL,
         )
     }
