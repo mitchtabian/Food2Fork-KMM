@@ -7,31 +7,31 @@ import kotlinx.serialization.Serializable
 data class RecipeDto(
 
         @SerialName("pk")
-        var pk: Int,
+        val pk: Int,
 
         @SerialName("title")
-        var title: String,
+        val title: String,
 
         @SerialName("publisher")
-        var publisher: String,
+        val publisher: String,
 
         @SerialName("featured_image")
-        var featuredImage: String,
+        val featuredImage: String,
 
         @SerialName("rating")
-        var rating: Int = 0,
+        val rating: Int = 0,
 
         @SerialName("source_url")
-        var sourceUrl: String,
+        val sourceUrl: String,
 
         @SerialName("ingredients")
-        var ingredients: List<String> = emptyList(),
+        val ingredients: List<String> = emptyList(),
 
         @SerialName("long_date_added")
-        var longDateAdded: Long,
+        val longDateAdded: Long,
 
         @SerialName("long_date_updated")
-        var longDateUpdated: Long,
+        val longDateUpdated: Long,
 )
 
 
