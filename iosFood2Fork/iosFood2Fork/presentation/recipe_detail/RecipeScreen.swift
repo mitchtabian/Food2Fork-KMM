@@ -11,23 +11,20 @@ import shared
 
 struct RecipeScreen: View {
     
-    private let appModule: AppModule
     private let cacheModule: CacheModule
     private let getRecipeModule: GetRecipeModule
     private let recipeId: Int
+    private let datetimeUtil = DatetimeUtil()
     
     @ObservedObject var viewModel: RecipeDetailViewModel
     
     init(
         recipeId: Int,
-        appModule: AppModule,
         cacheModule: CacheModule
          ) {
         self.recipeId = recipeId
-        self.appModule = appModule
         self.cacheModule = cacheModule
         self.getRecipeModule = GetRecipeModule(
-            appModule: self.appModule,
             cacheModule: self.cacheModule
         )
         viewModel = RecipeDetailViewModel(
@@ -40,7 +37,7 @@ struct RecipeScreen: View {
             if viewModel.state.recipe != nil {
                 RecipeView(
                     recipe: viewModel.state.recipe!,
-                    dateUtil: appModule.dateUtil
+                    dateUtil: datetimeUtil
                 )
             }
             else{
@@ -70,7 +67,6 @@ struct RecipeScreen_Previews: PreviewProvider {
     static var previews: some View {
         RecipeScreen(
             recipeId: 1,
-            appModule: AppModule(),
             cacheModule: CacheModule()
         )
     }

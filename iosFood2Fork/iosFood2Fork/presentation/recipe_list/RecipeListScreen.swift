@@ -12,7 +12,6 @@ import shared
 @available(iOS 14.0, *)
 struct RecipeListScreen: View {
     
-    private let appModule: AppModule
     private let networkModule: NetworkModule
     private let cacheModule: CacheModule
     private let searchRecipesModule: SearchRecipesModule
@@ -20,15 +19,12 @@ struct RecipeListScreen: View {
     @ObservedObject var viewModel: RecipeListViewModel
     
     init(
-        appModule: AppModule,
         networkModule: NetworkModule,
         cacheModule: CacheModule
     ) {
-        self.appModule = appModule
         self.networkModule = networkModule
         self.cacheModule = cacheModule
         self.searchRecipesModule = SearchRecipesModule(
-            appModule: self.appModule,
             networkModule: self.networkModule,
             cacheModule: self.cacheModule
         )
@@ -72,7 +68,6 @@ struct RecipeListScreen: View {
                                 NavigationLink(
                                     destination: RecipeScreen(
                                         recipeId: Int(recipe.id),
-                                        appModule: self.appModule,
                                         cacheModule: self.cacheModule
                                     )
                                 ){
@@ -107,7 +102,6 @@ struct RecipeListScreen: View {
 struct RecipeListScreen_Previews: PreviewProvider {
     static var previews: some View {
         RecipeListScreen(
-            appModule: AppModule(),
             networkModule: NetworkModule(),
             cacheModule: CacheModule()
         )

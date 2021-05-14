@@ -6,10 +6,8 @@ import com.codingwithmitch.food2forkkmm.datasource.network.RecipeServiceImpl
 
 class NetworkModule {
 
-    val dtoMapper: RecipeDtoMapper by lazy{RecipeDtoMapper()}
     val recipeService: RecipeService by lazy {
         RecipeServiceImpl(
-            recipeDtoMapper = dtoMapper,
             httpClient = KtorClientFactory().build(),
             baseUrl = RecipeServiceImpl.BASE_URL
         )
