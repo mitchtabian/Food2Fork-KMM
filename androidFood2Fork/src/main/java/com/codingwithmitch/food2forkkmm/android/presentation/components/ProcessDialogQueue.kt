@@ -9,8 +9,8 @@ import com.codingwithmitch.food2forkkmm.util.Logger
 @Composable
 fun ProcessDialogQueue(
     dialogQueue: Queue<GenericMessageInfo>?,
+    onRemoveHeadMessageFromQueue: () -> Unit,
 ) {
-    val logger = remember{ Logger("ProcessDialogQueue") }
     dialogQueue?.peek()?.let { dialogInfo ->
         GenericDialog(
             onDismiss = dialogInfo.onDismiss,
@@ -18,13 +18,7 @@ fun ProcessDialogQueue(
             description = dialogInfo.description,
             positiveAction = dialogInfo.positiveAction,
             negativeAction = dialogInfo.negativeAction,
-            onRemoveHeadFromQueue = {
-                try {
-                    dialogQueue.remove()
-                }catch (e: Exception){
-                    logger.log("Nothing to remove from DialogQueue")
-                }
-            }
+            onRemoveHeadFromQueue = onRemoveHeadMessageFromQueue
         )
     }
 }

@@ -12,9 +12,11 @@ import com.codingwithmitch.food2forkkmm.interactors.recipe_list.SearchRecipes
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListEvents
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState
+import com.codingwithmitch.food2forkkmm.util.Logger
 import com.codingwithmitch.shared.domain.util.UIComponentType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import java.util.*
 import javax.inject.Inject
 
@@ -24,6 +26,8 @@ class RecipeListViewModel
 constructor(
     private val searchRecipes: SearchRecipes,
 ): ViewModel() {
+
+    private val logger = Logger("RecipeListVM")
 
     val state: MutableState<RecipeListState> = mutableStateOf(RecipeListState())
 
@@ -51,6 +55,9 @@ constructor(
                 is RecipeListEvents.OnUpdateQuery -> {
                     state.value = state.value.copy(query =  event.query)
                 }
+                is RecipeListEvents.OnRemoveHeadMessageFromQueue -> {
+                    removeHeadMessage()
+                }
                 else -> {
                     val messageInfoBuilder = GenericMessageInfo.Builder()
                         .id(UUID.randomUUID().toString())
@@ -60,6 +67,17 @@ constructor(
                     appendToMessageQueue(messageInfo = messageInfoBuilder)
                 }
             }
+        }
+    }
+
+    private fun removeHeadMessage() {
+        try {
+            val queue = state.value.queue
+            queue.remove() // can throw exception if empty
+            state.value = state.value.copy(queue = Queue(mutableListOf())) // force recompose
+            state.value = state.value.copy(queue = queue)
+        }catch (e: Exception){
+            logger.log("Nothing to remove from DialogQueue")
         }
     }
 

@@ -44,7 +44,8 @@ fun Navigation(){
             val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
             val viewModel: RecipeDetailViewModel = viewModel("RecipeDetailViewModel", factory)
             RecipeDetailScreen(
-                state = viewModel.state.value
+                state = viewModel.state.value,
+                onTriggerEvent = viewModel::onTriggerEvent
             )
         }
     }

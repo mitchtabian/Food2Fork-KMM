@@ -9,12 +9,13 @@ import kotlinx.coroutines.flow.*
  * Source:
  * https://stackoverflow.com/questions/64175099/listen-to-kotlin-coroutine-flow-from-ios
  */
-fun <T> Flow<T>.asCommonFlow(): CommonFlow<T> = CommonFlow(this)
 
 /**
- * Must create a class since extension functions can't be used on iOS with KMM.
+ * Must create a (class + function) since extension functions can't be used on iOS with KMM.
  * Otherwise I'd simply create a Flow<T>.collectCommon() function.
  */
+fun <T> Flow<T>.asCommonFlow(): CommonFlow<T> = CommonFlow(this)
+
 class CommonFlow<T>(private val origin: Flow<T>): Flow<T> by origin {
     fun collectCommon(
         coroutineScope: CoroutineScope? = null, // 'viewModelScope' on Android and 'nil' on iOS
