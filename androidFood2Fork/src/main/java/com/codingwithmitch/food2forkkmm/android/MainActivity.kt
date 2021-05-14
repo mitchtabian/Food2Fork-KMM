@@ -6,10 +6,8 @@ import androidx.activity.compose.setContent
 import com.codingwithmitch.food2forkkmm.android.presentation.navigation.Navigation
 import com.codingwithmitch.food2forkkmm.datasource.network.KtorClientFactory
 import com.codingwithmitch.food2forkkmm.datasource.network.RecipeServiceImpl
-import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeDtoMapper
 import com.codingwithmitch.food2forkkmm.domain.util.DatetimeUtil
 import dagger.hilt.android.AndroidEntryPoint
-import io.ktor.client.request.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -25,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
         CoroutineScope(IO).launch {
             val recipeService = RecipeServiceImpl(
-                recipeDtoMapper = RecipeDtoMapper(),
                 httpClient = KtorClientFactory().build(),
                 baseUrl = BASE_URL,
             )
