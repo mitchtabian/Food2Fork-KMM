@@ -1,15 +1,14 @@
 package com.codingwithmitch.food2forkkmm.datasource.network
 
-import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeDtoMapper
+import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeDto
 import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeSearchResponse
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import io.ktor.client.*
 import io.ktor.client.request.*
 
 class RecipeServiceImpl(
-    private val recipeDtoMapper: RecipeDtoMapper,
     private val httpClient: HttpClient,
-    private val baseUrl: String, // baseUrl is an arg so a fake can be used for testing
+    private val baseUrl: String,
 ): RecipeService {
 
     override suspend fun search(page: Int, query: String): List<Recipe> {
@@ -17,16 +16,14 @@ class RecipeServiceImpl(
             url("$baseUrl/search?page=$page&query=$query")
             header("Authorization", TOKEN)
         }
-            .results.map{recipeDtoMapper.mapToDomainModel(it)}
+            .results.toRecipeList()
     }
 
     override suspend fun get(id: Int): Recipe {
-        return recipeDtoMapper.mapToDomainModel(
-            httpClient.get{
-                url("$baseUrl/get?id=$id")
-                header("Authorization", TOKEN)
-            }
-        )
+        return httpClient.get<RecipeDto>{
+            url("$baseUrl/get?id=$id")
+            header("Authorization", TOKEN)
+        }.toRecipe()
     }
 
     companion object {
