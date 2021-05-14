@@ -5,7 +5,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.codingwithmitch.food2forkkmm.android.presentation.navigation.Navigation
 import com.codingwithmitch.food2forkkmm.datasource.network.KtorClientFactory
-import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeDtoMapper
+import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeDto
+import com.codingwithmitch.food2forkkmm.datasource.network.toRecipe
 import com.codingwithmitch.food2forkkmm.domain.util.DatetimeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.client.request.*
@@ -25,12 +26,10 @@ class MainActivity : AppCompatActivity() {
         val ktorClient = KtorClientFactory().build()
         CoroutineScope(IO).launch {
             val recipeId = 1551
-            val recipe = RecipeDtoMapper().mapToDomainModel(
-                ktorClient.get{
-                    url("$BASE_URL/get?id=$recipeId")
-                    header("Authorization", TOKEN)
-                }
-            )
+            val recipe = ktorClient.get<RecipeDto>{
+                url("$BASE_URL/get?id=$recipeId")
+                header("Authorization", TOKEN)
+            }.toRecipe()
             println("KtorTest: ${recipe.title}")
             println("KtorTest: ${recipe.ingredients}")
             println("KtorTest: ${DatetimeUtil().humanizeDatetime(recipe.dateUpdated)}")
