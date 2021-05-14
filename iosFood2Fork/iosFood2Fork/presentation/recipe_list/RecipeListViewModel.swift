@@ -46,14 +46,19 @@ class RecipeListViewModel: ObservableObject {
         resetSearchState()
         let currentState = (self.state.copy() as! RecipeListState)
         do{
-            try searchRecipes.execute(page: Int32(currentState.page), query: currentState.query).watch(block: {dataState in
+            try searchRecipes.execute(
+                page: Int32(currentState.page),
+                query: currentState.query
+            ).collectCommon(
+                coroutineScope: nil,
+                callback: { dataState in
                 if dataState != nil {
                     let data = dataState?.data
                     let message = dataState?.message
                     let loading = dataState?.isLoading ?? false
 
                     self.updateState(isLoading: loading)
-                    
+
                     if(data != nil){
                         self.appendRecipes(recipes: data as! [Recipe])
                     }
@@ -75,7 +80,12 @@ class RecipeListViewModel: ObservableObject {
         logger.log(msg: "NEXT PAGE \(currentState.page)")
         if(currentState.page > 1){
             do{
-                try searchRecipes.execute(page: Int32(currentState.page), query: currentState.query).watch(block: {dataState in
+                try searchRecipes.execute(
+                    page: Int32(currentState.page),
+                    query: currentState.query
+                ).collectCommon(
+                    coroutineScope: nil,
+                    callback: { dataState in
                     if dataState != nil {
                         let data = dataState?.data
                         let message = dataState?.message

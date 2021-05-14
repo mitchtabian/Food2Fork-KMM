@@ -11,8 +11,6 @@ import com.codingwithmitch.food2forkkmm.domain.util.Queue
 import com.codingwithmitch.food2forkkmm.interactors.recipe_detail.GetRecipe
 import com.codingwithmitch.food2forkkmm.presentation.recipe_detail.RecipeDetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,20 +25,15 @@ constructor(
     val state: MutableState<RecipeDetailState> = mutableStateOf(RecipeDetailState())
 
     init {
-        try {
-            savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
-                viewModelScope.launch {
-                    getRecipe(recipeId = recipeId)
-                }
+        savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
+            viewModelScope.launch {
+                getRecipe(recipeId = recipeId)
             }
-        }catch (e: Exception){
-            // will throw exception if arg is not there for whatever reason.
-            // we don't need to do anything because it will already show a composable saying "Unable to get the details of this recipe..."
         }
     }
 
     private fun getRecipe(recipeId: Int){
-        getRecipe.execute(recipeId = recipeId).onEach { dataState ->
+        getRecipe.execute(recipeId = recipeId).collectCommon(viewModelScope) { dataState ->
             state.value = state.value.copy(isLoading = dataState.isLoading)
 
             dataState.data?.let { recipe ->
@@ -50,7 +43,7 @@ constructor(
             dataState.message?.let { message ->
                 appendToMessageQueue(message)
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun appendToMessageQueue(messageInfo: GenericMessageInfo.Builder){

@@ -31,7 +31,11 @@ class RecipeDetailViewModel: ObservableObject {
     
     private func executeGetRecipe(recipeId: Int){
         do{
-            try self.getRecipe.execute(recipeId: Int32(recipeId)).watch(block: { dataState in
+            try self.getRecipe.execute(
+                recipeId: Int32(recipeId)
+            ).collectCommon(
+                coroutineScope: nil,
+                callback: { dataState in
                 if dataState != nil {
                     let data = dataState?.data
                     let message = dataState?.message
