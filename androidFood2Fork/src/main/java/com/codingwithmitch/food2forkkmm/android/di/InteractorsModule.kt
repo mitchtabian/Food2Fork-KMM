@@ -1,12 +1,11 @@
 package com.codingwithmitch.food2forkkmm.android.di
 
+import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeCache
 import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeDatabase
 import com.codingwithmitch.food2forkkmm.datasource.network.RecipeService
-import com.codingwithmitch.food2forkkmm.datasource.network.model.RecipeDtoMapper
 import com.codingwithmitch.food2forkkmm.domain.util.DatetimeUtil
 import com.codingwithmitch.food2forkkmm.interactors.recipe_detail.GetRecipe
 import com.codingwithmitch.food2forkkmm.interactors.recipe_list.SearchRecipes
-import com.example.kmmplayground.shared.datasource.cache.model.RecipeEntityMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,15 +21,11 @@ object InteractorsModule {
     @Provides
     fun provideSearchRecipes(
         recipeService: RecipeService,
-        recipeDatabase: RecipeDatabase,
-        recipeEntityMapper: RecipeEntityMapper,
-        datetimeUtil: DatetimeUtil,
+        recipeCache: RecipeCache,
     ): SearchRecipes {
         return SearchRecipes(
             recipeService = recipeService,
-            recipeDatabase = recipeDatabase,
-            recipeEntityMapper = recipeEntityMapper,
-            dateUtil = datetimeUtil,
+            recipeCache = recipeCache
         )
     }
 
@@ -38,14 +33,10 @@ object InteractorsModule {
     @Singleton
     @Provides
     fun provideGetRecipe(
-        recipeDatabase: RecipeDatabase,
-        entityMapper: RecipeEntityMapper,
-        dateUtil: DatetimeUtil,
+        recipeCache: RecipeCache,
     ): GetRecipe {
         return GetRecipe(
-            recipeDatabase = recipeDatabase,
-            recipeEntityMapper = entityMapper,
-            dateUtil = dateUtil
+            recipeCache = recipeCache
         )
     }
 }

@@ -18,13 +18,9 @@ class DatetimeUtil
         return date.toInstant(TimeZone.UTC).toEpochMilliseconds().toDouble()
     }
 
-    fun convertDateToString(date: LocalDateTime?): String? {
-        return date?.toString()
-    }
-
     // States: yesterday, today, tomorrow and everything else
     @ExperimentalStdlibApi
-    fun humanizeDatetime(date: LocalDateTime?): String{
+    fun humanizeDatetime(date: LocalDateTime?): String {
         val sb = StringBuilder()
         date?.run {
             val hour = if(this.hour > 12){

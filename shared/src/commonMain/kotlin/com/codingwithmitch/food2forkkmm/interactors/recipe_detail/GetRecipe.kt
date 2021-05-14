@@ -1,12 +1,11 @@
 package com.codingwithmitch.food2forkkmm.interactors.recipe_detail
 
-import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeDatabase
+import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeCache
 import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.domain.util.*
 import com.codingwithmitch.food2forkkmm.util.BuildConfig
 import com.codingwithmitch.shared.domain.util.UIComponentType
-import com.example.kmmplayground.shared.datasource.cache.model.RecipeEntityMapper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 
@@ -14,9 +13,7 @@ import kotlinx.coroutines.flow.flow
  * Retrieve a recipe from the cache given it's unique id.
  */
 class GetRecipe (
-    private val recipeDatabase: RecipeDatabase,
-    private val recipeEntityMapper: RecipeEntityMapper,
-    private val dateUtil: DatetimeUtil,
+    private val recipeCache: RecipeCache,
 ){
 
     fun execute(
@@ -36,7 +33,7 @@ class GetRecipe (
                 throw Exception("Invalid Recipe Id")
             }
 
-            val recipe = getRecipeFromCache(recipeId = recipeId)
+            val recipe =  recipeCache.get(recipeId)
 
             emit(DataState.data(message = null, data = recipe))
 
@@ -51,21 +48,6 @@ class GetRecipe (
         }
     }.asCommonFlow()
 
-    private fun getRecipeFromCache(recipeId: Int): Recipe {
-        return recipeDatabase.recipeDbQueries.getRecipeById(recipeId.toLong()).executeAsOne().let { entity ->
-            Recipe(
-                id = entity.id.toInt(),
-                title = entity.title,
-                publisher = entity.publisher,
-                featuredImage = entity.featured_image,
-                rating = entity.rating.toInt(),
-                sourceUrl = entity.source_url,
-                ingredients = recipeEntityMapper.convertIngredientsToList(entity.ingredients),
-                dateAdded = dateUtil.toLocalDate(entity.date_added),
-                dateUpdated = dateUtil.toLocalDate(entity.date_updated)
-            )
-        }
-    }
 
 }
 

@@ -1,10 +1,8 @@
 package com.codingwithmitch.food2forkkmm.android.di
 
 import com.codingwithmitch.food2forkkmm.BaseApplication
-import com.codingwithmitch.food2forkkmm.datasource.cache.DriverFactory
-import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeDatabase
-import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeDatabaseFactory
-import com.example.kmmplayground.shared.datasource.cache.model.RecipeEntityMapper
+import com.codingwithmitch.food2forkkmm.datasource.cache.*
+import com.codingwithmitch.food2forkkmm.domain.util.DatetimeUtil
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,13 +15,25 @@ object CacheModule {
 
     @Singleton
     @Provides
-    fun provideRecipeEntityMapper(): RecipeEntityMapper {
-        return RecipeEntityMapper()
+    fun provideRecipeDatabase(context: BaseApplication): RecipeDatabase {
+        return RecipeDatabaseFactory(driverFactory = DriverFactory(context)).createDatabase()
     }
 
     @Singleton
     @Provides
-    fun provideRecipeDatabase(context: BaseApplication): RecipeDatabase {
-        return RecipeDatabaseFactory(driverFactory = DriverFactory(context)).createDatabase()
+    fun provideRecipeCache(
+        recipeDatabase: RecipeDatabase,
+        datetimeUtil: DatetimeUtil,
+    ): RecipeCache {
+        return RecipeCacheImpl(
+            recipeDatabase = recipeDatabase,
+            datetimeUtil = datetimeUtil,
+        )
     }
 }
+
+
+
+
+
+
