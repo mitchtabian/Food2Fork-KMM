@@ -50,7 +50,7 @@ constructor(
                 onSelectCategory(event.category)
             }
             is RecipeListEvents.OnUpdateQuery -> {
-                state.value = state.value.copy(query =  event.query)
+                state.value = state.value.copy(query =  event.query, selectedCategory = null)
             }
             is RecipeListEvents.OnRemoveHeadMessageFromQueue -> {
                 removeHeadMessage()

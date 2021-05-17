@@ -35,7 +35,6 @@ fun SearchAppBar(
   selectedCategory: FoodCategory?,
   onSelectedCategoryChanged: (FoodCategory) -> Unit,
 ) {
-  val focusManager = LocalFocusManager.current
   val keyboardController = LocalSoftwareKeyboardController.current
   Surface(
     modifier = Modifier
@@ -63,8 +62,7 @@ fun SearchAppBar(
           keyboardActions = KeyboardActions(
             onDone = {
               onExecuteSearch()
-//              focusManager.clearFocus(forcedClear = true) // close keyboard
-               keyboardController?.hideSoftwareKeyboard() // another way to close keyboard
+              keyboardController?.hide()
             },
           ),
           leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Search Icon") },
@@ -72,11 +70,9 @@ fun SearchAppBar(
           colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surface),
         )
       }
-      val scrollState = rememberLazyListState()
       LazyRow(
         modifier = Modifier
           .padding(start = 8.dp, bottom = 8.dp),
-        state = scrollState,
       ) {
         items(categories) {
           FoodCategoryChip(

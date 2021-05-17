@@ -35,14 +35,14 @@ class RecipeCacheImpl(
         return queries.searchRecipes(
             query = query,
             pageSize = RECIPE_PAGINATION_PAGE_SIZE.toLong(),
-            offset = (page * RECIPE_PAGINATION_PAGE_SIZE).toLong()
+            offset = ((page - 1)* RECIPE_PAGINATION_PAGE_SIZE).toLong()
         ).executeAsList().toRecipeList()
     }
 
     override fun getAll(page: Int): List<Recipe> {
         return queries.getAllRecipes(
             pageSize = RECIPE_PAGINATION_PAGE_SIZE.toLong(),
-            offset = (page * RECIPE_PAGINATION_PAGE_SIZE).toLong()
+            offset = ((page - 1) * RECIPE_PAGINATION_PAGE_SIZE).toLong()
         ).executeAsList().toRecipeList()
     }
 

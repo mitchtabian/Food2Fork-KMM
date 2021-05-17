@@ -35,7 +35,6 @@ class SearchRecipes(
                 page = page,
                 query = query,
             )
-
             // insert into cache
             recipeCache.insert(recipes)
 

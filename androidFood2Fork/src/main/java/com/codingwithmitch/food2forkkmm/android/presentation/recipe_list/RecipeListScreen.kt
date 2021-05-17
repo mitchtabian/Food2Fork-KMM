@@ -20,7 +20,6 @@ fun RecipeListScreen(
     onTriggerEvent: (RecipeListEvents) -> Unit,
     onClickRecipeListItem: (Int) -> Unit,
 ) {
-    val scaffoldState = rememberScaffoldState()
     AppTheme(
         displayProgressBar = state.isLoading,
         dialogQueue = state.queue,
@@ -45,10 +44,6 @@ fun RecipeListScreen(
                         onTriggerEvent(RecipeListEvents.OnSelectCategory(it))
                     },
                 )
-            },
-            scaffoldState = scaffoldState,
-            snackbarHost = {
-                scaffoldState.snackbarHostState
             },
         ) {
             RecipeList(
