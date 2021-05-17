@@ -1,4 +1,4 @@
-package com.codingwithmitch.food2forkkmm.android.presentation.recipe_list
+package com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -16,7 +16,6 @@ fun FoodCategoryChip(
     category: String,
     isSelected: Boolean = false,
     onSelectedCategoryChanged: (String) -> Unit,
-    onExecuteSearch: () -> Unit,
 ){
     Surface(
             modifier = Modifier.padding(end = 8.dp),

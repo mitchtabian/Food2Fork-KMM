@@ -6,7 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import com.codingwithmitch.food2forkcompose.presentation.theme.AppTheme
-import com.codingwithmitch.food2forkkmm.android.presentation.components.SearchAppBar
+import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components.RecipeList
+import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components.SearchAppBar
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

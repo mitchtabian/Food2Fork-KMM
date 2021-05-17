@@ -1,4 +1,4 @@
-package com.codingwithmitch.food2forkkmm.android.presentation.recipe_list
+package com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

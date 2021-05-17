@@ -1,4 +1,4 @@
-package com.codingwithmitch.food2forkkmm.android.presentation.components
+package com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -15,13 +14,12 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.FoodCategoryChip
+import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components.FoodCategoryChip
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategoryUtil
 
@@ -82,9 +80,6 @@ fun SearchAppBar(
               FoodCategoryUtil().getFoodCategory(it)?.let{ newCategory ->
                 onSelectedCategoryChanged(newCategory)
               }
-            },
-            onExecuteSearch = {
-              onExecuteSearch()
             },
           )
         }

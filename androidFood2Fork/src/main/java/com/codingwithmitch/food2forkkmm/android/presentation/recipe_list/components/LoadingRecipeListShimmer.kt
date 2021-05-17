@@ -1,4 +1,4 @@
-package com.codingwithmitch.food2forkkmm.android.presentation.recipe_list
+package com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.ShimmerRecipeCardItem
 
 @Composable
 fun LoadingRecipeListShimmer(
