@@ -33,29 +33,25 @@ constructor(
 
     init {
         savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
-            viewModelScope.launch {
-                onTriggerEvent(RecipeDetailEvents.GetRecipe(recipeId = recipeId))
-            }
+            onTriggerEvent(RecipeDetailEvents.GetRecipe(recipeId = recipeId))
         }
     }
 
     fun onTriggerEvent(event: RecipeDetailEvents){
-        viewModelScope.launch {
-            when (event){
-                is RecipeDetailEvents.GetRecipe -> {
-                    getRecipe(recipeId = event.recipeId)
-                }
-                is RecipeDetailEvents.OnRemoveHeadMessageFromQueue -> {
-                    removeHeadMessage()
-                }
-                else -> {
-                    val messageInfoBuilder = GenericMessageInfo.Builder()
-                        .id(UUID.randomUUID().toString())
-                        .title("Invalid Event")
-                        .uiComponentType(UIComponentType.Dialog)
-                        .description("Something went wrong.")
-                    appendToMessageQueue(messageInfo = messageInfoBuilder)
-                }
+        when (event){
+            is RecipeDetailEvents.GetRecipe -> {
+                getRecipe(recipeId = event.recipeId)
+            }
+            is RecipeDetailEvents.OnRemoveHeadMessageFromQueue -> {
+                removeHeadMessage()
+            }
+            else -> {
+                val messageInfoBuilder = GenericMessageInfo.Builder()
+                    .id(UUID.randomUUID().toString())
+                    .title("Invalid Event")
+                    .uiComponentType(UIComponentType.Dialog)
+                    .description("Something went wrong.")
+                appendToMessageQueue(messageInfo = messageInfoBuilder)
             }
         }
     }
@@ -92,11 +88,6 @@ constructor(
             queue.add(messageInfo.build())
             state.value = state.value.copy(queue = queue)
         }
-    }
-
-    private fun updateQueue(queue: Queue<GenericMessageInfo>){
-        state.value = state.value.copy(queue = Queue(mutableListOf())) // reset queue
-        state.value = state.value.copy(queue = queue)
     }
 }
 

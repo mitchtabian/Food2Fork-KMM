@@ -32,40 +32,36 @@ constructor(
     val state: MutableState<RecipeListState> = mutableStateOf(RecipeListState())
 
     init {
-        viewModelScope.launch {
-            loadRecipes()
-        }
+        loadRecipes()
     }
 
     fun onTriggerEvent(event: RecipeListEvents){
-        viewModelScope.launch {
-            when (event){
-                RecipeListEvents.LoadRecipes -> {
-                    loadRecipes()
-                }
-                RecipeListEvents.NewSearch -> {
-                    newSearch()
-                }
-                RecipeListEvents.NextPage -> {
-                    nextPage()
-                }
-                is RecipeListEvents.OnSelectCategory -> {
-                    onSelectCategory(event.category)
-                }
-                is RecipeListEvents.OnUpdateQuery -> {
-                    state.value = state.value.copy(query =  event.query)
-                }
-                is RecipeListEvents.OnRemoveHeadMessageFromQueue -> {
-                    removeHeadMessage()
-                }
-                else -> {
-                    val messageInfoBuilder = GenericMessageInfo.Builder()
-                        .id(UUID.randomUUID().toString())
-                        .title("Invalid Event")
-                        .uiComponentType(UIComponentType.Dialog)
-                        .description("Something went wrong.")
-                    appendToMessageQueue(messageInfo = messageInfoBuilder)
-                }
+        when (event){
+            RecipeListEvents.LoadRecipes -> {
+                loadRecipes()
+            }
+            RecipeListEvents.NewSearch -> {
+                newSearch()
+            }
+            RecipeListEvents.NextPage -> {
+                nextPage()
+            }
+            is RecipeListEvents.OnSelectCategory -> {
+                onSelectCategory(event.category)
+            }
+            is RecipeListEvents.OnUpdateQuery -> {
+                state.value = state.value.copy(query =  event.query)
+            }
+            is RecipeListEvents.OnRemoveHeadMessageFromQueue -> {
+                removeHeadMessage()
+            }
+            else -> {
+                val messageInfoBuilder = GenericMessageInfo.Builder()
+                    .id(UUID.randomUUID().toString())
+                    .title("Invalid Event")
+                    .uiComponentType(UIComponentType.Dialog)
+                    .description("Something went wrong.")
+                appendToMessageQueue(messageInfo = messageInfoBuilder)
             }
         }
     }
@@ -139,10 +135,6 @@ constructor(
         }
     }
 
-    private fun updateQueue(queue: Queue<GenericMessageInfo>){
-        state.value = state.value.copy(queue = Queue(mutableListOf())) // reset queue
-        state.value = state.value.copy(queue = queue)
-    }
 }
 
 
