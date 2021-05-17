@@ -1,5 +1,6 @@
 package com.codingwithmitch.food2forkkmm.android.di
 
+import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeCache
 import com.codingwithmitch.food2forkkmm.datasource.network.RecipeService
 import com.codingwithmitch.food2forkkmm.interactors.recipe_detail.GetRecipe
 import com.codingwithmitch.food2forkkmm.interactors.recipe_list.SearchRecipes
@@ -16,17 +17,21 @@ object InteractorsModule {
     @Singleton
     @Provides
     fun provideSearchRecipes(
-        recipeService: RecipeService
+        recipeService: RecipeService,
+        recipeCache: RecipeCache,
     ): SearchRecipes{
-        return SearchRecipes(recipeService = recipeService)
+        return SearchRecipes(
+            recipeService = recipeService,
+            recipeCache = recipeCache
+        )
     }
 
     @Singleton
     @Provides
     fun provideGetRecipe(
-        recipeService: RecipeService
+        recipeCache: RecipeCache,
     ): GetRecipe{
-        return GetRecipe(recipeService = recipeService)
+        return GetRecipe(recipeCache = recipeCache)
     }
 }
 
