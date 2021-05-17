@@ -19,7 +19,7 @@ class RecipeCacheImpl(
             featured_image = recipe.featuredImage,
             rating = recipe.rating.toLong(),
             source_url = recipe.sourceUrl,
-            ingredients = , // TODO("Convert String to List<String>")
+            ingredients = recipe.ingredients.convertIngredientListToString(),
             date_updated = datetimeUtil.toEpochMilliseconds(recipe.dateUpdated),
             date_added = datetimeUtil.toEpochMilliseconds(recipe.dateAdded),
         )
@@ -36,21 +36,21 @@ class RecipeCacheImpl(
             query = query,
             pageSize = RECIPE_PAGINATION_PAGE_SIZE.toLong(),
             offset = (page * RECIPE_PAGINATION_PAGE_SIZE).toLong()
-        ).executeAsList() // TODO("convert List<Recipe_Entity> to List<Recipe>")
+        ).executeAsList().toRecipeList()
     }
 
     override fun getAll(page: Int): List<Recipe> {
         return queries.getAllRecipes(
             pageSize = RECIPE_PAGINATION_PAGE_SIZE.toLong(),
             offset = (page * RECIPE_PAGINATION_PAGE_SIZE).toLong()
-        ).executeAsList() // TODO("convert List<Recipe_Entity> to List<Recipe>")
+        ).executeAsList().toRecipeList()
     }
 
     override fun get(recipeId: Int): Recipe? {
         return try {
             queries
                 .getRecipeById(id = recipeId.toLong())
-                .executeAsOne() // TODO("convert Recipe_Entity to Recipe")
+                .executeAsOne().toRecipe()
         }catch (e: NullPointerException){
             null
         }
