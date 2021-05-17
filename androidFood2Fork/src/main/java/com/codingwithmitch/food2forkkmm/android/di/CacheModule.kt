@@ -23,11 +23,10 @@ object CacheModule {
     @Provides
     fun provideRecipeCache(
         recipeDatabase: RecipeDatabase,
-        datetimeUtil: DatetimeUtil,
     ): RecipeCache {
         return RecipeCacheImpl(
             recipeDatabase = recipeDatabase,
-            datetimeUtil = datetimeUtil,
+            datetimeUtil = DatetimeUtil(),
         )
     }
 }
