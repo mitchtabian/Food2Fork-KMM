@@ -11,7 +11,6 @@ import kotlinx.coroutines.InternalCoroutinesApi
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    @InternalCoroutinesApi
     @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     @ExperimentalStdlibApi

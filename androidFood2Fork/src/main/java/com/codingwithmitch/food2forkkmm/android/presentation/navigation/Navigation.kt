@@ -14,7 +14,6 @@ import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeL
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 
-@InternalCoroutinesApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @ExperimentalStdlibApi

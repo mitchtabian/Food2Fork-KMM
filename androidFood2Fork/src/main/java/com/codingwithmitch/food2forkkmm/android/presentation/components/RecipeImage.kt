@@ -14,7 +14,6 @@ import kotlinx.coroutines.InternalCoroutinesApi
 
 const val RECIPE_IMAGE_HEIGHT = 260
 
-@InternalCoroutinesApi
 @Composable
 fun RecipeImage(
     url: String,
