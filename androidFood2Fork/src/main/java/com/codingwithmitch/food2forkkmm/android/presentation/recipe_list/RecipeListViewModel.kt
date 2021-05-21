@@ -34,13 +34,29 @@ constructor(
             RecipeListEvents.LoadRecipes -> {
                 loadRecipes()
             }
+            RecipeListEvents.NewSearch -> {
+                newSearch()
+            }
             RecipeListEvents.NextPage -> {
                 nextPage()
+            }
+            is RecipeListEvents.OnUpdateQuery -> {
+                state.value = state.value.copy(query =  event.query)
             }
             else -> {
                 handleError("Invalid Event")
             }
         }
+    }
+
+    /**
+     * Perform a new search:
+     * 1. page = 1
+     * 2. list position needs to be reset
+     */
+    private fun newSearch(){
+        state.value = state.value.copy(page = 1, recipes = listOf())
+        loadRecipes()
     }
 
     /**

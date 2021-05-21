@@ -5,6 +5,10 @@ sealed class RecipeListEvents {
 
     object LoadRecipes: RecipeListEvents()
 
+    object NewSearch: RecipeListEvents()
+
     object NextPage: RecipeListEvents()
+
+    data class OnUpdateQuery(val query: String): RecipeListEvents()
 
 }
