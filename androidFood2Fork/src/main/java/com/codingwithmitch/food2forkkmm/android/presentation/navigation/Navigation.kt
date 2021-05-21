@@ -1,6 +1,8 @@
 package com.codingwithmitch.food2forkkmm.android.presentation.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -11,6 +13,8 @@ import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.Recip
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
 
+@ExperimentalComposeUiApi
+@ExperimentalMaterialApi
 @ExperimentalStdlibApi
 @Composable
 fun Navigation(){
