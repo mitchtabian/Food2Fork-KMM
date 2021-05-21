@@ -10,11 +10,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.imageloading.ImageLoadState
-import kotlinx.coroutines.InternalCoroutinesApi
 
 const val RECIPE_IMAGE_HEIGHT = 260
 
-@InternalCoroutinesApi
 @Composable
 fun RecipeImage(
     url: String,

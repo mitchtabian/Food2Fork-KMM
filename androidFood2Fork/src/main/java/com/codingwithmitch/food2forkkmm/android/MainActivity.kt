@@ -7,11 +7,9 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import com.codingwithmitch.food2forkkmm.android.presentation.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.InternalCoroutinesApi
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    @InternalCoroutinesApi
     @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     @ExperimentalStdlibApi

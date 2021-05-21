@@ -12,9 +12,7 @@ import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.Recip
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.RecipeDetailViewModel
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
-import kotlinx.coroutines.InternalCoroutinesApi
 
-@InternalCoroutinesApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @ExperimentalStdlibApi

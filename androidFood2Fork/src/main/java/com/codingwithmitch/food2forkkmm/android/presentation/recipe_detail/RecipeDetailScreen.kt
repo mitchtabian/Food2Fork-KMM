@@ -1,6 +1,5 @@
 package com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -8,9 +7,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import com.codingwithmitch.food2forkkmm.android.presentation.components.RecipeImage
 import com.codingwithmitch.food2forkkmm.android.presentation.theme.AppTheme
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
-import kotlinx.coroutines.InternalCoroutinesApi
 
-@InternalCoroutinesApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
