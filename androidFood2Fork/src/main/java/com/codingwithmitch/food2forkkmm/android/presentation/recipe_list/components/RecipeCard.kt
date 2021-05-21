@@ -8,11 +8,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codingwithmitch.food2forkkmm.android.presentation.components.RecipeImage
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
-import com.codingwithmitch.food2forkkmm.domain.util.DatetimeUtil
 
 @Composable
 fun RecipeCard(

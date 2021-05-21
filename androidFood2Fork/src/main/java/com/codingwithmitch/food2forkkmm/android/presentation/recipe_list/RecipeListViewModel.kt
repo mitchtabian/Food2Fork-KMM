@@ -1,9 +1,13 @@
 package com.codingwithmitch.food2forkkmm.android.presentation.recipe_list
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.interactors.recipe_list.SearchRecipes
+import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.launchIn
@@ -18,6 +22,8 @@ constructor(
     private val searchRecipes: SearchRecipes,
 ): ViewModel() {
 
+    val state: MutableState<RecipeListState> = mutableStateOf(RecipeListState())
+
     init {
         loadRecipes()
     }
@@ -30,13 +36,19 @@ constructor(
             println("RecipeListVM: ${dataState.isLoading}")
 
             dataState.data?.let { recipes ->
-                println("RecipeListVM: recipes: ${recipes}")
+                appendRecipes(recipes)
             }
 
             dataState.message?.let { message ->
                 println("RecipeListVM: error: ${message}")
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun appendRecipes(recipes: List<Recipe>){
+        val curr = ArrayList(state.value.recipes)
+        curr.addAll(recipes)
+        state.value = state.value.copy(recipes = curr)
     }
 }
 

@@ -12,7 +12,6 @@ import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.Recip
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.RecipeDetailViewModel
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
-import kotlinx.coroutines.InternalCoroutinesApi
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
@@ -26,6 +25,7 @@ fun Navigation(){
             val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
             val viewModel: RecipeListViewModel = viewModel("RecipeListViewModel", factory)
             RecipeListScreen(
+                state = viewModel.state.value,
                 onSelectRecipe = { recipeId ->
                     navController.navigate("${Screen.RecipeDetail.route}/$recipeId")
                 }
