@@ -30,8 +30,8 @@ constructor(
 
     private fun loadRecipes(){
         searchRecipes.execute(
-            page = 1,
-            query = "chicken"
+            page = state.value.page,
+            query = state.value.query
         ).onEach { dataState ->
             state.value = state.value.copy(isLoading = dataState.isLoading)
 
