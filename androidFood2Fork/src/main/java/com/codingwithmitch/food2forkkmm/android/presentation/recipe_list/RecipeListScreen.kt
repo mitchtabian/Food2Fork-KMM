@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components.GradientDemo
 import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components.RecipeList
 import com.codingwithmitch.food2forkkmm.android.presentation.theme.AppTheme
+import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListEvents
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState
 
 @ExperimentalMaterialApi
@@ -21,6 +22,7 @@ import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState
 @Composable
 fun RecipeListScreen(
     state: RecipeListState,
+    onTriggerEvent: (RecipeListEvents) -> Unit,
     onSelectRecipe: (Int) -> Unit,
 ){
     AppTheme(
@@ -29,6 +31,10 @@ fun RecipeListScreen(
         RecipeList(
             loading = state.isLoading,
             recipes = state.recipes,
+            page = state.page,
+            onTriggerNextPage = {
+                onTriggerEvent(RecipeListEvents.NextPage)
+            },
             onClickRecipeListItem = onSelectRecipe
         )
     }

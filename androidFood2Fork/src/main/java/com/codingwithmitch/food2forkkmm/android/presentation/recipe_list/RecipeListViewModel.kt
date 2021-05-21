@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.interactors.recipe_list.SearchRecipes
+import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListEvents
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.forEach
@@ -25,13 +26,35 @@ constructor(
     val state: MutableState<RecipeListState> = mutableStateOf(RecipeListState())
 
     init {
+        onTriggerEvent(RecipeListEvents.LoadRecipes)
+    }
+
+    fun onTriggerEvent(event: RecipeListEvents){
+        when (event){
+            RecipeListEvents.LoadRecipes -> {
+                loadRecipes()
+            }
+            RecipeListEvents.NextPage -> {
+                nextPage()
+            }
+            else -> {
+                handleError("Invalid Event")
+            }
+        }
+    }
+
+    /**
+     * Get the next page of recipes
+     */
+    private fun nextPage(){
+        state.value = state.value.copy(page = state.value.page + 1)
         loadRecipes()
     }
 
     private fun loadRecipes(){
         searchRecipes.execute(
-            page = 1,
-            query = "chicken"
+            page = state.value.page,
+            query = state.value.query,
         ).onEach { dataState ->
             state.value = state.value.copy(isLoading = dataState.isLoading)
 
@@ -40,7 +63,7 @@ constructor(
             }
 
             dataState.message?.let { message ->
-                println("RecipeListVM: error: ${message}")
+                handleError(message)
             }
         }.launchIn(viewModelScope)
     }
@@ -49,6 +72,10 @@ constructor(
         val curr = ArrayList(state.value.recipes)
         curr.addAll(recipes)
         state.value = state.value.copy(recipes = curr)
+    }
+
+    private fun handleError(errorMessage: String){
+        // TODO("Handle errors")
     }
 }
 
