@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 
 @Composable
@@ -20,7 +21,7 @@ fun RecipeList(
             .background(color = MaterialTheme.colors.surface)
     ) {
         if (loading && recipes.isEmpty()) {
-            // Loading
+            LoadingRecipeListShimmer(imageHeight = 250.dp,)
         } else if (recipes.isEmpty()) {
             // There's nothing here
         } else {
