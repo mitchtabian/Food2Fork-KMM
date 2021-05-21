@@ -33,7 +33,7 @@ constructor(
             page = 1,
             query = "chicken"
         ).onEach { dataState ->
-            println("RecipeListVM: ${dataState.isLoading}")
+            state.value = state.value.copy(isLoading = dataState.isLoading)
 
             dataState.data?.let { recipes ->
                 appendRecipes(recipes)

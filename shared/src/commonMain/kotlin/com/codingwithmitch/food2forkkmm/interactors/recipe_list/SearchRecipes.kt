@@ -4,6 +4,7 @@ import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeCache
 import com.codingwithmitch.food2forkkmm.datasource.network.RecipeService
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.domain.util.DataState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -21,6 +22,10 @@ class SearchRecipes(
                 page = page,
                 query = query,
             )
+
+            // delay 500ms so we can see loading
+            delay(500)
+
             // insert into cache
             recipeCache.insert(recipes)
 
