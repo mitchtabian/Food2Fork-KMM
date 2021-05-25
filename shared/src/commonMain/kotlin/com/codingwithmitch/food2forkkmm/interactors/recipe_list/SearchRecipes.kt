@@ -24,7 +24,7 @@ class SearchRecipes(
             emit(DataState.loading())
 
             // just to show pagination, api is fast
-            delay(500)
+            delay(5000)
 
             // force error for testing
             if (query == "error") {
