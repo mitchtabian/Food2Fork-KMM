@@ -20,14 +20,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
+import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategoryUtil
 
 @ExperimentalComposeUiApi
 @Composable
 fun SearchAppBar(
     query: String,
-    categories: List<FoodCategory>,
     onQueryChanged: (String) -> Unit,
     onExecuteSearch: () -> Unit,
+    categories: List<FoodCategory>,
+    selectedCategory: FoodCategory?,
+    onSelectedCategoryChanged: (FoodCategory) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     Surface(
@@ -71,9 +74,11 @@ fun SearchAppBar(
                 items(categories) {
                     FoodCategoryChip(
                         category = it.value,
-                        isSelected = false,
+                        isSelected = selectedCategory == it,
                         onSelectedCategoryChanged = {
-                            // TODO("change the selected category")
+                            FoodCategoryUtil().getFoodCategory(it)?.let{ newCategory ->
+                                onSelectedCategoryChanged(newCategory)
+                            }
                         },
                     )
                 }
