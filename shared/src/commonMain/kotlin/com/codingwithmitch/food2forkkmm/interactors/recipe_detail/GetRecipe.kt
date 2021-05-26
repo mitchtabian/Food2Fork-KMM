@@ -2,7 +2,8 @@ package com.codingwithmitch.food2forkkmm.interactors.recipe_detail
 
 import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeCache
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
-import com.codingwithmitch.food2forkkmm.domain.util.*
+import com.codingwithmitch.food2forkkmm.domain.util.DataState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -17,6 +18,9 @@ class GetRecipe (
     ): Flow<DataState<Recipe>> = flow {
         try {
             emit(DataState.loading())
+
+            // for testing
+            delay(1000)
 
             val recipe =  recipeCache.get(recipeId)
 
