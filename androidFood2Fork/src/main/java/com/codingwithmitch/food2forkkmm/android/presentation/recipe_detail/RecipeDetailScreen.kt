@@ -4,13 +4,13 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import com.codingwithmitch.food2forkkmm.android.presentation.components.RecipeImage
-import com.codingwithmitch.food2forkkmm.android.presentation.recipe_list.components.RecipeCard
+import com.codingwithmitch.food2forkkmm.android.presentation.recipe_detail.composables.RecipeView
 import com.codingwithmitch.food2forkkmm.android.presentation.theme.AppTheme
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
+@ExperimentalStdlibApi
 @Composable
 fun RecipeDetailScreen(
     recipe: Recipe?,
@@ -22,7 +22,7 @@ fun RecipeDetailScreen(
             Text("Unable to get the details of this recipe...")
         }
         else{
-            RecipeCard(recipe = recipe, onClick = { /*TODO*/ })
+            RecipeView(recipe = recipe)
         }
     }
 }
