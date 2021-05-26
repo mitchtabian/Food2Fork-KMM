@@ -5,14 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codingwithmitch.food2forkkmm.datasource.network.RecipeService
-import com.codingwithmitch.food2forkkmm.domain.model.Recipe
-import com.codingwithmitch.food2forkkmm.domain.util.DatetimeUtil
 import com.codingwithmitch.food2forkkmm.interactors.recipe_detail.GetRecipe
+import com.codingwithmitch.food2forkkmm.presentation.recipe_detail.RecipeDetailEvents
+import com.codingwithmitch.food2forkkmm.presentation.recipe_detail.RecipeDetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalStdlibApi
@@ -24,21 +22,31 @@ constructor(
     private val getRecipe: GetRecipe,
 ): ViewModel() {
 
-    val recipe: MutableState<Recipe?> = mutableStateOf(null)
+    val state: MutableState<RecipeDetailState> = mutableStateOf(RecipeDetailState())
 
     init {
         savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
-            getRecipe(recipeId = recipeId)
+            onTriggerEvent(RecipeDetailEvents.GetRecipe(recipeId = recipeId))
+        }
+    }
+
+    fun onTriggerEvent(event: RecipeDetailEvents){
+        when (event) {
+            is RecipeDetailEvents.GetRecipe -> {
+                getRecipe(recipeId = event.recipeId)
+            }
+            else -> {
+                // TODO("Invalid event")
+            }
         }
     }
 
     private fun getRecipe(recipeId: Int){
         getRecipe.execute(recipeId = recipeId).onEach { dataState ->
-            println("RecipeDetailVM: loading: ${dataState.isLoading}")
+            state.value  = state.value.copy(isLoading = dataState.isLoading)
 
             dataState.data?.let { recipe ->
-                println("RecipeDetailVM: recipe: ${recipe}")
-                this.recipe.value = recipe
+                state.value = state.value.copy(recipe = recipe)
             }
 
             dataState.message?.let { message ->
