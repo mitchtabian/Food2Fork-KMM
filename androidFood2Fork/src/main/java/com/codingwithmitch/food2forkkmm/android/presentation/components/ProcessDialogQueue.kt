@@ -7,11 +7,13 @@ import com.codingwithmitch.food2forkkmm.domain.util.Queue
 @Composable
 fun ProcessDialogQueue(
     dialogQueue: Queue<GenericMessageInfo>?,
+    onRemoveHeadMessageFromQueue: () -> Unit,
 ) {
     dialogQueue?.peek()?.let { dialogInfo ->
         GenericDialog(
             title = dialogInfo.title,
             description = dialogInfo.description,
+            onRemoveHeadFromQueue = onRemoveHeadMessageFromQueue,
         )
     }
 }

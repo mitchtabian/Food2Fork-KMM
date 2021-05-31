@@ -9,6 +9,7 @@ import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.domain.model.UIComponentType
 import com.codingwithmitch.food2forkkmm.domain.util.GenericMessageInfoQueueUtil
+import com.codingwithmitch.food2forkkmm.domain.util.Queue
 import com.codingwithmitch.food2forkkmm.interactors.recipe_list.SearchRecipes
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListEvents
@@ -50,6 +51,9 @@ constructor(
             }
             is RecipeListEvents.OnSelectCategory -> {
                 onSelectCategory(event.category)
+            }
+            is RecipeListEvents.OnRemoveHeadMessageFromQueue -> {
+                removeHeadMessage()
             }
             else -> {
                 val messageInfoBuilder = GenericMessageInfo.Builder()
@@ -117,6 +121,17 @@ constructor(
             val queue = state.value.queue
             queue.add(messageInfo.build())
             state.value = state.value.copy(queue = queue)
+        }
+    }
+
+    private fun removeHeadMessage() {
+        try {
+            val queue = state.value.queue
+            queue.remove() // can throw exception if empty
+            state.value = state.value.copy(queue = Queue(mutableListOf())) // force recompose
+            state.value = state.value.copy(queue = queue)
+        }catch (e: Exception){
+            // nothing to remove, queue is empty
         }
     }
 
