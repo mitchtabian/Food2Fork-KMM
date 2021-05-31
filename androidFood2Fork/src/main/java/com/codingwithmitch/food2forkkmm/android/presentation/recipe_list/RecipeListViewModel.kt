@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
+import com.codingwithmitch.food2forkkmm.domain.model.UIComponentType
 import com.codingwithmitch.food2forkkmm.interactors.recipe_list.SearchRecipes
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListEvents
@@ -13,7 +15,9 @@ import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class RecipeListViewModel
@@ -47,7 +51,12 @@ constructor(
                 onSelectCategory(event.category)
             }
             else -> {
-                handleError("Invalid Event")
+                val messageInfoBuilder = GenericMessageInfo.Builder()
+                    .id(UUID.randomUUID().toString())
+                    .title("Invalid Event")
+                    .uiComponentType(UIComponentType.Dialog)
+                    .description("Something went wrong.")
+                appendToMessageQueue(messageInfo = messageInfoBuilder)
             }
         }
     }
@@ -90,7 +99,7 @@ constructor(
             }
 
             dataState.message?.let { message ->
-                handleError(message)
+                appendToMessageQueue(message)
             }
         }.launchIn(viewModelScope)
     }
@@ -101,9 +110,9 @@ constructor(
         state.value = state.value.copy(recipes = curr)
     }
 
-    private fun handleError(errorMessage: String) {
+    private fun appendToMessageQueue(messageInfo: GenericMessageInfo.Builder){
         val queue = state.value.queue
-        queue.add(errorMessage)
+        queue.add(messageInfo.build())
         state.value = state.value.copy(queue = queue)
     }
 
