@@ -36,7 +36,7 @@ constructor(
                 getRecipe(recipeId = event.recipeId)
             }
             else -> {
-                // TODO("Invalid event")
+                handleError("Invalid event")
             }
         }
     }
@@ -50,9 +50,15 @@ constructor(
             }
 
             dataState.message?.let { message ->
-                println("RecipeDetailVM: error: ${message}")
+                handleError(message)
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun handleError(errorMessage: String) {
+        val queue = state.value.queue
+        queue.add(errorMessage)
+        state.value = state.value.copy(queue = queue)
     }
 }
 
