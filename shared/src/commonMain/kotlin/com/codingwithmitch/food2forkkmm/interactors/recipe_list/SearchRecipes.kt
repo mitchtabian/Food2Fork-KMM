@@ -26,6 +26,11 @@ class SearchRecipes(
             // delay 500ms so we can see loading
             delay(500)
 
+            // force error for testing
+            if (query == "error") {
+                throw Exception("Forcing an error... Search FAILED!")
+            }
+
             // insert into cache
             recipeCache.insert(recipes)
 
