@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.domain.model.UIComponentType
+import com.codingwithmitch.food2forkkmm.domain.util.GenericMessageInfoQueueUtil
 import com.codingwithmitch.food2forkkmm.interactors.recipe_list.SearchRecipes
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListEvents
@@ -111,9 +112,12 @@ constructor(
     }
 
     private fun appendToMessageQueue(messageInfo: GenericMessageInfo.Builder){
-        val queue = state.value.queue
-        queue.add(messageInfo.build())
-        state.value = state.value.copy(queue = queue)
+        if(!GenericMessageInfoQueueUtil()
+                .doesMessageAlreadyExistInQueue(queue = state.value.queue,messageInfo = messageInfo.build())){
+            val queue = state.value.queue
+            queue.add(messageInfo.build())
+            state.value = state.value.copy(queue = queue)
+        }
     }
 
 }
