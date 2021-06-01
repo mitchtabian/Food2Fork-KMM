@@ -37,7 +37,7 @@ class Queue<T> (list:MutableList<T>){
         if(this.isEmpty()){
             throw Exception("fun 'element' threw an exception: Nothing in the queue.")
         }
-        return items[1]
+        return items[0]
     }
 
     fun offer(element: T): Boolean{
