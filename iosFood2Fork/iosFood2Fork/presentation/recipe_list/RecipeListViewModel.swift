@@ -77,11 +77,19 @@ class RecipeListViewModel: ObservableObject {
     }
     
     private func appendRecipes(recipes: [Recipe]){
-        for recipe in recipes {
-            print("\(recipe.title)")
+            var currentState = (self.state.copy() as! RecipeListState)
+            var currentRecipes = currentState.recipes
+            currentRecipes.append(contentsOf: recipes)
+            self.state = self.state.doCopy(
+                isLoading: currentState.isLoading,
+                page: currentState.page,
+                query: currentState.query,
+                selectedCategory: currentState.selectedCategory,
+                recipes: currentRecipes, // update recipes
+                queue: currentState.queue
+            )
+            currentState = (self.state.copy() as! RecipeListState)
         }
-        // TODO("append recipes to state")
-    }
     
     private func handleMessageByUIComponentType(_ message: GenericMessageInfo){
         // TODO("append to queue or 'None'")
@@ -90,6 +98,7 @@ class RecipeListViewModel: ObservableObject {
     private func doNothing(){
         // does nothing
     }
+    
     /**
      *  Not everything can be conveniently updated with this function.
      *  Things like recipes and selectedCategory must have their own functions.
