@@ -107,7 +107,6 @@ class RecipeListViewModel: ObservableObject {
             selectedCategory: foodCategory, // Maybe reset (see logic above)
             foodCategories: currentState.foodCategories,
             bottomRecipe:  currentState.bottomRecipe,
-            isQueryInProgress: currentState.isQueryInProgress,
             queue: currentState.queue
         )
     }
@@ -122,7 +121,6 @@ class RecipeListViewModel: ObservableObject {
             selectedCategory: foodCategory, // update selected FoodCategory
             foodCategories: currentState.foodCategories,
             bottomRecipe:  currentState.bottomRecipe,
-            isQueryInProgress: currentState.isQueryInProgress,
             queue: currentState.queue
         )
         onUpdateQuery(query: foodCategory?.value ?? "")
@@ -154,7 +152,6 @@ class RecipeListViewModel: ObservableObject {
             selectedCategory: currentState.selectedCategory,
             foodCategories: currentState.foodCategories,
             bottomRecipe:  currentState.bottomRecipe,
-            isQueryInProgress: currentState.isQueryInProgress,
             queue: currentState.queue
         )
         currentState = (self.state.copy() as! RecipeListState)
@@ -181,7 +178,7 @@ class RecipeListViewModel: ObservableObject {
         let currentState = (self.state.copy() as! RecipeListState)
         if(recipe.id == currentState.bottomRecipe?.id){
             if(RecipeListState.Companion().RECIPE_PAGINATION_PAGE_SIZE * currentState.page <= currentState.recipes.count){
-                if(!currentState.isQueryInProgress){
+                if(!currentState.isLoading){
                     return true
                 }
             }
@@ -222,7 +219,6 @@ class RecipeListViewModel: ObservableObject {
         page: Int? = nil,
         query: String? = nil,
         bottomRecipe: Recipe? = nil,
-        isQueryInProgress: Bool? = nil,
         queue: Queue<GenericMessageInfo>? = nil
     ){
         let currentState = (self.state.copy() as! RecipeListState)
@@ -234,7 +230,6 @@ class RecipeListViewModel: ObservableObject {
             selectedCategory: currentState.selectedCategory,
             foodCategories: currentState.foodCategories,
             bottomRecipe:  bottomRecipe ?? currentState.bottomRecipe,
-            isQueryInProgress: isQueryInProgress ?? currentState.isQueryInProgress,
             queue: queue ?? currentState.queue
         )
         shouldShowDialog()
