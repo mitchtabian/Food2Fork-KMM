@@ -27,4 +27,16 @@ class RecipeListViewModel: ObservableObject {
             // TODO("Perform a search")
         }
     
+    func incrementPage(){
+        let currentState = (self.state.copy() as! RecipeListState)
+        self.state = self.state.doCopy(
+            isLoading: currentState.isLoading,
+            page: currentState.page + 1,
+            query: currentState.query,
+            selectedCategory: currentState.selectedCategory,
+            recipes: currentState.recipes,
+            queue: currentState.queue
+        )
+    }
+    
 }
