@@ -42,13 +42,7 @@ struct RecipeListScreen: View {
                 VStack{
                     SearchAppBar(
                         query: viewModel.state.query,
-                        onUpdateQuery: { query in
-                            viewModel.onUpdateQuery(query: query)
-                        },
                         selectedCategory: viewModel.state.selectedCategory,
-                        onUpdateSelectedCategory: { foodCategory in
-                            viewModel.onUpdateSelectedCategory(foodCategory: foodCategory)
-                        },
                         foodCategories: viewModel.state.foodCategories,
                         onTriggerEvent: { event in
                             viewModel.onTriggerEvent(stateEvent: event)
@@ -91,7 +85,9 @@ struct RecipeListScreen: View {
                 let first = viewModel.state.queue.peek()!
                 return GenericMessageInfoAlert().build(
                     message: first,
-                    onRemoveHeadMessage: viewModel.removeHeadFromQueue
+                    onRemoveHeadMessage: {
+                        viewModel.onTriggerEvent(stateEvent: RecipeListEvents.OnRemoveHeadMessageFromQueue())
+                    }
                 )
             })
         }

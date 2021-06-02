@@ -13,23 +13,17 @@ import shared
 struct SearchAppBar: View {
     
     @State var query: String
-    let onUpdateQuery: (String) -> Void
     let selectedCategory: FoodCategory?
-    let onUpdateSelectedCategory: (FoodCategory) -> Void
     let foodCategories: [FoodCategory]
     let onTriggerEvent: (RecipeListEvents) -> Void
     
     init(
         query: String,
-        onUpdateQuery: @escaping (String) -> Void,
         selectedCategory: FoodCategory?,
-        onUpdateSelectedCategory: @escaping (FoodCategory) -> Void,
         foodCategories: [FoodCategory],
         onTriggerEvent: @escaping (RecipeListEvents) -> Void
     ) {
-        self.onUpdateQuery = onUpdateQuery
         self.selectedCategory = selectedCategory
-        self.onUpdateSelectedCategory = onUpdateSelectedCategory
         self.foodCategories = foodCategories
         self.onTriggerEvent = onTriggerEvent
         self._query = State(initialValue: query) // set initial value for query
@@ -47,9 +41,8 @@ struct SearchAppBar: View {
                     }
                 )
                 .onChange(of: query, perform: { value in
-                    onUpdateQuery(value)
+                    onTriggerEvent(RecipeListEvents.OnUpdateQuery(query: value))
                 })
-                
             }
             .padding(.bottom, 8)
             ScrollView(.horizontal){
@@ -61,7 +54,7 @@ struct SearchAppBar: View {
                         )
                         .onTapGesture {
                             query = category.value
-                            onUpdateSelectedCategory(category)
+                            onTriggerEvent(RecipeListEvents.OnSelectCategory(category: category))
                         }
                     }
                 }

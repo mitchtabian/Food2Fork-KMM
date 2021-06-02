@@ -28,22 +28,31 @@ class RecipeListViewModel: ObservableObject {
     ){
         self.searchRecipes = searchRecipes
         self.foodCategoryUtil = foodCategoryUtil
-        onTriggerEvent(stateEvent: RecipeListEvents.NewSearch())
+        onTriggerEvent(stateEvent: RecipeListEvents.LoadRecipes())
     }
     
     func onTriggerEvent(stateEvent: RecipeListEvents){
-        switch stateEvent{
-        case RecipeListEvents.NewSearch(): newSearch()
-        case RecipeListEvents.NextPage(): nextPage()
+        switch stateEvent {
+        case is RecipeListEvents.LoadRecipes:
+            loadRecipes()
+        case is RecipeListEvents.NewSearch:
+            newSearch()
+        case is RecipeListEvents.NextPage:
+            nextPage()
+        case is RecipeListEvents.OnUpdateQuery:
+            onUpdateQuery(query: (stateEvent as! RecipeListEvents.OnUpdateQuery).query)
+        case is RecipeListEvents.OnSelectCategory:
+            onUpdateSelectedCategory(foodCategory: (stateEvent as! RecipeListEvents.OnSelectCategory).category)
+        case RecipeListEvents.OnRemoveHeadMessageFromQueue():
+            removeHeadFromQueue()
         default:
             doNothing()
         }
     }
     
     func doNothing(){}
-
-    private func newSearch() {
-        resetSearchState()
+    
+    private func loadRecipes(){
         let currentState = (self.state.copy() as! RecipeListState)
         do{
             try searchRecipes.execute(
@@ -74,38 +83,14 @@ class RecipeListViewModel: ObservableObject {
         }
     }
 
+    private func newSearch() {
+        resetSearchState()
+        loadRecipes()
+    }
+
     private func nextPage(){
         incrementPage()
-        let currentState = (self.state.copy() as! RecipeListState)
-        logger.log(msg: "NEXT PAGE \(currentState.page)")
-        if(currentState.page > 1){
-            do{
-                try searchRecipes.execute(
-                    page: Int32(currentState.page),
-                    query: currentState.query
-                ).collectCommon(
-                    coroutineScope: nil,
-                    callback: { dataState in
-                    if dataState != nil {
-                        let data = dataState?.data
-                        let message = dataState?.message
-                        let loading = dataState?.isLoading ?? false
-
-                        self.updateState(isLoading: loading)
-                        if(data != nil){
-                            self.appendRecipes(recipes: data as! [Recipe])
-                        }
-                        if(message != nil){
-                            self.handleMessageByUIComponentType(message!.build())
-                        }
-                    }else{
-                        self.logger.log(msg: "NextPage: DataState is nil")
-                    }
-                })
-            }catch{
-                self.logger.log(msg: "\(error)")
-            }
-        }
+        loadRecipes()
     }
     
     private func resetSearchState(){
@@ -127,7 +112,7 @@ class RecipeListViewModel: ObservableObject {
         )
     }
 
-    func onUpdateSelectedCategory(foodCategory: FoodCategory?){
+    private func onUpdateSelectedCategory(foodCategory: FoodCategory?){
         let currentState = (self.state.copy() as! RecipeListState)
         self.state = self.state.doCopy(
             isLoading: currentState.isLoading,
@@ -144,7 +129,7 @@ class RecipeListViewModel: ObservableObject {
         onTriggerEvent(stateEvent: RecipeListEvents.NewSearch())
     }
 
-    func onUpdateQuery(query: String){
+    private func onUpdateQuery(query: String){
         updateState(query: query)
     }
 
