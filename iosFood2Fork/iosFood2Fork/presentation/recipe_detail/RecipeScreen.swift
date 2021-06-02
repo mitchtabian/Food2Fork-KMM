@@ -47,7 +47,9 @@ struct RecipeScreen: View {
                             let first = viewModel.state.queue.peek()!
                             return GenericMessageInfoAlert().build(
                                 message: first,
-                                onRemoveHeadMessage: viewModel.removeHeadFromQueue
+                                onRemoveHeadMessage: {
+                                    viewModel.onTriggerEvent(stateEvent: RecipeDetailEvents.OnRemoveHeadMessageFromQueue())
+                                }
                             )
                         })
                 }

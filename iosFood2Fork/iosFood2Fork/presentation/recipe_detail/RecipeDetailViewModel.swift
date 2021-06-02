@@ -26,10 +26,20 @@ class RecipeDetailViewModel: ObservableObject {
         getRecipe: GetRecipe
     ) {
         self.getRecipe = getRecipe
-        executeGetRecipe(recipeId: recipeId)
+        onTriggerEvent(stateEvent: RecipeDetailEvents.GetRecipe(recipeId: Int32(recipeId)))
     }
     
-    private func executeGetRecipe(recipeId: Int){
+    func onTriggerEvent(stateEvent: RecipeDetailEvents){
+        switch stateEvent {
+            case is RecipeDetailEvents.GetRecipe:
+                getRecipe(recipeId: Int((stateEvent as! RecipeDetailEvents.GetRecipe).recipeId))
+            case is RecipeDetailEvents.OnRemoveHeadMessageFromQueue:
+                removeHeadFromQueue()
+            default: doNothing()
+        }
+    }
+    
+    private func getRecipe(recipeId: Int){
         do{
             try self.getRecipe.execute(
                 recipeId: Int32(recipeId)
@@ -102,7 +112,7 @@ class RecipeDetailViewModel: ObservableObject {
     /**
      *  Remove the head message from queue
      */
-    func removeHeadFromQueue(){
+    private func removeHeadFromQueue(){
         let currentState = (self.state.copy() as! RecipeDetailState)
         let queue = currentState.queue
         do {
