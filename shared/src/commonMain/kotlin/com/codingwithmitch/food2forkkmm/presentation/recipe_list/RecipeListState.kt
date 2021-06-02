@@ -11,4 +11,14 @@ data class RecipeListState(
     val selectedCategory: FoodCategory? = null,
     val recipes: List<Recipe> = listOf(),
     val queue: Queue<GenericMessageInfo> = Queue(mutableListOf()), // messages to be displayed in ui
-)
+){
+    // Need secondary zero-argument constructor to initialize with no args in SwiftUI
+    constructor(): this(
+        isLoading = false,
+        page = 1,
+        query = "",
+        recipes = listOf(),
+        selectedCategory = null,
+        queue = Queue(mutableListOf()),
+    )
+}
