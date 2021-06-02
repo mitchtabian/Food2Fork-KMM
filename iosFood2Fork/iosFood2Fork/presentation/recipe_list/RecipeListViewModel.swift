@@ -27,16 +27,29 @@ class RecipeListViewModel: ObservableObject {
             // TODO("Perform a search")
         }
     
-    func incrementPage(){
-        let currentState = (self.state.copy() as! RecipeListState)
-        self.state = self.state.doCopy(
-            isLoading: currentState.isLoading,
-            page: currentState.page + 1,
-            query: currentState.query,
-            selectedCategory: currentState.selectedCategory,
-            recipes: currentState.recipes,
-            queue: currentState.queue
-        )
-    }
+    /**
+     *  Not everything can be conveniently updated with this function.
+     *  Things like recipes and selectedCategory must have their own functions.
+     *  Basically if more then one action must be taken then it cannot be updated with this function.
+     *  ex: updating selected category requires us to 1) update category, 2) update the query, 3) trigger new search event
+     */
+        func updateState(
+            isLoading: Bool? = nil,
+            page: Int? = nil,
+            query: String? = nil,
+            bottomRecipe: Recipe? = nil,
+            isQueryInProgress: Bool? = nil,
+            queue: Queue<GenericMessageInfo>? = nil
+        ){
+            let currentState = (self.state.copy() as! RecipeListState)
+            self.state = self.state.doCopy(
+                isLoading: isLoading ?? currentState.isLoading,
+                page: Int32(page ?? Int(currentState.page)),
+                query: query ?? currentState.query,
+                selectedCategory: currentState.selectedCategory,
+                recipes: currentState.recipes ,
+                queue: queue ?? currentState.queue
+            )
+        }
     
 }
