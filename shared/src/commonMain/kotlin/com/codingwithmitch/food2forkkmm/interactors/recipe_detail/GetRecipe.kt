@@ -4,9 +4,10 @@ import com.codingwithmitch.food2forkkmm.datasource.cache.RecipeCache
 import com.codingwithmitch.food2forkkmm.domain.model.GenericMessageInfo
 import com.codingwithmitch.food2forkkmm.domain.model.Recipe
 import com.codingwithmitch.food2forkkmm.domain.model.UIComponentType
+import com.codingwithmitch.food2forkkmm.domain.util.CommonFlow
 import com.codingwithmitch.food2forkkmm.domain.util.DataState
+import com.codingwithmitch.food2forkkmm.domain.util.asCommonFlow
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 /**
@@ -17,7 +18,7 @@ class GetRecipe (
 ){
     fun execute(
         recipeId: Int,
-    ): Flow<DataState<Recipe>> = flow {
+    ): CommonFlow<DataState<Recipe>> = flow {
         try {
             emit(DataState.loading())
 
@@ -37,6 +38,6 @@ class GetRecipe (
                     .description(e.message?: "Unknown Error")
             ))
         }
-    }
+    }.asCommonFlow()
 
 }

@@ -13,8 +13,6 @@ import com.codingwithmitch.food2forkkmm.interactors.recipe_detail.GetRecipe
 import com.codingwithmitch.food2forkkmm.presentation.recipe_detail.RecipeDetailEvents
 import com.codingwithmitch.food2forkkmm.presentation.recipe_detail.RecipeDetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import java.util.*
 import javax.inject.Inject
 
@@ -55,8 +53,8 @@ constructor(
     }
 
     private fun getRecipe(recipeId: Int){
-        getRecipe.execute(recipeId = recipeId).onEach { dataState ->
-            state.value  = state.value.copy(isLoading = dataState.isLoading)
+        getRecipe.execute(recipeId = recipeId).collectCommon(viewModelScope) { dataState ->
+            state.value = state.value.copy(isLoading = dataState.isLoading)
 
             dataState.data?.let { recipe ->
                 state.value = state.value.copy(recipe = recipe)
@@ -65,7 +63,7 @@ constructor(
             dataState.message?.let { message ->
                 appendToMessageQueue(message)
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun appendToMessageQueue(messageInfo: GenericMessageInfo.Builder){

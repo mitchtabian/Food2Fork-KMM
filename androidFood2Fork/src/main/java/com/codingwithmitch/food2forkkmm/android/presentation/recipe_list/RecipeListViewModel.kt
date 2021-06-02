@@ -15,8 +15,6 @@ import com.codingwithmitch.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListEvents
 import com.codingwithmitch.food2forkkmm.presentation.recipe_list.RecipeListState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -95,8 +93,8 @@ constructor(
     private fun loadRecipes() {
         searchRecipes.execute(
             page = state.value.page,
-            query = state.value.query,
-        ).onEach { dataState ->
+            query = state.value.query
+        ).collectCommon(viewModelScope) { dataState ->
             state.value = state.value.copy(isLoading = dataState.isLoading)
 
             dataState.data?.let { recipes ->
@@ -106,7 +104,7 @@ constructor(
             dataState.message?.let { message ->
                 appendToMessageQueue(message)
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun appendRecipes(recipes: List<Recipe>) {
