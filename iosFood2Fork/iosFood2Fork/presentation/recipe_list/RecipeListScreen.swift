@@ -39,7 +39,7 @@ struct RecipeListScreen: View {
             Text("\(viewModel.state.page)")
             Button(
                 action: {
-                    viewModel.incrementPage()
+                    viewModel.updateState(page: Int(viewModel.state.page) + 1)
                 },
                label: {
                     Text("Increment page")
