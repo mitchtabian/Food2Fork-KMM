@@ -59,8 +59,6 @@ class RecipeListViewModel: ObservableObject {
             isLoading: Bool? = nil,
             page: Int? = nil,
             query: String? = nil,
-            bottomRecipe: Recipe? = nil,
-            isQueryInProgress: Bool? = nil,
             queue: Queue<GenericMessageInfo>? = nil
         ){
             let currentState = (self.state.copy() as! RecipeListState)
