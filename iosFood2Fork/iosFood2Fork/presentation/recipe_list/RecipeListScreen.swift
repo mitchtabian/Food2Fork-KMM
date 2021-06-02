@@ -35,9 +35,20 @@ struct RecipeListScreen: View {
     }
     
     var body: some View {
-        List{
-            ForEach(viewModel.state.recipes, id: \.self.id){ recipe in
-                Text(recipe.title)
+        VStack{
+            HStack{
+                Text("Page: \(viewModel.state.page), Size: \(viewModel.state.recipes.count)")
+                    .padding()
+            }
+            List{
+                ForEach(viewModel.state.recipes, id: \.self.id){ recipe in
+                    Text(recipe.title)
+                        .onAppear(perform: {
+                           if viewModel.shouldQueryNextPage(recipe: recipe){
+                               viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NextPage())
+                           }
+                       })
+                }
             }
         }
     }
