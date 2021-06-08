@@ -13,10 +13,11 @@ struct FoodCategoryChip: View {
     private let category: String
     private let isSelected: Bool
     
-    init(category: String, isSelected: Bool = false) { 
+    init(category: String, isSelected: Bool = false) {
         self.category = category
         self.isSelected = isSelected
     }
+    
     var body: some View {
         HStack{
             Text(category) // TODO("update font")
