@@ -10,7 +10,6 @@ actual data class RecipeListState(
     val query: String = "",
     val recipes: List<Recipe> = listOf(),
     val selectedCategory: FoodCategory? = null,
-    val foodCategories: List<FoodCategory> = FoodCategoryUtil().getAllFoodCategories(),
     val bottomRecipe: Recipe? = null, // track the recipe at the bottom of the list so we know when to trigger pagination
     val queue: Queue<GenericMessageInfo> = Queue(mutableListOf()), // messages to be displayed in ui
 )  {
