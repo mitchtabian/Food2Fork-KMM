@@ -41,7 +41,10 @@ struct RecipeListScreen: View {
                     .padding()
             }
             SearchAppBar(
-                query: viewModel.state.query
+                query: viewModel.state.query,
+                onTriggerEvent: { event in
+                    viewModel.onTriggerEvent(stateEvent: event)
+                }
             )
             List{
                 ForEach(viewModel.state.recipes, id: \.self.id){ recipe in

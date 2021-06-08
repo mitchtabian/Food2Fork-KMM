@@ -11,7 +11,16 @@ import shared
 
 struct SearchAppBar: View {
     
-    @State var query: String = ""
+    @State var query: String
+    let onTriggerEvent: (RecipeListEvents) -> Void
+    
+    init(
+        query: String,
+        onTriggerEvent: @escaping (RecipeListEvents) -> Void
+    ) {
+        self.onTriggerEvent = onTriggerEvent
+        self._query = State(initialValue: query) // set initial value for query
+    }
     
     var body: some View {
             VStack{
@@ -21,11 +30,11 @@ struct SearchAppBar: View {
                         "Search...",
                         text: $query,
                         onCommit:{
-                            // TODO("Execute a new search")
+                            onTriggerEvent(RecipeListEvents.NewSearch())
                         }
                     )
                     .onChange(of: query, perform: { value in
-                       //  TODO("Update the query")
+                        onTriggerEvent(RecipeListEvents.OnUpdateQuery(query: value))
                     })
                 }
                 .padding(.bottom, 8)
