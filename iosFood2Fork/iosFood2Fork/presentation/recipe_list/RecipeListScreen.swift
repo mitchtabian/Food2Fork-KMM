@@ -59,11 +59,12 @@ struct RecipeListScreen: View {
                                         viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NextPage())
                                     }
                                 })
-                                .listRowInsets(EdgeInsets())
-                                .padding(.top, 10)
                         }
+                        .listRowInsets(EdgeInsets())
+                        .padding(.top, 10)
                     }
                 }
+                .listStyle(PlainListStyle())
             }
             .navigationBarHidden(true)
         }
