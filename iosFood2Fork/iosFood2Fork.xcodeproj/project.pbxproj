@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		226D3849266FC64F0079F99B /* SearchAppBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226D3848266FC64E0079F99B /* SearchAppBar.swift */; };
 		226D384B266FD2EE0079F99B /* FoodCategoryChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226D384A266FD2EE0079F99B /* FoodCategoryChip.swift */; };
+		226D384D266FE0BF0079F99B /* RecipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226D384C266FE0BF0079F99B /* RecipeCard.swift */; };
 		22847CA02667F05000D941CB /* RecipeListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22847C9F2667F05000D941CB /* RecipeListScreen.swift */; };
 		22847CA22667F5BB00D941CB /* RecipeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22847CA12667F5BB00D941CB /* RecipeListViewModel.swift */; };
 		5BDB47D334868C22A88CE278 /* Pods_iosFood2Fork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219AB49DE46487BC9CE2CA74 /* Pods_iosFood2Fork.framework */; };
@@ -20,6 +21,7 @@
 		219AB49DE46487BC9CE2CA74 /* Pods_iosFood2Fork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosFood2Fork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		226D3848266FC64E0079F99B /* SearchAppBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppBar.swift; sourceTree = "<group>"; };
 		226D384A266FD2EE0079F99B /* FoodCategoryChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategoryChip.swift; sourceTree = "<group>"; };
+		226D384C266FE0BF0079F99B /* RecipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCard.swift; sourceTree = "<group>"; };
 		22847C9F2667F05000D941CB /* RecipeListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListScreen.swift; sourceTree = "<group>"; };
 		22847CA12667F5BB00D941CB /* RecipeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewModel.swift; sourceTree = "<group>"; };
 		2F38F42FDC0C4F50C0B7F91B /* Pods-iosFood2Fork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosFood2Fork.debug.xcconfig"; path = "Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork.debug.xcconfig"; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				226D3848266FC64E0079F99B /* SearchAppBar.swift */,
 				226D384A266FD2EE0079F99B /* FoodCategoryChip.swift */,
+				226D384C266FE0BF0079F99B /* RecipeCard.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -123,6 +126,7 @@
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				7D031E8D7819433762B70594 /* Frameworks */,
+				861A828D7A497FD2FF87BC9E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -199,6 +203,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		861A828D7A497FD2FF87BC9E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -211,6 +232,7 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				226D384B266FD2EE0079F99B /* FoodCategoryChip.swift in Sources */,
 				22847CA22667F5BB00D941CB /* RecipeListViewModel.swift in Sources */,
+				226D384D266FE0BF0079F99B /* RecipeCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
