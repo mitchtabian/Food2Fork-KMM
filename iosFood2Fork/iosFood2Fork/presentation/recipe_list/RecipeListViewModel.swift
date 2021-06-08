@@ -105,7 +105,6 @@ class RecipeListViewModel: ObservableObject {
             query: currentState.query,
             recipes: [], // reset
             selectedCategory: foodCategory, // Maybe reset (see logic above)
-            foodCategories: currentState.foodCategories,
             bottomRecipe:  currentState.bottomRecipe,
             queue: currentState.queue
         )
@@ -119,7 +118,6 @@ class RecipeListViewModel: ObservableObject {
             query: currentState.query,
             recipes: currentState.recipes,
             selectedCategory: foodCategory, // update selected FoodCategory
-            foodCategories: currentState.foodCategories,
             bottomRecipe:  currentState.bottomRecipe,
             queue: currentState.queue
         )
@@ -150,7 +148,6 @@ class RecipeListViewModel: ObservableObject {
             query: currentState.query,
             recipes: currentRecipes, // update recipes
             selectedCategory: currentState.selectedCategory,
-            foodCategories: currentState.foodCategories,
             bottomRecipe:  currentState.bottomRecipe,
             queue: currentState.queue
         )
@@ -228,7 +225,6 @@ class RecipeListViewModel: ObservableObject {
             query: query ?? currentState.query,
             recipes: currentState.recipes ,
             selectedCategory: currentState.selectedCategory,
-            foodCategories: currentState.foodCategories,
             bottomRecipe:  bottomRecipe ?? currentState.bottomRecipe,
             queue: queue ?? currentState.queue
         )
