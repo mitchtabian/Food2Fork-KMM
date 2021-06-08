@@ -45,6 +45,7 @@ struct RecipeListScreen: View {
             }
             SearchAppBar(
                 query: viewModel.state.query,
+                selectedCategory: viewModel.state.selectedCategory,
                 foodCategories: foodCategories,
                 onTriggerEvent: { event in
                     viewModel.onTriggerEvent(stateEvent: event)
