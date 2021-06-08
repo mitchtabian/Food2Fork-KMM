@@ -40,6 +40,9 @@ struct RecipeListScreen: View {
                 Text("Page: \(viewModel.state.page), Size: \(viewModel.state.recipes.count)")
                     .padding()
             }
+            SearchAppBar(
+                query: viewModel.state.query
+            )
             List{
                 ForEach(viewModel.state.recipes, id: \.self.id){ recipe in
                     Text(recipe.title)
