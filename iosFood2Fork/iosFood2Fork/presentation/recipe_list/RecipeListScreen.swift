@@ -50,20 +50,28 @@ struct RecipeListScreen: View {
                 )
                 List {
                     ForEach(viewModel.state.recipes, id: \.self.id){ recipe in
-                        NavigationLink(
-                            destination: Text("\(recipe.title)")
-                        ){
-                            RecipeCard(recipe: recipe)
-                                .onAppear(perform: {
-                                    if viewModel.shouldQueryNextPage(recipe: recipe){
-                                        viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NextPage())
-                                    }
-                                })
-                                .listRowInsets(EdgeInsets())
-                                .padding(.top, 10)
+                        ZStack{
+                            VStack{
+                                RecipeCard(recipe: recipe)
+                                    .onAppear(perform: {
+                                        if viewModel.shouldQueryNextPage(recipe: recipe){
+                                            viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NextPage())
+                                        }
+                                    })
+                            }
+                            NavigationLink(
+                                destination: Text("\(recipe.title)")
+                            ){
+                                // workaround for hiding arrows
+                                EmptyView()
+                            }.hidden().frame(width: 0)
                         }
+                        .listRowInsets(EdgeInsets())
+                        .padding(.top, 10)
                     }
                 }
+                .listStyle(PlainListStyle())
+                .background(Color.gray)
             }
             .navigationBarHidden(true)
         }
