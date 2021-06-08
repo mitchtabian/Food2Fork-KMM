@@ -8,6 +8,7 @@
 
 import SwiftUI
 import shared
+import SDWebImageSwiftUI
 
 struct RecipeView: View {
     
@@ -26,10 +27,17 @@ struct RecipeView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading){
-                AsyncImageView(urlString: recipe.featuredImage)
-                    .scaledToFill()
-                    .frame(maxHeight: 250)
-                    .clipped()
+                WebImage(url: URL(string: recipe.featuredImage))
+                            .resizable()
+                            .placeholder(Image(systemName: "photo")) // Placeholder Image
+                            .placeholder {
+                                Rectangle().foregroundColor(.white)
+                            }
+                            .indicator(.activity)
+                            .transition(.fade(duration: 0.5))
+                            .scaledToFill() // 1
+                            .frame(height: 250, alignment: .center) // 2
+                            .clipped() // 3
                 
                 VStack(alignment: .leading){
                     
