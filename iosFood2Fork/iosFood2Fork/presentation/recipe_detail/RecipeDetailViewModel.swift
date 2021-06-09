@@ -17,6 +17,8 @@ class RecipeDetailViewModel: ObservableObject {
     // State
     @Published var state: RecipeDetailState =  RecipeDetailState()
     
+    @Published var showDialog: Bool = false
+    
     init(
         recipeId: Int,
         getRecipe: GetRecipe
@@ -26,45 +28,90 @@ class RecipeDetailViewModel: ObservableObject {
     }
     
     func onTriggerEvent(stateEvent: RecipeDetailEvents){
-            switch stateEvent {
-                case is RecipeDetailEvents.GetRecipe:
-                    getRecipe(recipeId: Int((stateEvent as! RecipeDetailEvents.GetRecipe).recipeId))
-                case is RecipeDetailEvents.OnRemoveHeadMessageFromQueue:
-                    doNothing()
-                default: doNothing()
-            }
+        switch stateEvent {
+            case is RecipeDetailEvents.GetRecipe:
+                getRecipe(recipeId: Int((stateEvent as! RecipeDetailEvents.GetRecipe).recipeId))
+            case is RecipeDetailEvents.OnRemoveHeadMessageFromQueue:
+                removeHeadFromQueue()
+            default: doNothing()
         }
+    }
         
-        private func getRecipe(recipeId: Int){
-            do{
-                try self.getRecipe.execute(
-                    recipeId: Int32(recipeId)
-                ).collectCommon(
-                    coroutineScope: nil,
-                    callback: { dataState in
-                    if dataState != nil {
-                        let data = dataState?.data
-                        let message = dataState?.message
-                        let loading = dataState?.isLoading ?? false
-                        self.updateState(isLoading: loading)
+    private func getRecipe(recipeId: Int){
+        do{
+            try self.getRecipe.execute(
+                recipeId: Int32(recipeId)
+            ).collectCommon(
+                coroutineScope: nil,
+                callback: { dataState in
+                if dataState != nil {
+                    let data = dataState?.data
+                    let message = dataState?.message
+                    let loading = dataState?.isLoading ?? false
+                    self.updateState(isLoading: loading)
+                    
+                    if(data != nil){
+                        self.updateState(recipe: data! as Recipe)
                         
-                        if(data != nil){
-                            self.updateState(recipe: data! as Recipe)
-                        }
-                        if(message != nil){
-                            self.handleMessageByUIComponentType(message!.build())
-                        }
-                    }else{
-                        print("GetRecipe: DataState is nil")
+                        let msg = GenericMessageInfo.Builder()
+                            .id(id: String((data! as Recipe).id))
+                            .title(title: "Error with \((data! as Recipe).id)")
+                            .uiComponentType(uiComponentType: UIComponentType.Dialog())
+                            .description(description: "Something went wrong")
+                        self.appendToQueue(message: msg.build())
                     }
-                })
-            }catch{
-                print("GetRecipe: ERROR: \(error)")
-            }
+                    if(message != nil){
+                        self.handleMessageByUIComponentType(message!.build())
+                    }
+                }else{
+                    print("GetRecipe: DataState is nil")
+                }
+            })
+        }catch{
+            print("GetRecipe: ERROR: \(error)")
         }
+    }
     
     private func handleMessageByUIComponentType(_ message: GenericMessageInfo){
-        // TODO("handle error messages")
+        switch message.uiComponentType{
+        case UIComponentType.Dialog():
+            appendToQueue(message: message)
+        case UIComponentType.None():
+            print("\(message.description)")
+        default:
+            doNothing()
+        }
+    }
+    
+    private func appendToQueue(message: GenericMessageInfo){
+        print("Appending: \(message.id)")
+        let currentState = (self.state.copy() as! RecipeDetailState)
+        let queue = currentState.queue
+        let queueUtil = GenericMessageInfoQueueUtil() // prevent duplicates
+        if !queueUtil.doesMessageAlreadyExistInQueue(queue: queue, messageInfo: message) {
+           queue.add(element: message)
+           updateState(queue: queue)
+        }
+        shouldShowDialog()
+   }
+    
+    /**
+     *  Remove the head message from queue
+     */
+    private func removeHeadFromQueue(){
+        let currentState = (self.state.copy() as! RecipeDetailState)
+        let queue = currentState.queue
+        do {
+            try queue.remove()
+            updateState(queue: queue)
+        }catch{
+            print("\(error)")
+        }
+    }
+    
+    func shouldShowDialog(){
+        let currentState = (self.state.copy() as! RecipeDetailState)
+        showDialog = currentState.queue.items.count > 0
     }
         
     private func doNothing(){}
