@@ -39,39 +39,44 @@ struct RecipeListScreen: View {
     
     var body: some View {
         NavigationView{
-            VStack{
-                SearchAppBar(
-                    query: viewModel.state.query,
-                    selectedCategory: viewModel.state.selectedCategory,
-                    foodCategories: foodCategories,
-                    onTriggerEvent: { event in
-                        viewModel.onTriggerEvent(stateEvent: event)
-                    }
-                )
-                List {
-                    ForEach(viewModel.state.recipes, id: \.self.id){ recipe in
-                        ZStack{
-                            VStack{
-                                RecipeCard(recipe: recipe)
-                                    .onAppear(perform: {
-                                        if viewModel.shouldQueryNextPage(recipe: recipe){
-                                            viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NextPage())
-                                        }
-                                    })
-                            }
-                            NavigationLink(
-                                destination: Text("\(recipe.title)")
-                            ){
-                                // workaround for hiding arrows
-                                EmptyView()
-                            }.hidden().frame(width: 0)
+            ZStack{
+                VStack{
+                    SearchAppBar(
+                        query: viewModel.state.query,
+                        selectedCategory: viewModel.state.selectedCategory,
+                        foodCategories: foodCategories,
+                        onTriggerEvent: { event in
+                            viewModel.onTriggerEvent(stateEvent: event)
                         }
-                        .listRowInsets(EdgeInsets())
-                        .padding(.top, 10)
+                    )
+                    List {
+                        ForEach(viewModel.state.recipes, id: \.self.id){ recipe in
+                            ZStack{
+                                VStack{
+                                    RecipeCard(recipe: recipe)
+                                        .onAppear(perform: {
+                                            if viewModel.shouldQueryNextPage(recipe: recipe){
+                                                viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NextPage())
+                                            }
+                                        })
+                                }
+                                NavigationLink(
+                                    destination: Text("\(recipe.title)")
+                                ){
+                                    // workaround for hiding arrows
+                                    EmptyView()
+                                }.hidden().frame(width: 0)
+                            }
+                            .listRowInsets(EdgeInsets())
+                            .padding(.top, 10)
+                        }
                     }
+                    .listStyle(PlainListStyle())
+                    .background(Color.gray)
                 }
-                .listStyle(PlainListStyle())
-                .background(Color.gray)
+                if viewModel.state.isLoading {
+                    ProgressView("Searching recipes...")
+                }
             }
             .navigationBarHidden(true)
         }
