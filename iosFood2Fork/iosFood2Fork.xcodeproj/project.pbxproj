@@ -16,6 +16,7 @@
 		22ACA31D267128C100A9D666 /* RecipeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ACA31C267128C100A9D666 /* RecipeDetailViewModel.swift */; };
 		22ACA31F26712A0500A9D666 /* RecipeDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ACA31E26712A0500A9D666 /* RecipeDetailScreen.swift */; };
 		22ACA32226712C8C00A9D666 /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ACA32126712C8C00A9D666 /* RecipeView.swift */; };
+		22ACA325267133E900A9D666 /* Avenir.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 22ACA324267133E900A9D666 /* Avenir.ttc */; };
 		5BDB47D334868C22A88CE278 /* Pods_iosFood2Fork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219AB49DE46487BC9CE2CA74 /* Pods_iosFood2Fork.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,7 @@
 		22ACA31C267128C100A9D666 /* RecipeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewModel.swift; sourceTree = "<group>"; };
 		22ACA31E26712A0500A9D666 /* RecipeDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailScreen.swift; sourceTree = "<group>"; };
 		22ACA32126712C8C00A9D666 /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
+		22ACA324267133E900A9D666 /* Avenir.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Avenir.ttc; sourceTree = "<group>"; };
 		2F38F42FDC0C4F50C0B7F91B /* Pods-iosFood2Fork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosFood2Fork.debug.xcconfig"; path = "Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork.debug.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosFood2Fork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosFood2Fork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -103,6 +105,14 @@
 			path = components;
 			sourceTree = "<group>";
 		};
+		22ACA3232671338800A9D666 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				22ACA324267133E900A9D666 /* Avenir.ttc */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		52E6BA7785F9EEF5775D20DE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +143,7 @@
 		7555FF7D242A565900829871 /* iosFood2Fork */ = {
 			isa = PBXGroup;
 			children = (
+				22ACA3232671338800A9D666 /* fonts */,
 				22847C9D2667F03B00D941CB /* presentation */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
@@ -200,6 +211,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22ACA325267133E900A9D666 /* Avenir.ttc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
