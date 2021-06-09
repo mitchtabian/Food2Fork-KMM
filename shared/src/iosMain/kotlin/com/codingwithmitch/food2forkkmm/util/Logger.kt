@@ -9,7 +9,7 @@ actual class Logger actual constructor(
             // Crashlytics or whatever
         }
         else{
-            println("className: $msg")
+            println("$className: $msg")
         }
     }
 }

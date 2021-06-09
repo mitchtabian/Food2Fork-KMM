@@ -1,107 +1,86 @@
-//
-//  RecipeView.swift
-//  iosFood2Fork
-//
-//  Created by Mitch Tabian on 2021-05-05.
-//  Copyright © 2021 orgName. All rights reserved.
-//
-
 import SwiftUI
 import shared
 import SDWebImageSwiftUI
 
 struct RecipeView: View {
     
-    private let recipe: Recipe
+    private let recipe: Recipe?
     private let dateUtil: DatetimeUtil
+    private let message: GenericMessageInfo?
+    private let onTriggerEvent: (RecipeDetailEvents) -> Void
+
+    @State var showDialog: Bool
     
     init(
-        recipe: Recipe,
-        dateUtil: DatetimeUtil
+        recipe: Recipe?,
+        dateUtil: DatetimeUtil,
+        message: GenericMessageInfo? = nil,
+        onTriggerEvent: @escaping (RecipeDetailEvents) -> Void
     ) {
         self.recipe = recipe
         self.dateUtil = dateUtil
-        UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "avenir", size: 20)!]
+        self.message = message
+        if message != nil {
+            self.showDialog = true
+        }else{
+            self.showDialog = false
+        }
+        self.onTriggerEvent = onTriggerEvent
+        print("SHOW DIALOG: \(self.showDialog)")
     }
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading){
-                WebImage(url: URL(string: recipe.featuredImage))
-                            .resizable()
-                            .placeholder(Image(systemName: "photo")) // Placeholder Image
-                            .placeholder {
-                                Rectangle().foregroundColor(.white)
-                            }
-                            .indicator(.activity)
-                            .transition(.fade(duration: 0.5))
-                            .scaledToFill() // 1
-                            .frame(height: 250, alignment: .center) // 2
-                            .clipped() // 3
-                
-                VStack(alignment: .leading){
-                    
-                    HStack(alignment: .lastTextBaseline){
-                        DefaultText(
-                            "Updated \(dateUtil.humanizeDatetime(date: recipe.dateUpdated)) by \(recipe.publisher)"
-                        )
-                            .foregroundColor(Color.init(hex: 0x5f5f5f))
-
-                        Spacer()
+        NavigationView{
+            ScrollView {
+                if recipe == nil {
+                    Text("Error")
+                }else{
+                    VStack(alignment: .leading){
+                        WebImage(url: URL(string: recipe!.featuredImage))
+                                    .resizable()
+                                    .placeholder(Image(systemName: "photo")) // Placeholder Image
+                                    .placeholder {
+                                        Rectangle().foregroundColor(.white)
+                                    }
+                                    .indicator(.activity)
+                                    .transition(.fade(duration: 0.5))
+                                    .scaledToFill() // 1
+                                    .frame(height: 250, alignment: .center) // 2
+                                    .clipped() // 3
                         
-                        DefaultText(String(recipe.rating))
-                            .frame(alignment: .trailing)
-                    }
-                    
-                    ForEach(recipe.ingredients as Array<String>, id: \.self){ ingredient in
-                        DefaultText(ingredient)
-                            .padding(.top, 4)
+                        VStack(alignment: .leading){
+                            HStack(alignment: .lastTextBaseline){
+                                DefaultText(
+                                    "Updated \(dateUtil.humanizeDatetime(date: recipe!.dateUpdated)) by \(recipe!.publisher)"
+                                )
+                                .foregroundColor(Color.gray)
+
+                                Spacer()
+                                
+                                DefaultText(String(recipe!.rating))
+                                    .frame(alignment: .trailing)
+                            }
+                            
+                            ForEach(recipe!.ingredients as Array<String>, id: \.self){ ingredient in
+                                DefaultText(ingredient)
+                                    .padding(.top, 4)
+                            }
+                        }
+                        .background(Color.white)
+                        .padding(12)
                     }
                 }
-                .background(Color.white)
-                .padding(12)
             }
+            .navigationBarHidden(true)
+            .alert(isPresented: $showDialog, content: {
+                return GenericMessageInfoAlert().build(
+                    message: message!,
+                    onRemoveHeadMessage: {
+                        onTriggerEvent(RecipeDetailEvents.OnRemoveHeadMessageFromQueue())
+                    }
+                )
+            })
         }
-        .navigationBarTitle(Text(recipe.title), displayMode: .inline)
-    }
-}
-
-struct RecipeView_Previews: PreviewProvider {
-    static let recipe = Recipe(
-        id: 1,
-        title: "Slow Cooker Beef and Barley Soup",
-        publisher: "jessica",
-        featuredImage: "https://nyc3.digitaloceanspaces.com/food2fork/food2fork-static/featured_images/1551/featured_image.png",
-        rating: 99,
-        sourceUrl: "http://picky-palate.com/2013/01/14/slow-cooker-beef-and-barley-soup/",
-        ingredients: [
-            "8.8 ounces barley",
-            "1 cup chopped celery",
-            "1 pound stewing beef",
-            "1 teaspoon kosher salt",
-            "1 1/2 cups chopped onion",
-            "1/2 teaspoon kosher salt",
-            "1/2 cup all-purpose flour",
-            "1 small jalapeno (optional)",
-            "3 tablespoons minced garlic",
-            "1/4 cup chopped fresh parsley",
-            "2 cups sliced carrots, peeled",
-            "2 cups sliced cremini mushrooms",
-            "1/2 teaspoon ground black pepper",
-            "64 ounces reduced sodium beef broth",
-            "2-3 tablespoons Worcestershire Sauce",
-            "3 tablespoons extra virgin olive oil",
-            "1 medium zucchini, sliced and chopped",
-            "1/2 teaspoon freshly ground black pepper",
-            "2-3 tablespoons fresh chopped thyme leaves"
-        ],
-        dateAdded: DatetimeUtil().now(),
-        dateUpdated: DatetimeUtil().now()
-    )
-    static var previews: some View {
-        RecipeView(
-            recipe: recipe,
-            dateUtil: DatetimeUtil()
-        )
+        .navigationBarTitle(Text(recipe?.title ?? "Error"), displayMode: .inline)
     }
 }

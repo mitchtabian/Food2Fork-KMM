@@ -63,7 +63,7 @@ struct RecipeListScreen: View {
                                         })
                                 }
                                 NavigationLink(
-                                    destination: RecipeScreen(
+                                    destination: RecipeDetailScreen(
                                         recipeId: Int(recipe.id),
                                         cacheModule: self.cacheModule
                                     )

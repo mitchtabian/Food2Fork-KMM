@@ -1,11 +1,3 @@
-//
-//  RecipeDetailViewModel.swift
-//  iosFood2Fork
-//
-//  Created by Mitch Tabian on 2021-05-05.
-//  Copyright © 2021 orgName. All rights reserved.
-//
-
 import SwiftUI
 import shared
 
@@ -14,12 +6,10 @@ class RecipeDetailViewModel: ObservableObject {
     private let logger = Logger(className: "RecipeDetailViewModel")
     
     // Dependencies
-    let getRecipe: GetRecipe
+    private let getRecipe: GetRecipe
     
     // State
     @Published var state: RecipeDetailState =  RecipeDetailState()
-    
-    @Published var showDialog: Bool = false
     
     init(
         recipeId: Int,
@@ -38,7 +28,7 @@ class RecipeDetailViewModel: ObservableObject {
             default: doNothing()
         }
     }
-    
+        
     private func getRecipe(recipeId: Int){
         do{
             try self.getRecipe.execute(
@@ -63,7 +53,7 @@ class RecipeDetailViewModel: ObservableObject {
                 }
             })
         }catch{
-            self.logger.log(msg: "\(error)")
+            logger.log(msg: "GetRecipe: ERROR: \(error)")
         }
     }
     
@@ -78,17 +68,31 @@ class RecipeDetailViewModel: ObservableObject {
         }
     }
     
-    private func doNothing(){}
-    
     private func appendToQueue(message: GenericMessageInfo){
         let currentState = (self.state.copy() as! RecipeDetailState)
         let queue = currentState.queue
         let queueUtil = GenericMessageInfoQueueUtil() // prevent duplicates
         if !queueUtil.doesMessageAlreadyExistInQueue(queue: queue, messageInfo: message) {
-            queue.add(element: message)
+           queue.add(element: message)
+           updateState(queue: queue)
+        }
+   }
+    
+    /**
+     *  Remove the head message from queue
+     */
+    private func removeHeadFromQueue(){
+        let currentState = (self.state.copy() as! RecipeDetailState)
+        let queue = currentState.queue
+        do {
+            try queue.remove()
             updateState(queue: queue)
+        }catch{
+            logger.log(msg: "\(error)")
         }
     }
+    
+    private func doNothing(){}
     
     private func updateState(
         isLoading: Bool? = nil,
@@ -101,28 +105,6 @@ class RecipeDetailViewModel: ObservableObject {
             recipe: recipe ?? currentState.recipe,
             queue: queue ?? currentState.queue
         )
-        shouldShowDialog()
     }
     
-    func shouldShowDialog(){
-        let currentState = (self.state.copy() as! RecipeDetailState)
-        showDialog = currentState.queue.items.count > 0
-    }
-    
-    /**
-     *  Remove the head message from queue
-     */
-    private func removeHeadFromQueue(){
-        let currentState = (self.state.copy() as! RecipeDetailState)
-        let queue = currentState.queue
-        do {
-            try queue.remove()
-            updateState(queue: queue)
-        }catch{
-            self.logger.log(msg: "\(error)")
-        }
-    }
 }
-
-
-
