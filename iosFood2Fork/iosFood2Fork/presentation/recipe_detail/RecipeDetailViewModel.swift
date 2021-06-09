@@ -52,13 +52,6 @@ class RecipeDetailViewModel: ObservableObject {
                     
                     if(data != nil){
                         self.updateState(recipe: data! as Recipe)
-                        
-                        let msg = GenericMessageInfo.Builder()
-                            .id(id: String((data! as Recipe).id))
-                            .title(title: "Error with \((data! as Recipe).id)")
-                            .uiComponentType(uiComponentType: UIComponentType.Dialog())
-                            .description(description: "Something went wrong")
-                        self.appendToQueue(message: msg.build())
                     }
                     if(message != nil){
                         self.handleMessageByUIComponentType(message!.build())
@@ -84,7 +77,6 @@ class RecipeDetailViewModel: ObservableObject {
     }
     
     private func appendToQueue(message: GenericMessageInfo){
-        print("Appending: \(message.id)")
         let currentState = (self.state.copy() as! RecipeDetailState)
         let queue = currentState.queue
         let queueUtil = GenericMessageInfoQueueUtil() // prevent duplicates
