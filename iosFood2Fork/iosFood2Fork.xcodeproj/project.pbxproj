@@ -17,6 +17,7 @@
 		22ACA31F26712A0500A9D666 /* RecipeDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ACA31E26712A0500A9D666 /* RecipeDetailScreen.swift */; };
 		22ACA32226712C8C00A9D666 /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ACA32126712C8C00A9D666 /* RecipeView.swift */; };
 		22ACA325267133E900A9D666 /* Avenir.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 22ACA324267133E900A9D666 /* Avenir.ttc */; };
+		22ACA3272671358E00A9D666 /* DefaultText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ACA3262671358E00A9D666 /* DefaultText.swift */; };
 		5BDB47D334868C22A88CE278 /* Pods_iosFood2Fork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219AB49DE46487BC9CE2CA74 /* Pods_iosFood2Fork.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		22ACA31E26712A0500A9D666 /* RecipeDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailScreen.swift; sourceTree = "<group>"; };
 		22ACA32126712C8C00A9D666 /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		22ACA324267133E900A9D666 /* Avenir.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Avenir.ttc; sourceTree = "<group>"; };
+		22ACA3262671358E00A9D666 /* DefaultText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultText.swift; sourceTree = "<group>"; };
 		2F38F42FDC0C4F50C0B7F91B /* Pods-iosFood2Fork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosFood2Fork.debug.xcconfig"; path = "Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork.debug.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosFood2Fork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosFood2Fork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				226D3848266FC64E0079F99B /* SearchAppBar.swift */,
 				226D384A266FD2EE0079F99B /* FoodCategoryChip.swift */,
 				226D384C266FE0BF0079F99B /* RecipeCard.swift */,
+				22ACA3262671358E00A9D666 /* DefaultText.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				226D3849266FC64F0079F99B /* SearchAppBar.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				226D384B266FD2EE0079F99B /* FoodCategoryChip.swift in Sources */,
+				22ACA3272671358E00A9D666 /* DefaultText.swift in Sources */,
 				22847CA22667F5BB00D941CB /* RecipeListViewModel.swift in Sources */,
 				22ACA31F26712A0500A9D666 /* RecipeDetailScreen.swift in Sources */,
 				226D384D266FE0BF0079F99B /* RecipeCard.swift in Sources */,

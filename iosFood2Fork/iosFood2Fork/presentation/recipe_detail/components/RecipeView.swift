@@ -41,19 +41,19 @@ struct RecipeView: View {
                 VStack(alignment: .leading){
                     
                     HStack(alignment: .lastTextBaseline){
-                        Text(
+                        DefaultText(
                             "Updated \(dateUtil.humanizeDatetime(date: recipe.dateUpdated)) by \(recipe.publisher)"
                         )
                         .foregroundColor(Color.gray)
 
                         Spacer()
                         
-                        Text(String(recipe.rating))
+                        DefaultText(String(recipe.rating))
                             .frame(alignment: .trailing)
                     }
                     
                     ForEach(recipe.ingredients as Array<String>, id: \.self){ ingredient in
-                        Text(ingredient)
+                        DefaultText(ingredient)
                             .padding(.top, 4)
                     }
                 }
@@ -61,7 +61,7 @@ struct RecipeView: View {
                 .padding(12)
             }
         }
-        .navigationBarTitle(Text(recipe.title), displayMode: .inline)
+        .navigationBarTitle(Text(recipe.title)), displayMode: .inline)
     }
 }
 
