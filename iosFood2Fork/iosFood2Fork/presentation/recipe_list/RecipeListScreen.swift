@@ -82,6 +82,15 @@ struct RecipeListScreen: View {
                 }
             }
             .navigationBarHidden(true)
+            .alert(isPresented: $viewModel.showDialog, content: {
+                let first = viewModel.state.queue.peek()!
+                return GenericMessageInfoAlert().build(
+                    message: first,
+                    onRemoveHeadMessage: {
+                        viewModel.onTriggerEvent(stateEvent: RecipeListEvents.OnRemoveHeadMessageFromQueue())
+                    }
+                )
+            })
         }
     }
 }

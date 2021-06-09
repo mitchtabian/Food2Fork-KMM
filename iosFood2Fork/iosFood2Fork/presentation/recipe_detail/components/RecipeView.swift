@@ -61,7 +61,7 @@ struct RecipeView: View {
                 .padding(12)
             }
         }
-        .navigationBarTitle(Text(recipe.title)), displayMode: .inline)
+        .navigationBarTitle(Text(recipe.title), displayMode: .inline)
     }
 }
 

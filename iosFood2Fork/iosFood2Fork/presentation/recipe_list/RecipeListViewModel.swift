@@ -18,6 +18,8 @@ class RecipeListViewModel: ObservableObject {
     // State
     @Published var state: RecipeListState = RecipeListState()
     
+    @Published var showDialog: Bool = false
+    
     init(
             searchRecipes: SearchRecipes,
             foodCategoryUtil: FoodCategoryUtil
@@ -40,7 +42,7 @@ class RecipeListViewModel: ObservableObject {
         case is RecipeListEvents.OnSelectCategory:
             onUpdateSelectedCategory(foodCategory: (stateEvent as! RecipeListEvents.OnSelectCategory).category)
         case RecipeListEvents.OnRemoveHeadMessageFromQueue():
-            doNothing()
+            removeHeadFromQueue()
         default:
             doNothing()
         }
@@ -128,28 +130,64 @@ class RecipeListViewModel: ObservableObject {
         }
     
     private func appendRecipes(recipes: [Recipe]){
-            var currentState = (self.state.copy() as! RecipeListState)
-            var currentRecipes = currentState.recipes
-            currentRecipes.append(contentsOf: recipes)
-            self.state = self.state.doCopy(
-                isLoading: currentState.isLoading,
-                page: currentState.page,
-                query: currentState.query,
-                selectedCategory: currentState.selectedCategory,
-                recipes: currentRecipes, // update recipes
-                bottomRecipe: currentState.bottomRecipe,
-                queue: currentState.queue
-            )
-            currentState = (self.state.copy() as! RecipeListState)
-            self.onUpdateBottomRecipe(recipe: currentState.recipes[currentState.recipes.count - 1])
-        }
+        var currentState = (self.state.copy() as! RecipeListState)
+        var currentRecipes = currentState.recipes
+        currentRecipes.append(contentsOf: recipes)
+        self.state = self.state.doCopy(
+            isLoading: currentState.isLoading,
+            page: currentState.page,
+            query: currentState.query,
+            selectedCategory: currentState.selectedCategory,
+            recipes: currentRecipes, // update recipes
+            bottomRecipe: currentState.bottomRecipe,
+            queue: currentState.queue
+        )
+        currentState = (self.state.copy() as! RecipeListState)
+        self.onUpdateBottomRecipe(recipe: currentState.recipes[currentState.recipes.count - 1])
+    }
     
     private func handleMessageByUIComponentType(_ message: GenericMessageInfo){
-        // TODO("append to queue or 'None'")
-    }
+            switch message.uiComponentType{
+            case UIComponentType.Dialog():
+                appendToQueue(message: message)
+            case UIComponentType.None():
+                print("\(message.description)")
+            default:
+                doNothing()
+            }
+        }
     
     private func doNothing(){
         // does nothing
+    }
+    
+    private func appendToQueue(message: GenericMessageInfo){
+        let currentState = (self.state.copy() as! RecipeListState)
+        let queue = currentState.queue
+        let queueUtil = GenericMessageInfoQueueUtil() // prevent duplicates
+        if !queueUtil.doesMessageAlreadyExistInQueue(queue: queue, messageInfo: message) {
+            queue.add(element: message)
+            updateState(queue: queue)
+        }
+    }
+    
+    /**
+     *  Remove the head message from queue
+     */
+    func removeHeadFromQueue(){
+        let currentState = (self.state.copy() as! RecipeListState)
+        let queue = currentState.queue
+        do {
+            try queue.remove()
+            updateState(queue: queue)
+        }catch{
+            print("\(error)")
+        }
+    }
+    
+    func shouldShowDialog(){
+        let currentState = (self.state.copy() as! RecipeListState)
+        showDialog = currentState.queue.items.count > 0
     }
     
     func shouldQueryNextPage(recipe: Recipe) -> Bool {
@@ -192,6 +230,7 @@ class RecipeListViewModel: ObservableObject {
                 bottomRecipe:  bottomRecipe ?? currentState.bottomRecipe,
                 queue: queue ?? currentState.queue
             )
+            shouldShowDialog()
         }
     
 }
