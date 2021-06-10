@@ -26,7 +26,6 @@ struct RecipeView: View {
             self.showDialog = false
         }
         self.onTriggerEvent = onTriggerEvent
-        print("SHOW DIALOG: \(self.showDialog)")
     }
     
     var body: some View {

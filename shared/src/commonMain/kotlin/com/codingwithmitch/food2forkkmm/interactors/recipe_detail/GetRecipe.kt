@@ -22,6 +22,9 @@ class GetRecipe (
         try {
             emit(DataState.loading())
 
+            if(recipeId == 1 || recipeId == 5){
+                throw Exception("Invalid Recipe id")
+            }
             // for testing
             delay(1000)
 

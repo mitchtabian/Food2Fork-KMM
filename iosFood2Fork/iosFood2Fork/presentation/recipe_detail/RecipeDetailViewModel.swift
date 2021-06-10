@@ -17,8 +17,6 @@ class RecipeDetailViewModel: ObservableObject {
     // State
     @Published var state: RecipeDetailState =  RecipeDetailState()
     
-    @Published var showDialog: Bool = false
-    
     init(
         recipeId: Int,
         getRecipe: GetRecipe
@@ -84,7 +82,6 @@ class RecipeDetailViewModel: ObservableObject {
            queue.add(element: message)
            updateState(queue: queue)
         }
-        shouldShowDialog()
    }
     
     /**
@@ -101,11 +98,6 @@ class RecipeDetailViewModel: ObservableObject {
         }
     }
     
-    func shouldShowDialog(){
-        let currentState = (self.state.copy() as! RecipeDetailState)
-        showDialog = currentState.queue.items.count > 0
-    }
-        
     private func doNothing(){}
     
     private func updateState(
