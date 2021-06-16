@@ -1,6 +1,7 @@
 # <img src="https://github.com/mitchtabian/Food2Fork-KMM/blob/master/assets/food2fork_logo.png?raw=true" alt="Food2Fork App Icon" width="50" height="50"> Food2Fork Recipe App
 <p>
-This is the codebase for an upcoming course featuring Kotlin Multiplatform Mobile.
+This is the codebase for a Kotlin Multiplatform Mobile course.
+[Watch the course](https://codingwithmitch.com/courses/kotlin-multiplatform-mobile/)
 </p>
 
 # Architecture
