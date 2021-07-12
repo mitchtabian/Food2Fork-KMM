@@ -42,6 +42,7 @@ dependencies {
     implementation(Accompanist.coil)
 
     implementation(AndroidX.appCompat)
+    implementation(AndroidX.fragmentKtx)
 
     implementation(Compose.runtime)
     implementation(Compose.runtimeLiveData)
@@ -58,7 +59,6 @@ dependencies {
 
     implementation(Hilt.hiltAndroid)
     implementation(Hilt.hiltNavigation)
-    implementation("androidx.fragment:fragment-ktx:1.3.3")
     kapt(Hilt.hiltCompiler)
 
     implementation(Kotlinx.datetime)

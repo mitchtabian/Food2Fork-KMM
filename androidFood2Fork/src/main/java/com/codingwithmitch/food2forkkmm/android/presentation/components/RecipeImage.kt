@@ -28,7 +28,7 @@ fun RecipeImage(
             contentScale = ContentScale.Crop,
         )
         when (painter.loadState) {
-            ImageLoadState.Loading -> {
+            is ImageLoadState.Loading -> {
                 Box(modifier = Modifier
                     .fillMaxWidth()
                     .height(RECIPE_IMAGE_HEIGHT.dp)
