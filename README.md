@@ -73,6 +73,7 @@ Make sure you have this setting in android studio:
 
 <img class='header-img' src='https://raw.githubusercontent.com/mitchtabian/Food2Fork-KMM/master/assets/Kotlin_android_studio.png' />
 
+
 # Kotlin Multiplatform Talks
 1. Mitch Tabian
     1. [Is Kotlin Multiplatform Ready for Production?](https://www.youtube.com/watch?v=L8Xq15NTuCc)
