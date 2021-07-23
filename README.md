@@ -4,10 +4,10 @@ This is the codebase for a Kotlin Multiplatform Mobile course.
 [Watch the course](https://codingwithmitch.com/courses/kotlin-multiplatform-mobile/)
 
 # List to Detail screen
-<img src="assets/list_demo.gif" width="25%">
+<img src="assets/list_detail_demo.gif" width="25%">
 
 # Searching
-<img src="assets/search_demo.gif" width="25%">
+<img src="assets/search_recipes_demo.gif" width="25%">
 
 
 # Architecture
