@@ -9,9 +9,9 @@
 /* Begin PBXAggregateTarget section */
 		8777C9F6889E59EFFD631D80AEE9048B /* shared */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = C12F82084A1D789106266CAAF7274FD2 /* Build configuration list for PBXAggregateTarget "shared" */;
+			buildConfigurationList = 9FAF69EFFAE27522789F3CA719BA83DE /* Build configuration list for PBXAggregateTarget "shared" */;
 			buildPhases = (
-				F2F266D90E96E94E3FEEA4EF908A1753 /* [CP-User] Build shared */,
+				4552119A071AC6BAB7327E6434237EC3 /* [CP-User] Build shared */,
 			);
 			dependencies = (
 			);
@@ -778,8 +778,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7141F4085DE07864C237DFED24207902 /* SDWebImageSwiftUI-umbrella.h in Headers */,
 				D9A9F890AE47129340C203C1EAA482EE /* SDWebImageSwiftUI.h in Headers */,
+				7141F4085DE07864C237DFED24207902 /* SDWebImageSwiftUI-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -802,8 +802,8 @@
 				1F55097C4490DCFB8BA4B3D8D284ED33 /* SDAnimatedImage.h in Headers */,
 				DDABCEDA1455A7213CC6411BEE294CCB /* SDAnimatedImagePlayer.h in Headers */,
 				B74F4E473F8A8EE8922DE009ADBA3AB0 /* SDAnimatedImageRep.h in Headers */,
-				18D1D252617EE8076F60E5F13462A79F /* SDAnimatedImageView+WebCache.h in Headers */,
 				870F8CC125713185231805CA5F1A3005 /* SDAnimatedImageView.h in Headers */,
+				18D1D252617EE8076F60E5F13462A79F /* SDAnimatedImageView+WebCache.h in Headers */,
 				6D807F4E3245C11DF14F39F681BAEA23 /* SDAssociatedObject.h in Headers */,
 				71C95FB341142F6C81587F4A60DC189F /* SDAsyncBlockOperation.h in Headers */,
 				7771562E8212237F9D71DFA61B548766 /* SDDeviceHelper.h in Headers */,
@@ -836,8 +836,8 @@
 				482390939D521EDC7E4197436C13C005 /* SDMemoryCache.h in Headers */,
 				B13000184102BC002BDF251521D52FBE /* SDmetamacros.h in Headers */,
 				3D375A85D8162BC44D045F53781D006A /* SDWeakProxy.h in Headers */,
-				B964F75E0BEC223C3DDD199C6342AE0F /* SDWebImage-umbrella.h in Headers */,
 				A128F49AA0C69EC677B7CBE89E876B42 /* SDWebImage.h in Headers */,
+				B964F75E0BEC223C3DDD199C6342AE0F /* SDWebImage-umbrella.h in Headers */,
 				04762E2F6696F6B57AC647288F800D2D /* SDWebImageCacheKeyFilter.h in Headers */,
 				08414C28164CC487E519E30C48342B08 /* SDWebImageCacheSerializer.h in Headers */,
 				84B3C925CCA883C89A4FAF942D952371 /* SDWebImageCompat.h in Headers */,
@@ -939,8 +939,8 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -988,7 +988,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		F2F266D90E96E94E3FEEA4EF908A1753 /* [CP-User] Build shared */ = {
+		4552119A071AC6BAB7327E6434237EC3 /* [CP-User] Build shared */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -996,7 +996,7 @@
 			name = "[CP-User] Build shared";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" :shared:syncFramework                     -Pkotlin.native.cocoapods.target=$KOTLIN_TARGET                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION                     -Pkotlin.native.cocoapods.cflags=\"$OTHER_CFLAGS\"                     -Pkotlin.native.cocoapods.paths.headers=\"$HEADER_SEARCH_PATHS\"                     -Pkotlin.native.cocoapods.paths.frameworks=\"$FRAMEWORK_SEARCH_PATHS\"\n";
+			shellScript = "                if [ \"YES\" = \"$COCOAPODS_SKIP_KOTLIN_BUILD\" ]; then\n                  echo \"Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1013,8 +1013,8 @@
 				4F00ED583882C1B74A2BA97EE0637416 /* ImageViewWrapper.swift in Sources */,
 				28BECC3D1820CD67D8A3D9D50F9C73A4 /* Indicator.swift in Sources */,
 				551C4389AFD1B7AEE39E409444643206 /* ProgressIndicator.swift in Sources */,
-				61D5775A223AAF6DCCAC900613F1B0CF /* SDWebImageSwiftUI-dummy.m in Sources */,
 				189A148F892169776B8789F0C6175595 /* SDWebImageSwiftUI.swift in Sources */,
+				61D5775A223AAF6DCCAC900613F1B0CF /* SDWebImageSwiftUI-dummy.m in Sources */,
 				798F4BDE3A509E1F9F02A4075C0DD4B5 /* SwiftUICompatibility.swift in Sources */,
 				FE13F4069DEF171E3AC81FE9E04A9781 /* Transition.swift in Sources */,
 				4F0774F9C65915286144135BCBAE8D74 /* WebImage.swift in Sources */,
@@ -1040,8 +1040,8 @@
 				6AC5D2781167F9081FBA570FC8B89C90 /* SDAnimatedImage.m in Sources */,
 				D91024E2275D2B62BB8CDFAADDA9F999 /* SDAnimatedImagePlayer.m in Sources */,
 				E3C7DC809034DACD9D1FF1856DAD3ED2 /* SDAnimatedImageRep.m in Sources */,
-				1F7AFE861609115DF7D756769A553F87 /* SDAnimatedImageView+WebCache.m in Sources */,
 				E57482DCBAB73E4AC9A8EB0816998D8F /* SDAnimatedImageView.m in Sources */,
+				1F7AFE861609115DF7D756769A553F87 /* SDAnimatedImageView+WebCache.m in Sources */,
 				02292FC1E8CF700F59D154DF2C841F75 /* SDAssociatedObject.m in Sources */,
 				AF855A5EDCAEFF0EFCD1F6AC49D664B5 /* SDAsyncBlockOperation.m in Sources */,
 				A8C8A2C92F70DFC3E67E1CCB0A5FBDA3 /* SDDeviceHelper.m in Sources */,
@@ -1205,6 +1205,24 @@
 			};
 			name = Release;
 		};
+		1B6EAB28480B60AB33A8B63338687E30 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B34BE5C5BA69C336E915FC8011CC0AC3 /* shared.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		24BEEDFABA9607E02FAA35007BC34E75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A231A3C087B578A27DF40542C1FF5C24 /* SDWebImageSwiftUI.release.xcconfig */;
@@ -1338,24 +1356,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Release;
-		};
-		8D3CE62BF39AD67694AD6D9C12796B95 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B34BE5C5BA69C336E915FC8011CC0AC3 /* shared.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -1497,7 +1497,7 @@
 			};
 			name = Debug;
 		};
-		CDCC3BDADC08CA648A703CE57218742D /* Debug */ = {
+		F80DE7EBDDFC80B4D52BCACF2249C6B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E288A42FCA6973CB35B18FA55E8C3EED /* shared.debug.xcconfig */;
 			buildSettings = {
@@ -1544,11 +1544,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C12F82084A1D789106266CAAF7274FD2 /* Build configuration list for PBXAggregateTarget "shared" */ = {
+		9FAF69EFFAE27522789F3CA719BA83DE /* Build configuration list for PBXAggregateTarget "shared" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CDCC3BDADC08CA648A703CE57218742D /* Debug */,
-				8D3CE62BF39AD67694AD6D9C12796B95 /* Release */,
+				F80DE7EBDDFC80B4D52BCACF2249C6B6 /* Debug */,
+				1B6EAB28480B60AB33A8B63338687E30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

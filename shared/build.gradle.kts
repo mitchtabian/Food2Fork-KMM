@@ -11,11 +11,11 @@ plugins {
 version = "1.0"
 
 android {
-    compileSdkVersion(Application.compileSdk)
+    compileSdk = Application.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(Application.minSdk)
-        targetSdkVersion(Application.targetSdk)
+        minSdk = Application.minSdk
+        targetSdk = Application.targetSdk
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -34,11 +34,11 @@ android {
 kotlin {
     android()
 
-    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-            ::iosArm64
-        else
-            ::iosX64
+    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget = when {
+        System.getenv("SDK_NAME")?.startsWith("iphoneos") == true -> ::iosArm64
+        System.getenv("NATIVE_ARCH")?.startsWith("arm") == true -> ::iosSimulatorArm64
+        else -> ::iosX64
+    }
 
     iosTarget("ios") {}
 
@@ -46,7 +46,9 @@ kotlin {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
-        frameworkName = "shared"
+        framework {
+            baseName = "shared"
+        }
         podfile = project.file("../iosFood2Fork/Podfile")
     }
     
@@ -54,20 +56,21 @@ kotlin {
         val commonMain by getting {
             dependencies{
                 implementation(Ktor.core)
-                implementation(Ktor.clientSerialization)
+                implementation(Ktor.jsonSerialization)
+                implementation(Ktor.contentNegotiation)
                 implementation(Kotlinx.datetime)
                 implementation(SQLDelight.runtime)
             }
         }
         val androidMain by getting {
             dependencies{
-                implementation(Ktor.android)
+                implementation(Ktor.clientCIO)
                 implementation(SQLDelight.androidDriver)
             }
         }
         val iosMain by getting{
             dependencies {
-                implementation(Ktor.ios)
+                implementation(Ktor.clientDarwin)
                 implementation(SQLDelight.nativeDriver)
             }
         }
