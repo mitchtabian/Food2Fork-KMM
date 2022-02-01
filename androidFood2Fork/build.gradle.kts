@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Application.compileSdk)
+    compileSdk = Application.compileSdk
     defaultConfig {
         applicationId = Application.appId
-        minSdkVersion(Application.minSdk)
-        targetSdkVersion(Application.targetSdk)
+        minSdk = Application.minSdk
+        targetSdk = Application.targetSdk
         versionCode = Application.versionCode
         versionName = Application.versionName
     }
@@ -29,7 +29,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        useIR = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Compose.composeVersion
@@ -63,14 +62,7 @@ dependencies {
 
     implementation(Kotlinx.datetime)
 
-    implementation(Ktor.android)
+    implementation(Ktor.clientCIO)
 
     debugImplementation(SquareUp.leakCanary)
 }
-
-
-
-
-
-
-
